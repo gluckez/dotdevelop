@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -18,6 +19,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGnome|AnyCPU' " />
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
@@ -124,7 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="MonoDevelop.VersionControl.Git.Tests" />
-  </ItemGroup>
+
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 <!--  <Choose>-->
 <!--    <When Condition=" '$(Configuration)' == 'DebugMac' OR '$(Configuration)' == 'ReleaseMac' ">-->
@@ -147,4 +153,44 @@
 <!--     </ItemGroup>-->
 <!--     <Copy SourceFiles="@(NativeBinaries)" DestinationFolder="$(OutputPath)\" SkipUnchangedFiles="true" />-->
 <!--  </Target>-->
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+    <Compile Include="MonoDevelop.VersionControl.Git\IGitCredentialsProvider.cs" />
+    <Compile Include="MonoDevelop.VersionControl.Git\XwtCredentialsDialog.cs" />
+    <PackageReference Include="LibGit2Sharp.NativeBinaries" Version="[2.0.312]" PrivateAssets="none" />
+    <PackageReference Include="LibGit2Sharp" Version="0.27.0-preview-g1da3cfaa68" />
+<!--    <None Include="..\..\..\..\external\libgit-binary\libgit2.license.txt">-->
+<!--      <Link>libgit2.license.txt</Link>-->
+<!--      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+<!--    </None>-->
+<!--    <None Include="..\..\..\..\external\libgit-binary\libssh2.license.txt">-->
+<!--      <Link>libssh2.license.txt</Link>-->
+<!--      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+<!--    </None>-->
+    <IncludeCopyLocal Include="LibGit2Sharp.dll" />
+<!--  <Choose>-->
+<!--    <When Condition=" '$(Configuration)' == 'DebugMac' OR '$(Configuration)' == 'ReleaseMac' ">-->
+<!--      <ItemGroup>-->
+<!--        <NativeBinaries Include="..\..\..\..\external\libgit-binary\mac\*.dylib" />-->
+<!--      </ItemGroup>-->
+<!--    </When>-->
+<!--    <When Condition=" '$(Configuration)' == 'DebugWin32' OR '$(Configuration)' == 'ReleaseWin32' ">-->
+<!--      <ItemGroup>-->
+<!--        <NativeBinaries Include="..\..\..\..\external\libgit-binary\windows\*.*" />-->
+<!--      </ItemGroup>-->
+<!--    </When>-->
+<!--  </Choose>-->
+<!--  <Target Name="BeforeBuild">-->
+<!--    <Exec Command="bash build_libgit2.sh" Condition=" '$(Configuration)' == 'DebugGnome' OR '$(Configuration)' == 'ReleaseGnome' " />-->
+<!--  </Target>-->
+<!--  <Target Name="AfterBuild">-->
+<!--     <ItemGroup Condition=" '$(Configuration)' == 'DebugGnome' OR '$(Configuration)' == 'ReleaseGnome' ">-->
+<!--       <NativeBinaries Include="..\..\..\..\external\libgit2\build\*.so*" />-->
+<!--     </ItemGroup>-->
+<!--     <Copy SourceFiles="@(NativeBinaries)" DestinationFolder="$(OutputPath)\" SkipUnchangedFiles="true" />-->
+<!--  </Target>-->
+  </ItemGroup>
 </Project>

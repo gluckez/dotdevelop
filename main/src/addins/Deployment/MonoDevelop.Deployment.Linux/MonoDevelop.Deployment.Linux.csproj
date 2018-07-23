@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -42,6 +43,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonoDevelop.Deployment.Linux\DesktopInfo.xml" />
@@ -52,6 +58,11 @@
     <Compile Include="MonoDevelop.Deployment.Linux\BasicOptionPanelWidget.cs" />
     <Compile Include="MonoDevelop.Deployment.Linux\DesktopPanelWidget.cs" />
     <Compile Include="MonoDevelop.Deployment.Linux\DotDesktopViewWidget.cs" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Compile Include="MonoDevelop.Deployment.Linux\DotDesktopView.cs" />
     <Compile Include="MonoDevelop.Deployment.Linux\DesktopEntry.cs" />
     <Compile Include="MonoDevelop.Deployment.Linux\MenuCategorySelectorDialog.cs" />

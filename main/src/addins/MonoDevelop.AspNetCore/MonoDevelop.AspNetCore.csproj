@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -19,6 +20,16 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="$(NuGetVersionNewtonsoftJson)" />
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MonoDevelop.AspNetCore.Templating\AspNetCoreFileTemplateCondition.cs" />
@@ -219,4 +230,100 @@
     <Folder Include="MonoDevelop.AspNetCore.Scaffolding\Configuration\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+
+    <TemplatesVersion1x>1.0.0-beta2-20170629-269</TemplatesVersion1x>
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <PackageReference Include="Newtonsoft.Json" Version="$(NuGetVersionNewtonsoftJson)" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
+    <Compile Include="MonoDevelop.AspNetCore.Commands\PublishCommandItem.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Commands\ProjectPublishProfile.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Dialogs\PublishToFolderDialog.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\ProjectExtensions.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Commands\PublishToFolderCommandHandler.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Commands\PublishToFolderProfilesCommandHandler.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Commands\PublishToFolderBaseCommandHandler.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\Counters.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\LaunchProfileData.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\LaunchProfile.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\ILaunchProfile.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\LaunchProfileDataExtensions.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\LaunchProfileProvider.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\AspNetCoreNestingRulesProvider.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\AspNetCoreExecutionTarget.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\AspNetCoreTargetFrameworkExecutionTarget.cs" />
+    <Compile Include="MonoDevelop.AspNetCore\AspNetCoreProjectTemplateWizard.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Commands\ScaffoldCommandHandler.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\ScaffolderArgs.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\ModelVisitor.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\ScaffolderWizard.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\ScaffolderDialogController.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\ScaffolderTemplateSelectPage.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\ScaffolderTemplateConfigurePage.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\CommandLineArg.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\ScaffolderWizardPageBase.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\ApiControllerEntityFrameworkScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\ApiControllerWithActionsScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\ControllerScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\EmptyApiControllerScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\EmptyMvcControllerScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\ScaffolderBase.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\MvcControllerWithActionsScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\RazorPageEntityFrameworkCrudScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\RazorPageEntityFrameworkScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\RazorPageScaffolder.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Fields\BoolField.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Fields\BoolFieldList.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Fields\ComboField.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Fields\ScaffolderField.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Fields\StringField.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Fields\FileField.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\RazorPageScaffolderBase.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Fields\ArgumentField.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Configuration\PackageDescription.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Configuration\ScaffoldingConfig.cs" />
+    <Compile Include="MonoDevelop.AspNetCore.Scaffolding\Configuration\SupportPolicyVersion.cs" />
+    <EmbeddedResource Include="Resources\aspnet-wizard-page.png" />
+    <EmbeddedResource Include="MonoDevelop.AspNetCore.Scaffolding\Configuration\ScaffoldingPackageVersions.json" />
+    <None Include="Templates\AppSettingsFile.xft.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\AppSettingsFile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\AspNetCore.filenesting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\RazorComponent.xft.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\RazorComponent.razor">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <ProjectReference Include="..\MonoDevelop.PackageManagement\MonoDevelop.PackageManagement.csproj">
+      <Project>{F218643D-2E74-4309-820E-206A54B7133F}</Project>
+      <Name>MonoDevelop.PackageManagement</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <DownloadNupkg Include="Microsoft.DotNet.Web.ProjectTemplates.1.x" Version="$(TemplatesVersion1x)" ExtensionDir="Templates" />
+    <DownloadNupkg Include="Microsoft.DotNet.Web.ProjectTemplates.2.0" Version="$(TemplatesVersion20)" ExtensionDir="Templates" />
+    <InternalsVisibleTo Include="MonoDevelop.AspNetCore.Tests" />
+    <Folder Include="Resources\" />
+    <Folder Include="MonoDevelop.AspNetCore.Scaffolding\" />
+    <Folder Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\" />
+    <Folder Include="MonoDevelop.AspNetCore.Scaffolding\Fields\" />
+    <Folder Include="MonoDevelop.AspNetCore.Scaffolding\Configuration\" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  </ItemGroup>
 </Project>

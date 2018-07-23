@@ -2,6 +2,7 @@
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesVSEditor)" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -38,6 +39,12 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Drawing" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +67,14 @@
     <Compile Include="Gui\MonoDevelop.VBNetBinding.ConfigurationOptionsPanelWidget.cs" />
     <Compile Include="Gui\MonoDevelop.VBNetBinding.ImportsOptionsPanelWidget.cs" />
     <Compile Include="Gui\MonoDevelop.VBNetBinding.ProjectOptionsPanelWidget.cs" />
+    <Compile Include="Project\TypeSystemParser.cs" />
+    <Compile Include="Project\VBNetParsedDocument.cs" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Compile Include="Project\TypeSystemParser.cs" />
     <Compile Include="Project\VBNetParsedDocument.cs" />
   </ItemGroup>

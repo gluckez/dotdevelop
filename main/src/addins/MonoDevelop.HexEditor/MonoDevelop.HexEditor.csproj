@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -15,6 +16,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonoDevelop.HexEditor.addin.xml" />
@@ -55,6 +61,13 @@
     <Compile Include="AddinInfo.cs" />
     <Compile Include="MonoDevelop.HexEditor\HexEditorVisualizer.cs" />
     <Compile Include="Mono.MHex\HexEditorDebugger.cs" />
+    <Compile Include="Mono.MHex.Data\ByteBufferModel.cs" />
+    <Compile Include="Mono.MHex.Data\ByteBuffer.cs" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Compile Include="Mono.MHex.Data\ByteBufferModel.cs" />
     <Compile Include="Mono.MHex.Data\ByteBuffer.cs" />
   </ItemGroup>

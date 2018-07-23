@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,6 +18,19 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\..\packages\JetBrains.SharpZipLib.Stripped.0.87.20170615.10\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\..\..\..\build\bin\System.Collections.Immutable.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\MonoDevelop.Core\MonoDevelop.Core.csproj">
@@ -183,6 +197,64 @@
     <EmbeddedResource Include="templates\PackagingProject.xpt.xml" />
 
     <EmbeddedResource Include="MonoDevelop.Deployment.addin.xml" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugWin32|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseWin32|AnyCPU' " />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\..\packages\JetBrains.SharpZipLib.Stripped.0.87.20170615.10\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\..\..\..\build\bin\System.Collections.Immutable.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <EmbeddedResource Include="icons\package-16~contrast.png" />
+    <EmbeddedResource Include="icons\package-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\package-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\package-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\package-16~contrast~dark~error.png" />
+    <EmbeddedResource Include="icons\package-16~contrast~dark~error%402x.png" />
+    <EmbeddedResource Include="icons\package-16~contrast~error.png" />
+    <EmbeddedResource Include="icons\package-16~contrast~error%402x.png" />
+    <EmbeddedResource Include="icons\package-16~dark~error.png" />
+    <EmbeddedResource Include="icons\package-16~dark~error%402x.png" />
+    <EmbeddedResource Include="icons\package-16~dark~sel.png" />
+    <EmbeddedResource Include="icons\package-16~dark~sel%402x.png" />
+    <EmbeddedResource Include="icons\package-16~error.png" />
+    <EmbeddedResource Include="icons\package-16~error%402x.png" />
+
+    <EmbeddedResource Include="icons\package-32~contrast.png" />
+    <EmbeddedResource Include="icons\package-32~contrast%402x.png" />
+    <EmbeddedResource Include="icons\package-32~contrast~dark.png" />
+    <EmbeddedResource Include="icons\package-32~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\package-32~sel.png" />
+    <EmbeddedResource Include="icons\package-32~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\package-48~contrast.png" />
+    <EmbeddedResource Include="icons\package-48~contrast%402x.png" />
+    <EmbeddedResource Include="icons\package-48~contrast~dark.png" />
+    <EmbeddedResource Include="icons\package-48~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\package-48~dark~sel.png" />
+    <EmbeddedResource Include="icons\package-48~dark~sel%402x.png" />
+
+    <EmbeddedResource Include="templates\images\package-project.png" />
+    <EmbeddedResource Include="templates\images\package-project%402x.png" />
+    <EmbeddedResource Include="templates\images\package-project~dark.png" />
+    <EmbeddedResource Include="templates\images\package-project~dark%402x.png" />
+    <EmbeddedResource Include="templates\images\package-project~dark~sel.png" />
+    <EmbeddedResource Include="templates\images\package-project~dark~sel%402x.png" />
+    <EmbeddedResource Include="templates\images\package-project~sel.png" />
+    <EmbeddedResource Include="templates\images\package-project~sel%402x.png" />
+    <EmbeddedResource Include="templates\images\package-sidebar.png" />
+    <EmbeddedResource Include="templates\images\package-sidebar%402x.png" />
+    <EmbeddedResource Include="templates\images\package-sidebar~dark.png" />
+    <EmbeddedResource Include="templates\images\package-sidebar~dark%402x.png" />
+
+
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

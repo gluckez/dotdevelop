@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -18,6 +19,28 @@
   <ItemGroup>
     <Reference Include="System.Xml" />
     <Reference Include="System" />
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces.Desktop">
+      <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.Workspaces.Desktop.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts">
+      <HintPath>..\..\build\bin\System.Composition.TypedParts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp.Features">
+      <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.CSharp.Features.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Features">
+      <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.Features.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\core\MonoDevelop.Ide\MonoDevelop.Ide.csproj">
@@ -75,6 +98,32 @@
     <Compile Include="ResultsEditorExtensionTestBase.cs" />
     <Compile Include="CodeActionEditorExtensionTestBase.cs" />
     <Compile Include="MonoDevelop.Refactoring\RenameRefactoringTests.cs" />
+    <!--
+    This contains tests for many deprecated editor APIs, disable deprecation warnings for now.
+    -->
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces.Desktop">
+      <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.Workspaces.Desktop.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts">
+      <HintPath>..\..\build\bin\System.Composition.TypedParts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp.Features">
+      <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.CSharp.Features.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Features">
+      <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.Features.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+      <Private>False</Private>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -58,6 +59,14 @@
       <Project>{C93D746E-1586-4D4F-B411-BF5A966E6A08}</Project>
       <Name>Xwt.WPF</Name>
     </ProjectReference>
+    <IncludeCopyLocal Include="Microsoft.WindowsAPICodePack.dll" />
+    <IncludeCopyLocal Include="Microsoft.WindowsAPICodePack.Shell.dll" />
+    <IncludeCopyLocal Include="Xwt.Gtk.Windows.dll" />
+    <IncludeCopyLocal Include="Xwt.WPF.dll" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <IncludeCopyLocal Include="Microsoft.WindowsAPICodePack.dll" />
     <IncludeCopyLocal Include="Microsoft.WindowsAPICodePack.Shell.dll" />
     <IncludeCopyLocal Include="Xwt.Gtk.Windows.dll" />

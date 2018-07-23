@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,6 +18,16 @@
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="NuGet.Versioning">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Versioning.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Mono.Cairo" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,4 +267,139 @@
     <Folder Include="MonoDevelop.DotNetCore.GlobalTools\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+  <TemplatesVersion1x>1.0.0-beta2-20170629-269</TemplatesVersion1x>
+
+  <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="NuGet.Versioning">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Versioning.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Mono.Cairo" />
+    <Compile Include="MonoDevelop.DotNetCore\DotNetCoreNotInstalledInfoBar.cs" />
+    <Compile Include="MonoDevelop.DotNetCore\MonoRuntimeInfoExtensions.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\PackageDependencyInfo.cs" />
+    <Compile Include="MonoDevelop.DotNetCore\DotNetCliWatch.cs" />
+    <Compile Include="DotNetCoreDownloadUrl.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\PackageDependencyNodePropertyProvider.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\PackageDependencyNodeDescriptor.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.Commands\DependenciesNodeCommandHandler.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\FrameworkReferenceNodeCache.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\FrameworkReferenceNodeBuilder.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\FrameworkReferenceNode.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\FrameworkReferencesNode.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.NodeBuilders\FrameworkReferencesNodeBuilder.cs" />
+    <Compile Include="MonoDevelop.DotNetCore\DotNetCoreRuntimeSystemInformation.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.Commands\PackCommandHandler.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.GlobalTools\DotNetCoreGlobalToolManager.cs" />
+    <Compile Include="MonoDevelop.DotNetCore.Templating\DotNetCoreProjectTemplateParameters.cs" />
+    <ProjectReference Include="..\MonoDevelop.DesignerSupport\MonoDevelop.DesignerSupport.csproj">
+      <Project>{2C24D515-4A2C-445C-8419-C09231913CFA}</Project>
+      <Name>MonoDevelop.DesignerSupport</Name>
+      <Private>False</Private>
+    </ProjectReference>
+
+    <EmbeddedResource Include="images\netcore-wizard-page.png" />
+    <EmbeddedResource Include="images\netcore-wizard-page%402x.png" />
+    <EmbeddedResource Include="images\netcore-wizard-page~dark.png" />
+    <EmbeddedResource Include="images\netcore-wizard-page~dark%402x.png" />
+
+    <EmbeddedResource Include="images\crossplatform-library-project.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project%402x.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~contrast.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~contrast%402x.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~contrast~dark.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~contrast~dark%402x.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~dark.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~dark%402x.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~dark~sel.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~dark~sel%402x.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~sel.png" />
+    <EmbeddedResource Include="images\crossplatform-library-project~sel%402x.png" />
+    <EmbeddedResource Include="images\crossplatform-library-sidebar.png" />
+    <EmbeddedResource Include="images\crossplatform-library-sidebar%402x.png" />
+    <EmbeddedResource Include="images\crossplatform-library-sidebar~dark.png" />
+    <EmbeddedResource Include="images\crossplatform-library-sidebar~dark%402x.png" />
+
+    <EmbeddedResource Include="images\netcore-project.png" />
+    <EmbeddedResource Include="images\netcore-project%402x.png" />
+    <EmbeddedResource Include="images\netcore-project~contrast.png" />
+    <EmbeddedResource Include="images\netcore-project~contrast%402x.png" />
+    <EmbeddedResource Include="images\netcore-project~contrast~dark.png" />
+    <EmbeddedResource Include="images\netcore-project~contrast~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-project~dark.png" />
+    <EmbeddedResource Include="images\netcore-project~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-project~dark~sel.png" />
+    <EmbeddedResource Include="images\netcore-project~dark~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-project~sel.png" />
+    <EmbeddedResource Include="images\netcore-project~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-sidebar.png" />
+    <EmbeddedResource Include="images\netcore-sidebar%402x.png" />
+    <EmbeddedResource Include="images\netcore-sidebar~dark.png" />
+    <EmbeddedResource Include="images\netcore-sidebar~dark%402x.png" />
+
+    <EmbeddedResource Include="images\netcore-console-project.png" />
+    <EmbeddedResource Include="images\netcore-console-project%402x.png" />
+    <EmbeddedResource Include="images\netcore-console-project~contrast.png" />
+    <EmbeddedResource Include="images\netcore-console-project~contrast%402x.png" />
+    <EmbeddedResource Include="images\netcore-console-project~contrast~dark.png" />
+    <EmbeddedResource Include="images\netcore-console-project~contrast~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-console-project~dark.png" />
+    <EmbeddedResource Include="images\netcore-console-project~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-console-project~dark~sel.png" />
+    <EmbeddedResource Include="images\netcore-console-project~dark~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-console-project~sel.png" />
+    <EmbeddedResource Include="images\netcore-console-project~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-console-sidebar.png" />
+    <EmbeddedResource Include="images\netcore-console-sidebar%402x.png" />
+    <EmbeddedResource Include="images\netcore-console-sidebar~dark.png" />
+    <EmbeddedResource Include="images\netcore-console-sidebar~dark%402x.png" />
+
+    <EmbeddedResource Include="images\netcore-library-project.png" />
+    <EmbeddedResource Include="images\netcore-library-project%402x.png" />
+    <EmbeddedResource Include="images\netcore-library-project~contrast.png" />
+    <EmbeddedResource Include="images\netcore-library-project~contrast%402x.png" />
+    <EmbeddedResource Include="images\netcore-library-project~contrast~dark.png" />
+    <EmbeddedResource Include="images\netcore-library-project~contrast~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-library-project~dark.png" />
+    <EmbeddedResource Include="images\netcore-library-project~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-library-project~dark~sel.png" />
+    <EmbeddedResource Include="images\netcore-library-project~dark~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-library-project~sel.png" />
+    <EmbeddedResource Include="images\netcore-library-project~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-library-sidebar.png" />
+    <EmbeddedResource Include="images\netcore-library-sidebar%402x.png" />
+    <EmbeddedResource Include="images\netcore-library-sidebar~dark.png" />
+    <EmbeddedResource Include="images\netcore-library-sidebar~dark%402x.png" />
+
+    <EmbeddedResource Include="images\netcore-test-project.png" />
+    <EmbeddedResource Include="images\netcore-test-project%402x.png" />
+    <EmbeddedResource Include="images\netcore-test-project~contrast.png" />
+    <EmbeddedResource Include="images\netcore-test-project~contrast%402x.png" />
+    <EmbeddedResource Include="images\netcore-test-project~contrast~dark.png" />
+    <EmbeddedResource Include="images\netcore-test-project~contrast~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-test-project~dark.png" />
+    <EmbeddedResource Include="images\netcore-test-project~dark%402x.png" />
+    <EmbeddedResource Include="images\netcore-test-project~dark~sel.png" />
+    <EmbeddedResource Include="images\netcore-test-project~dark~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-test-project~sel.png" />
+    <EmbeddedResource Include="images\netcore-test-project~sel%402x.png" />
+    <EmbeddedResource Include="images\netcore-test-sidebar.png" />
+    <EmbeddedResource Include="images\netcore-test-sidebar%402x.png" />
+    <EmbeddedResource Include="images\netcore-test-sidebar~dark.png" />
+    <EmbeddedResource Include="images\netcore-test-sidebar~dark%402x.png" />
+    <InternalsVisibleTo Include="MonoDevelop.AzureFunctions" />
+    <DownloadNupkg Include="Microsoft.DotNet.Common.ProjectTemplates.1.x" Version="$(TemplatesVersion1x)" ExtensionDir="Templates" />
+    <DownloadNupkg Include="Microsoft.DotNet.Common.ProjectTemplates.2.0" Version="$(TemplatesVersion20)" ExtensionDir="Templates" />
+    <DownloadNupkg Include="Microsoft.DotNet.Test.ProjectTemplates.1.x" Version="$(TemplatesVersion1x)" ExtensionDir="Templates" />
+    <DownloadNupkg Include="Microsoft.DotNet.Test.ProjectTemplates.2.0" Version="$(TemplatesVersion20)" ExtensionDir="Templates" />
+
+    <Folder Include="MonoDevelop.DotNetCore.GlobalTools\" />
+
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+    </ItemGroup>
 </Project>

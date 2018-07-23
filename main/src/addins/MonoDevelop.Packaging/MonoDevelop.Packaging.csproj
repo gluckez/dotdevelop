@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,6 +15,37 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="NuGet.Protocol">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Protocol.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Packaging">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Packaging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Packaging.Core">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Packaging.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Frameworks">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Frameworks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Versioning">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Versioning.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="NuGet.PackageManagement">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.PackageManagement.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +152,45 @@
     <ExtensionContent Include="Templates\CrossPlatformLibrary.xpt.xml" />
     <ExtensionContent Include="Templates\PackagingProject.xpt.xml" />
     <DownloadNupkg Include="NuGet.Build.Packaging" Version="$(_BuildPackagingVersion)" ExtensionDir="packages" />
-  </ItemGroup>
+
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+    <_BuildPackagingVersion>0.2.5-dev.8</_BuildPackagingVersion>
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="NuGet.Protocol">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Protocol.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Packaging">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Packaging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Packaging.Core">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Packaging.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Frameworks">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Frameworks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Versioning">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.Versioning.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="NuGet.PackageManagement">
+      <HintPath>..\..\..\external\nuget-binary\NuGet.PackageManagement.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <ExtensionContent Include="Targets\NuGet.Packaging.Authoring.props" />
+    <ExtensionContent Include="Targets\NuGet.Packaging.Authoring.targets" />
+    <ExtensionContent Include="Templates\CrossPlatformLibrary.xpt.xml" />
+    <ExtensionContent Include="Templates\PackagingProject.xpt.xml" />
+    <DownloadNupkg Include="NuGet.Build.Packaging" Version="$(_BuildPackagingVersion)" ExtensionDir="packages" />
+
+  </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,6 +18,18 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   <ItemGroup>
     <Reference Include="System" />
+<<<<<<< HEAD
+=======
+    <Reference Include="ICSharpCode.Decompiler">
+      <HintPath>..\..\..\packages\ICSharpCode.Decompiler.3.0.0.3403-beta4\lib\net46\ICSharpCode.Decompiler.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+>>>>>>> 61552748da (Port to Gtk#3)
     <Reference Include="System.Core" />
     <Reference Include="monodoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <Reference Include="System.Xml" />
@@ -106,6 +119,21 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonoDevelop.AssemblyBrowser.addin.xml" />
+    <!--
+    This needs to be ported to the new editor, and currently makes use of many deprecated APIs.
+    -->
+    <NoWarn>$(NoWarn);618;612</NoWarn>
+    <Reference Include="ICSharpCode.Decompiler">
+      <HintPath>..\..\..\packages\ICSharpCode.Decompiler.3.0.0.3403-beta4\lib\net46\ICSharpCode.Decompiler.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Compile Include="MonoDevelop.AssemblyBrowser\MetadataExtensions.cs" />
+    <Compile Include="MonoDevelop.AssemblyBrowser\TreeNodes\Cecil\ICSharpCodeStringFormatter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
