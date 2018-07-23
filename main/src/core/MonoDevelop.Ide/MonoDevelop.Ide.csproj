@@ -147,6 +147,15 @@
       <Project>{92494904-35FA-4DC9-BDE9-3A3E87AC49D3}</Project>
       <Name>Xwt</Name>
     </ProjectReference>
+<!--
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk\Xwt.Gtk.csproj">
+      <Project>{C3887A93-B2BD-4097-8E2F-3A063EFF32FD}</Project>
+      <Name>Xwt.Gtk</Name>
+    </ProjectReference>-->
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk\Xwt.Gtk3.csproj">
+      <Project>{3B25FD1F-CEBA-4450-8893-DC330FDB56A7}</Project>
+      <Name>Xwt.Gtk3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins\Mono.Addins.csproj">
       <Project>{91DD5A2D-9FE3-4C3C-9253-876141874DAD}</Project>
       <Name>Mono.Addins</Name>
@@ -2000,6 +2009,693 @@
     <InternalsVisibleTo Include="MonoDevelop.UserInterfaceTesting" />
     <InternalsVisibleTo Include="MonoDevelop.VersionControl" />
     <InternalsVisibleTo Include="WebToolingAddin" />
+    <InternalsVisibleTo Include="TypeScriptAddin" />
+    <InternalsVisibleTo Include="WindowsPlatform" />
+    <InternalsVisibleTo Include="Xamarin.Forms.Addin.Tests" />
+    <InternalsVisibleTo Include="Xamarin.Ide" />
+    <InternalsVisibleTo Include="Xamarin.OSXEditor" />
+    <InternalsVisibleTo Include="Xamarin.Sketches" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MonoDevelop.Components\Shared\" />
+    <Folder Include="MonoDevelop.Ide.Projects.FileNesting\" />
+    <Folder Include="MonoDevelop.Components\Cairo\" />
+  <Import Project="$(ReferencesGtk)" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugGnome|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGnome|AnyCPU' " />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TemplateEngine.Edge" Version="$(NuGetVersionMicrosoftTemplateEngine)" PrivateAssets="runtime" />
+    <PackageReference Include="Microsoft.TemplateEngine.Orchestrator.RunnableProjects" Version="$(NuGetVersionMicrosoftTemplateEngine)" PrivateAssets="runtime" />
+    <PackageReference Include="Microsoft.VisualStudio.CodingConventions" Version="1.1.20191022.5" PrivateAssets="runtime" />
+    <PackageReference Include="YamlDotNet" Version="5.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <IncludeCopyLocal Include="ICSharpCode.NRefactory.Cecil.dll" />
+    <IncludeCopyLocal Include="ICSharpCode.NRefactory.CSharp.dll" />
+    <IncludeCopyLocal Include="ICSharpCode.NRefactory.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Abstractions.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Core.Contracts.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Core.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Edge.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Orchestrator.RunnableProjects.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Utils.dll" />
+    <IncludeCopyLocal Include="Mono.Addins.Gui.dll" />
+    <IncludeCopyLocal Include="Mono.Debugging.dll" />
+    <IncludeCopyLocal Include="Xwt.dll" />
+    <IncludeCopyLocal Include="Xwt.Gtk.dll" />
+    <IncludeCopyLocal Include="YamlDotNet.dll" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'DebugWin32' Or '$(Configuration)' == 'ReleaseWin32' ">
+    <Reference Include="System.Windows" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'DebugMac' Or '$(Configuration)' == 'ReleaseMac' ">
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.XamMac\Xwt.XamMac.csproj">
+      <Project>{B7C1673E-5124-4BE5-8D21-EC8B12F85B6B}</Project>
+      <Name>Xwt.XamMac</Name>
+    </ProjectReference>
+    <Reference Include="Xamarin.Mac">
+      <HintPath>..\..\..\external\Xamarin.Mac.dll</HintPath>
+    </Reference>
+    <IncludeCopyLocal Include="Xamarin.Mac.dll" />
+    <IncludeCopyLocal Include="Xwt.XamMac.dll" />
+<!--
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk\Xwt.Gtk.csproj">
+      <Project>{C3887A93-B2BD-4097-8E2F-3A063EFF32FD}</Project>
+      <Name>Xwt.Gtk</Name>
+    </ProjectReference>-->
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk\Xwt.Gtk3.csproj">
+      <Project>{3B25FD1F-CEBA-4450-8893-DC330FDB56A7}</Project>
+      <Name>Xwt.Gtk3</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Condition="$(HaveGtkSharp)">
+    <ProjectReference Include="..\MonoDevelop.GtkExtensions\MonoDevelop.GtkExtensions.csproj">
+      <Project>{288994D1-C7E1-4740-99AB-A52B572EBA8A}</Project>
+      <Name>MonoDevelop.GtkExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.GtkSharp\Xwt.GtkSharp.csproj">
+      <Project>{8F0B736F-8353-4A6C-B471-192D826BDD81}</Project>
+      <Name>Xwt.GtkSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.GuiGtk3\Mono.Addins.GuiGtk3.csproj">
+      <Project>{410A7DC9-E7DA-43E6-B592-93E2A344B660}</Project>
+      <Name>Mono.Addins.GuiGtk3</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Condition="!$(HaveGtkSharp)">
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk2\Xwt.Gtk2.csproj">
+      <Project>{FED3E127-B64A-4E57-8D2A-C8817C5D593A}</Project>
+      <Name>Xwt.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.Gui\Mono.Addins.Gui.csproj">
+      <Project>{FEC19BDA-4904-4005-8C09-68E82E8BEF6A}</Project>
+      <Name>Mono.Addins.Gui</Name>
+    </ProjectReference>
+
+    <EmbeddedResource Include="branding\**\*.png" LinkBase="branding" />
+    <EmbeddedResource Include="icons\**\*.png" LinkBase="icons" />
+    <EmbeddedResource Include="MonoDevelop.Components.Docking\icons\**\*.png" LinkBase="MonoDevelop.Components.Docking\icons" />
+    <EmbeddedResource Include="MonoDevelop.Components.MainToolbar\assets\**\*.png" LinkBase="MonoDevelop.Components.MainToolbar\assets" />
+    <EmbeddedResource Include="MonoDevelop.Components.MainToolbar\icons\**\*.png" LinkBase="MonoDevelop.Components.MainToolbar\icons" />
+
+    <EmbeddedResource Include="templates\images\**\*.png" LinkBase="templates\images" />
+    <EmbeddedResource Include="MonoDevelop.Ide.WelcomePage\icons\**\*.png" LinkBase="MonoDevelop.Ide.WelcomePage\icons\" />
+    <EmbeddedResource Include="resources\**\*.png" LinkBase="resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="templates\**\*.xml" LinkBase="templates" />
+    <EmbeddedResource Include="options\**\KeyBinding*.xml" LinkBase="options" />
+
+    <EmbeddedResource Include="ExtensionModel\MonoDevelop.Ide.addin.xml" />
+    <EmbeddedResource Include="ExtensionModel\Policies.addin.xml" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.Gui.Pads.ClassPad\ClassPadContextMenu.addin.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Gui.Pads.ProjectPad\ProjectPadContextMenu.addin.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Projects.FileNesting\FileNestingExtensionModel.addin.xml" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeFormatting\InvariantTextStylePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeFormatting\MonoTextStylePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeFormatting\VisualStudioTextStylePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeTemplates\MonoDevelop-templates.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\Apache2LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\GPL2LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\GPL3LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\LGPL2-1LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\LGPL3LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\MITX11LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\NewBSDLicencePolicy.xml" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ASP\Ashx.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ASP\AspNet.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ASP\Razor.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\CgShader\CgShader.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ChangeLog\ChangeLog.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\CSharp\C#.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\CSharp\CSharpComments.tmPreferences" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\FSharp\F#.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\FSharp\FSharpComments.tmPreferences" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\IL\IL.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\IL\ILComments.tmPreferences" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\Markdown\Markdown.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\T4\T4.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\Yaml\Yaml.sublime-syntax" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\themes\FallbackStyle.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\themes\HCDarkStyle.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\themes\HCLightStyle.json" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\bat\syntaxes\BatchFile.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\cpp\syntaxes\c.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\cpp\syntaxes\c++.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\diff\syntaxes\diff.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\html\syntaxes\html.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\java\syntaxes\java.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\less\syntaxes\LESS.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\objective-c\syntaxes\Objective-C.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\typescript\syntaxes\TypeScript.tmLanguage.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\typescript\syntaxes\TypeScriptReact.tmLanguage.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\xml\syntaxes\xml.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\xml\syntaxes\xsl.json" />
+    <Compile Include="MonoDevelop.Components.Commands\ICustomCommandTarget.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\EditorExperimentationServiceInternal.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\EditorWaitIndicator.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\ExtensionSelector.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\ObscuringTipManager.cs" />
+    <!--<Compile Include="MonoDevelop.Ide.Composition\PeekResultFactory.cs" />-->
+    <Compile Include="MonoDevelop.Ide.Editor.Highlighting\RoslynClassificationHighlighting.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\DynamicFileManager.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\IDynamicDocumentInfoProvider.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MiscellaneousFilesWorkspace.cs" />
+    <Compile Include="MonoDevelop.Ide\MimeTypeCatalog.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor\ITextEditorInitializationService.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor.Highlighting\RoslynClassificationHighlighting.cs" />
+    <Compile Include="MonoDevelop.Ide.BuildOutputView\Counters.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataServiceFactory.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReference.Snapshot.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReference.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.MetadataCache.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.RecoverableMetadataValueSource.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.MetadataReferenceCache.cs" />
+    <Compile Include="MonoDevelop.Components.MainToolbar\RoslynSearchCategory.ShimNavigateToSearchService.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor.Extension\EditorFormattingServiceTextEditorExtension.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopRuleSetManager.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.DocumentMap.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectData.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectDataMap.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.OpenDocumentsData.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectionData.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.Shims.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.MetadataReferenceHandler.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectSystemHandler.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Components\IInfoBarHost.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopAnalyzer.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\HostDiagnosticUpdateSource.cs" />
+    <Compile Include="MonoDevelop.Ide\ProductInformationProvider.cs" />
+    <Compile Include="MonoDevelop.Ide\RuntimeVersionInfo.cs" />
+    <Compile Include="MonoDevelop.Ide.Updater\UpdateInfo.cs" />
+    <Compile Include="MonoDevelop.Ide.Desktop\ThermalMonitor.cs" />
+    <Compile Include="MonoDevelop.Ide\PlatformThermalStatusEventArgs.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopFrameworkAssemblyPathResolver.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopDocumentNavigationService.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopSymbolNavigationService.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.FileKey.cs" />
+    <Compile Include="MonoDevelop.Ide.WelcomePage\IWelcomeWindowProvider.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\RoslynLogger.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\RoslynFileLogger.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentController.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerRole.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentModelRegistry.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerFactory.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerDescription.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileDescriptor.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerService.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\IFileViewer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ModelDescriptor.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Navigation\NavigationHistoryService.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\ProgressMonitorManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileDocumentController.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerExtension.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContainer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportDocumentControllerExtensionAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContentCollection.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContent.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentView.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentViewItem.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentViewContainer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentViewContent.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContainerMode.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\SdiWorkspaceWindow.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\DefaultWorkbench.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContainer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewItem.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContent.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShell.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkDocumentToolbar.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentToolbar.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportDocumentControllerBaseAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportDocumentControllerFactoryAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportFileDocumentControllerAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\FileOpenInformation.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentCloseEventArgs.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\RoslynDocumentExtension.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileDocumentControllerFactory.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellNotebook.cs" />
+    <Compile Include="MonoDevelop.Ide\IdeInstanceConnection.cs" />
+    <Compile Include="MonoDevelop.Ide\MonoDevelopOptions.cs" />
+    <Compile Include="MonoDevelop.Ide\AddinError.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\TextBufferFileModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\TextFileModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ModelRepresentation.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContainerTabs.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContainerSplit.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\ProjectReloadCapability.cs" />
+    <Compile Include="MonoDevelop.Ide.Extensions\StartupInfo.cs" />
+    <Compile Include="MonoDevelop.Ide\IdeServices.cs" />
+    <Compile Include="MonoDevelop.Ide.Tasks\TaskSeverity.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\VisualStudioMefHostServices.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects\NewSolutionRunConfigurationDialog.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\WorkspaceFilesCache.cs" />
+    <Compile Include="$(VSEditorApiDirectory)src\Editor\Text\Util\TextUIUtil\VacuousTextDataModel.cs" Link="Util\VacuousTextDataModel.cs" />
+    <Compile Include="$(VSEditorApiDirectory)src\Editor\Text\Util\TextUIUtil\VacuousTextViewModel.cs" Link="Util\VacuousTextViewModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor\EditorPreferences.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Dialogs\NewFolderDialog.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Pads.ProjectPad\IProjectPadNodeSelector.cs" />
+    <Compile Include="MonoDevelop.Components.PropertyGrid\IPropertyGrid.cs" />
+    <Compile Include="MonoDevelop.Ide.Extensions\FileNameEvalutor.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentToolbar.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.Gtk.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.Cocoa.cs" />
+    <Compile Include="MonoDevelop.Ide\IdeStartupTracker.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ContentCallbackRegistry.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest.Results\WebViewResult.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.Cocoa.Webview.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopExtensionManager.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopErrorLoggerService.cs" />
+    <Compile Include="MonoDevelop.Components.Commands\IdeCommandManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\WorkbenchStatusBar.cs" />
+    <Compile Include="MonoDevelop.Components.Docking\SplitterWidgetWrapper.cs" />
+    <Compile Include="MonoDevelop.Components.Docking\SplitterMacHostWidget.cs" />
+    <Compile Include="MonoDevelop.Components\Shared\GtkWorkarounds.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects.FileNesting\FileNestingService.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects.FileNesting\NestingRule.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects.FileNesting\NestingRulesProvider.cs" />
+    <Compile Include="MonoDevelop.Ide\TranslationCatalog.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\TypeSystemService_WorkspaceRequestRegistration.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Dialogs\NewConfigurationDialog.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AutoTestToolbar.cs" />
+    <Compile Include="MonoDevelop.Components\Cairo\CairoLibraryDefinition.cs" />
+    <Compile Include="MonoDevelop.Components\Cairo\CairoExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'DebugMac' OR '$(Configuration)' == 'ReleaseMac'">
+    <Compile Include="MonoDevelop.Components.Docking\MacSplitterWidget.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\VerticalAlignmentTextCell.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\DragEventTrapView.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NativeToolkitHelper.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSViewExtensions.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\KeyCodes.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NativeViewHelper.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSStackViewExtensions.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSLabel.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSLine.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDLinkMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDMenu.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDMenuHeaderItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDServicesMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDSubMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\Messaging.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\Util.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSViewContainer.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\GtkEmbed.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\WidgetWithNativeWindow.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\GtkMacInterop.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\GtkNSViewHost.cs" />
+    <InternalsVisibleTo Include="FSharpBinding" />
+    <InternalsVisibleTo Include="IdeUnitTests" />
+    <InternalsVisibleTo Include="MonoDevelop.AspNet" />
+    <InternalsVisibleTo Include="MonoDevelop.AspNetCore.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.AssemblyBrowser" />
+    <InternalsVisibleTo Include="MonoDevelop.CSharpBinding" />
+    <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.AspNet" />
+    <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.DotNetCore.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.FSharp.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.GtkCore" />
+    <InternalsVisibleTo Include="MonoDevelop.PackageManagement" />
+    <InternalsVisibleTo Include="MonoDevelop.Packaging" />
+    <InternalsVisibleTo Include="MonoDevelop.Packaging.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.Refactoring" />
+    <InternalsVisibleTo Include="MonoDevelop.Refactoring.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.SourceEditor2" />
+    <InternalsVisibleTo Include="MonoDevelop.TextEditor" />
+    <InternalsVisibleTo Include="MonoDevelop.TextEditor.Cocoa" />
+    <InternalsVisibleTo Include="MonoDevelop.TextEditor.Wpf" />
+    <InternalsVisibleTo Include="MonoDevelop.TextEditor.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.UnitTesting" />
+    <InternalsVisibleTo Include="MonoDevelop.VBNetBinding" />
+    <InternalsVisibleTo Include="MonoDevelop.Xml" />
+    <InternalsVisibleTo Include="MonoDevelop.Xml.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.UserInterfaceTesting" />
+    <InternalsVisibleTo Include="MonoDevelop.VersionControl" />
+    <InternalsVisibleTo Include="WebToolingAddin" />
+    <InternalsVisibleTo Include="TypeScriptAddin" />
+    <InternalsVisibleTo Include="WindowsPlatform" />
+    <InternalsVisibleTo Include="Xamarin.Forms.Addin" />
+    <InternalsVisibleTo Include="Xamarin.Forms.Addin.Tests" />
+    <InternalsVisibleTo Include="Xamarin.Ide" />
+    <InternalsVisibleTo Include="Xamarin.Sketches" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MonoDevelop.Components\Shared\" />
+    <Folder Include="MonoDevelop.Ide.Projects.FileNesting\" />
+    <Folder Include="MonoDevelop.Components\Cairo\" />
+  <Import Project="$(ReferencesGtk)" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugGnome|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGnome|AnyCPU' " />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\packages\JetBrains.SharpZipLib.Stripped.0.87.20170615.10\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TemplateEngine.Abstractions">
+      <HintPath>..\..\..\packages\Microsoft.TemplateEngine.Abstractions.1.0.0-beta3-20171117-314\lib\net45\Microsoft.TemplateEngine.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TemplateEngine.Core">
+      <HintPath>..\..\..\packages\Microsoft.TemplateEngine.Core.1.0.0-beta3-20171117-314\lib\net45\Microsoft.TemplateEngine.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TemplateEngine.Core.Contracts">
+      <HintPath>..\..\..\packages\Microsoft.TemplateEngine.Core.Contracts.1.0.0-beta3-20171117-314\lib\net45\Microsoft.TemplateEngine.Core.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TemplateEngine.Edge">
+      <HintPath>..\..\..\packages\Microsoft.TemplateEngine.Edge.1.0.0-beta3-20171117-314\lib\net45\Microsoft.TemplateEngine.Edge.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TemplateEngine.Orchestrator.RunnableProjects">
+      <HintPath>..\..\..\packages\Microsoft.TemplateEngine.Orchestrator.RunnableProjects.1.0.0-beta3-20171117-314\lib\net45\Microsoft.TemplateEngine.Orchestrator.RunnableProjects.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TemplateEngine.Utils">
+      <HintPath>..\..\..\packages\Microsoft.TemplateEngine.Utils.1.0.0-beta3-20171117-314\lib\net45\Microsoft.TemplateEngine.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Composition, Version=15.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\..\..\packages\Microsoft.VisualStudio.Composition.15.6.36\lib\net45\Microsoft.VisualStudio.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Threading, Version=15.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\..\..\packages\Microsoft.VisualStudio.Threading.15.6.46\lib\net45\Microsoft.VisualStudio.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Validation, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\..\..\packages\Microsoft.VisualStudio.Validation.15.3.32\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TemplateEngine.Edge" Version="$(NuGetVersionMicrosoftTemplateEngine)" PrivateAssets="runtime" />
+    <PackageReference Include="Microsoft.TemplateEngine.Orchestrator.RunnableProjects" Version="$(NuGetVersionMicrosoftTemplateEngine)" PrivateAssets="runtime" />
+    <PackageReference Include="Microsoft.VisualStudio.CodingConventions" Version="1.1.20191022.5" PrivateAssets="runtime" />
+    <PackageReference Include="YamlDotNet" Version="5.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <IncludeCopyLocal Include="ICSharpCode.NRefactory.Cecil.dll" />
+    <IncludeCopyLocal Include="ICSharpCode.NRefactory.CSharp.dll" />
+    <IncludeCopyLocal Include="ICSharpCode.NRefactory.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Abstractions.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Core.Contracts.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Core.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Edge.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Orchestrator.RunnableProjects.dll" />
+    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Utils.dll" />
+    <IncludeCopyLocal Include="Mono.Addins.Gui.dll" />
+    <IncludeCopyLocal Include="Mono.Debugging.dll" />
+    <IncludeCopyLocal Include="Xwt.dll" />
+    <IncludeCopyLocal Include="Xwt.Gtk.dll" />
+    <IncludeCopyLocal Include="YamlDotNet.dll" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'DebugWin32' Or '$(Configuration)' == 'ReleaseWin32' ">
+    <Reference Include="System.Windows" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup Condition="$(HaveGtkSharp)">
+    <ProjectReference Include="..\MonoDevelop.GtkExtensions\MonoDevelop.GtkExtensions.csproj">
+      <Project>{288994D1-C7E1-4740-99AB-A52B572EBA8A}</Project>
+      <Name>MonoDevelop.GtkExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.GtkSharp\Xwt.GtkSharp.csproj">
+      <Project>{8F0B736F-8353-4A6C-B471-192D826BDD81}</Project>
+      <Name>Xwt.GtkSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.GuiGtk3\Mono.Addins.GuiGtk3.csproj">
+      <Project>{410A7DC9-E7DA-43E6-B592-93E2A344B660}</Project>
+      <Name>Mono.Addins.GuiGtk3</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Condition="!$(HaveGtkSharp)">
+    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk2\Xwt.Gtk2.csproj">
+      <Project>{FED3E127-B64A-4E57-8D2A-C8817C5D593A}</Project>
+      <Name>Xwt.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.Gui\Mono.Addins.Gui.csproj">
+      <Project>{FEC19BDA-4904-4005-8C09-68E82E8BEF6A}</Project>
+      <Name>Mono.Addins.Gui</Name>
+    </ProjectReference>
+  </ItemGroup>
+    <ItemGroup>
+    <EmbeddedResource Include="branding\**\*.png" LinkBase="branding" />
+    <EmbeddedResource Include="icons\**\*.png" LinkBase="icons" />
+    <EmbeddedResource Include="MonoDevelop.Components.Docking\icons\**\*.png" LinkBase="MonoDevelop.Components.Docking\icons" />
+    <EmbeddedResource Include="MonoDevelop.Components.MainToolbar\assets\**\*.png" LinkBase="MonoDevelop.Components.MainToolbar\assets" />
+    <EmbeddedResource Include="MonoDevelop.Components.MainToolbar\icons\**\*.png" LinkBase="MonoDevelop.Components.MainToolbar\icons" />
+
+    <EmbeddedResource Include="templates\images\**\*.png" LinkBase="templates\images" />
+    <EmbeddedResource Include="MonoDevelop.Ide.WelcomePage\icons\**\*.png" LinkBase="MonoDevelop.Ide.WelcomePage\icons\" />
+    <EmbeddedResource Include="resources\**\*.png" LinkBase="resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="templates\**\*.xml" LinkBase="templates" />
+    <EmbeddedResource Include="options\**\KeyBinding*.xml" LinkBase="options" />
+
+    <EmbeddedResource Include="ExtensionModel\MonoDevelop.Ide.addin.xml" />
+    <EmbeddedResource Include="ExtensionModel\Policies.addin.xml" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.BuildOutputView\BuildOutputExtension.addin.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Gui.Pads.ProjectPad\ProjectPadContextMenu.addin.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Projects.FileNesting\FileNestingExtensionModel.addin.xml" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeFormatting\InvariantTextStylePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeFormatting\MonoTextStylePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeFormatting\VisualStudioTextStylePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.CodeTemplates\MonoDevelop-templates.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\Apache2LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\GPL2LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\GPL3LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\LGPL2-1LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\LGPL3LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\MITX11LicencePolicy.xml" />
+    <EmbeddedResource Include="MonoDevelop.Ide.StandardHeader\NewBSDLicencePolicy.xml" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ASP\Ashx.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ASP\AspNet.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ASP\Razor.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\CgShader\CgShader.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\ChangeLog\ChangeLog.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\CSharp\C#.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\CSharp\CSharpComments.tmPreferences" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\FSharp\F#.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\FSharp\FSharpComments.tmPreferences" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\IL\IL.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\IL\ILComments.tmPreferences" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\Markdown\Markdown.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\T4\T4.sublime-syntax" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\syntaxes\Yaml\Yaml.sublime-syntax" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\themes\FallbackStyle.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\themes\HCDarkStyle.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\themes\HCLightStyle.json" />
+
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\bat\syntaxes\BatchFile.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\cpp\syntaxes\c.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\cpp\syntaxes\c++.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\diff\syntaxes\diff.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\html\syntaxes\html.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\java\syntaxes\java.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\less\syntaxes\LESS.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\objective-c\syntaxes\Objective-C.tmLanguage" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\typescript\syntaxes\TypeScript.tmLanguage.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\typescript\syntaxes\TypeScriptReact.tmLanguage.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\xml\syntaxes\xml.json" />
+    <EmbeddedResource Include="MonoDevelop.Ide.Editor.Highlighting\VSCodeImport\xml\syntaxes\xsl.json" />
+
+
+    <Compile Include="MonoDevelop.Components.Commands\ICustomCommandTarget.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\EditorExperimentationServiceInternal.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\EditorWaitIndicator.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\ExtensionSelector.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\ObscuringTipManager.cs" />
+    <!--<Compile Include="MonoDevelop.Ide.Composition\PeekResultFactory.cs" />-->
+    <Compile Include="MonoDevelop.Ide.Editor.Highlighting\RoslynClassificationHighlighting.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\DynamicFileManager.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\IDynamicDocumentInfoProvider.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MiscellaneousFilesWorkspace.cs" />
+    <Compile Include="MonoDevelop.Ide\MimeTypeCatalog.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor\ITextEditorInitializationService.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor.Highlighting\RoslynClassificationHighlighting.cs" />
+    <Compile Include="MonoDevelop.Ide.BuildOutputView\Counters.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataServiceFactory.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReference.Snapshot.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReference.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.MetadataCache.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.RecoverableMetadataValueSource.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.MetadataReferenceCache.cs" />
+    <Compile Include="MonoDevelop.Components.MainToolbar\RoslynSearchCategory.ShimNavigateToSearchService.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor.Extension\EditorFormattingServiceTextEditorExtension.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopRuleSetManager.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.DocumentMap.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectData.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectDataMap.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.OpenDocumentsData.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectionData.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.Shims.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.MetadataReferenceHandler.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopWorkspace.ProjectSystemHandler.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Components\IInfoBarHost.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopAnalyzer.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\HostDiagnosticUpdateSource.cs" />
+    <Compile Include="MonoDevelop.Ide\ProductInformationProvider.cs" />
+    <Compile Include="MonoDevelop.Ide\RuntimeVersionInfo.cs" />
+    <Compile Include="MonoDevelop.Ide.Updater\UpdateInfo.cs" />
+    <Compile Include="MonoDevelop.Ide.Desktop\ThermalMonitor.cs" />
+    <Compile Include="MonoDevelop.Ide\PlatformThermalStatusEventArgs.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopFrameworkAssemblyPathResolver.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopDocumentNavigationService.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopSymbolNavigationService.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\MonoDevelopMetadataReferenceManager.FileKey.cs" />
+    <Compile Include="MonoDevelop.Ide.WelcomePage\IWelcomeWindowProvider.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\RoslynLogger.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\RoslynFileLogger.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentController.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerRole.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentModelRegistry.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerFactory.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerDescription.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileDescriptor.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerService.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\IFileViewer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ModelDescriptor.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Navigation\NavigationHistoryService.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\ProgressMonitorManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileDocumentController.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentControllerExtension.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContainer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportDocumentControllerExtensionAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContentCollection.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContent.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentView.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentViewItem.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentViewContainer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentViewContent.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentViewContainerMode.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\SdiWorkspaceWindow.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\DefaultWorkbench.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContainer.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewItem.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContent.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShell.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkDocumentToolbar.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellDocumentToolbar.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportDocumentControllerBaseAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportDocumentControllerFactoryAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ExportFileDocumentControllerAttribute.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\FileOpenInformation.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentCloseEventArgs.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\RoslynDocumentExtension.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\FileDocumentControllerFactory.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\IShellNotebook.cs" />
+    <Compile Include="MonoDevelop.Ide\IdeInstanceConnection.cs" />
+    <Compile Include="MonoDevelop.Ide\MonoDevelopOptions.cs" />
+    <Compile Include="MonoDevelop.Ide\AddinError.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\TextBufferFileModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\TextFileModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ModelRepresentation.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContainerTabs.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Shell\GtkShellDocumentViewContainerSplit.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\ProjectReloadCapability.cs" />
+    <Compile Include="MonoDevelop.Ide.Extensions\StartupInfo.cs" />
+    <Compile Include="MonoDevelop.Ide\IdeServices.cs" />
+    <Compile Include="MonoDevelop.Ide.Tasks\TaskSeverity.cs" />
+    <Compile Include="MonoDevelop.Ide.Composition\VisualStudioMefHostServices.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects\NewSolutionRunConfigurationDialog.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\WorkspaceFilesCache.cs" />
+    <Compile Include="$(VSEditorApiDirectory)src\Editor\Text\Util\TextUIUtil\VacuousTextDataModel.cs" Link="Util\VacuousTextDataModel.cs" />
+    <Compile Include="$(VSEditorApiDirectory)src\Editor\Text\Util\TextUIUtil\VacuousTextViewModel.cs" Link="Util\VacuousTextViewModel.cs" />
+    <Compile Include="MonoDevelop.Ide.Editor\EditorPreferences.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Dialogs\NewFolderDialog.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Pads.ProjectPad\IProjectPadNodeSelector.cs" />
+    <Compile Include="MonoDevelop.Components.PropertyGrid\IPropertyGrid.cs" />
+    <Compile Include="MonoDevelop.Ide.Extensions\FileNameEvalutor.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\DocumentToolbar.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.Gtk.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.Cocoa.cs" />
+    <Compile Include="MonoDevelop.Ide\IdeStartupTracker.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Documents\ContentCallbackRegistry.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest.Results\WebViewResult.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AppQueryRunner.Cocoa.Webview.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopExtensionManager.cs" />
+    <Compile Include="MonoDevelop.Ide.RoslynServices\MonoDevelopErrorLoggerService.cs" />
+    <Compile Include="MonoDevelop.Components.Commands\IdeCommandManager.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui\WorkbenchStatusBar.cs" />
+    <Compile Include="MonoDevelop.Components.Docking\SplitterWidgetWrapper.cs" />
+    <Compile Include="MonoDevelop.Components.Docking\SplitterMacHostWidget.cs" />
+    <Compile Include="MonoDevelop.Components\Shared\GtkWorkarounds.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects.FileNesting\FileNestingService.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects.FileNesting\NestingRule.cs" />
+    <Compile Include="MonoDevelop.Ide.Projects.FileNesting\NestingRulesProvider.cs" />
+    <Compile Include="MonoDevelop.Ide\TranslationCatalog.cs" />
+    <Compile Include="MonoDevelop.Ide.TypeSystem\TypeSystemService_WorkspaceRequestRegistration.cs" />
+    <Compile Include="MonoDevelop.Ide.Gui.Dialogs\NewConfigurationDialog.cs" />
+    <Compile Include="MonoDevelop.Components.AutoTest\AutoTestToolbar.cs" />
+    <Compile Include="MonoDevelop.Components\Cairo\CairoLibraryDefinition.cs" />
+    <Compile Include="MonoDevelop.Components\Cairo\CairoExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'DebugMac' OR '$(Configuration)' == 'ReleaseMac'">
+    <Compile Include="MonoDevelop.Components.Docking\MacSplitterWidget.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\VerticalAlignmentTextCell.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\DragEventTrapView.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NativeToolkitHelper.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSViewExtensions.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\KeyCodes.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NativeViewHelper.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSStackViewExtensions.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSLabel.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSLine.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDLinkMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDMenu.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDMenuHeaderItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDServicesMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\MDSubMenuItem.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\Messaging.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\Util.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\NSViewContainer.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\GtkEmbed.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\WidgetWithNativeWindow.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\GtkMacInterop.cs" />
+    <Compile Include="MonoDevelop.Components\Mac\GtkNSViewHost.cs" />
+    <InternalsVisibleTo Include="IdeUnitTests" />
+    <InternalsVisibleTo Include="MonoDevelop.AspNetCore.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.CSharpBinding" />
+    <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.DotNetCore.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.FSharp.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.PackageManagement" />
+    <InternalsVisibleTo Include="MonoDevelop.TextEditor" />
+    <InternalsVisibleTo Include="MonoDevelop.TextEditor.Cocoa" />
+    <InternalsVisibleTo Include="MonoDevelop.TextEditor.Wpf" />
+    <InternalsVisibleTo Include="MonoDevelop.Xml" />
+    <InternalsVisibleTo Include="MonoDevelop.Xml.Tests" />
+    <InternalsVisibleTo Include="MonoDevelop.UserInterfaceTesting" />
+    <InternalsVisibleTo Include="MonoDevelop.VersionControl" />
     <InternalsVisibleTo Include="TypeScriptAddin" />
     <InternalsVisibleTo Include="WindowsPlatform" />
     <InternalsVisibleTo Include="Xamarin.Forms.Addin.Tests" />
