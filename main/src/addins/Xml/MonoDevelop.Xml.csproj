@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -20,6 +21,15 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
+<<<<<<< HEAD
+=======
+    <Reference Include="Mono.Posix" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+>>>>>>> 1db6b06f91 (Remove lingering glade-sharp references)
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +162,28 @@
     <Compile Include="Editor\XmlCommands.cs" />
     <Compile Include="Editor\EncodedStringWriter.cs" />
     <Compile Include="Editor\XmlExpandSelectionHandler.cs" />
+    <Compile Include="Editor\LegacyEditorSupportProvider.cs" />
+    <!--
+    This needs to be ported to the new editor, and currently makes use of many deprecated APIs.
+    -->
+    <NoWarn>$(NoWarn);618;612</NoWarn>
+    <Reference Include="Mono.Posix" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference Include="..\MonoDevelop.TextEditor\MonoDevelop.TextEditor\MonoDevelop.TextEditor.csproj">
+      <Project>{3F5B5BDA-69D5-441A-8142-AA25C998A997}</Project>
+      <Name>MonoDevelop.TextEditor</Name>
+    </ProjectReference>
+    <EmbeddedResource Include="icons\prefs-xml-16~contrast.png" />
+    <EmbeddedResource Include="icons\prefs-xml-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\prefs-xml-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\prefs-xml-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\prefs-xml-16~sel.png" />
+    <EmbeddedResource Include="icons\prefs-xml-16~sel%402x.png" />
+
     <Compile Include="Editor\LegacyEditorSupportProvider.cs" />
   </ItemGroup>
   <ItemGroup>
