@@ -28,11 +28,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-#if DD_Mac_TODO
-using Foundation;
-#endif
-using GLib;
+
 using Gtk;
 
 using Mono.Debugging.Client;
@@ -171,7 +167,7 @@ widget ""*.exception_help_link_label"" style ""exception-help-link-label""
 		void ExceptionHelpLinkLabel_Clicked (object sender, EventArgs e) => IdeServices.DesktopService.ShowUrl (exceptionHelpLink);
 
 		void EventBoxLink_KeyPressEvent (object o, KeyPressEventArgs args)
-		{ 
+		{
 			if (args.Event.Key == Gdk.Key.KP_Enter || args.Event.Key == Gdk.Key.KP_Space)
 				IdeServices.DesktopService.ShowUrl (exceptionHelpLink);
 		}
@@ -198,7 +194,7 @@ widget ""*.exception_help_link_label"" style ""exception-help-link-label""
 				if (Platform.IsMac) {
 					macExceptionValueTreeView = controller.GetMacControl (ObjectValueTreeViewFlags.ObjectValuePadFlags);
 					macExceptionValueTreeView.UIElementName = "ExceptionCaughtDialog";
-				} else 
+				} else
 #endif
 				{
 					exceptionValueTreeView = controller.GetGtkControl (ObjectValueTreeViewFlags.ExceptionCaughtFlags);
@@ -240,7 +236,7 @@ widget ""*.exception_help_link_label"" style ""exception-help-link-label""
 				var host = new GtkNSViewHost (scrolled);
 				host.ShowAll ();
 				scrolledWidget = host;
-			} else 
+			} else
 #endif
 			{
 				exceptionValueTreeView.ModifyBase (StateType.Normal, Styles.ExceptionCaughtDialog.ValueTreeBackgroundColor.ToGdkColor ());
@@ -283,7 +279,7 @@ widget ""*.exception_help_link_label"" style ""exception-help-link-label""
 			return vbox;
 		}
 
-		static void StackFrameLayout (CellLayout layout, CellRenderer cr, TreeModel model, TreeIter iter)
+		static void StackFrameLayout (CellLayout layout, CellRenderer cr, ITreeModel model, TreeIter iter)
 		{
 			var frame = (ExceptionStackFrame)model.GetValue (iter, (int)ModelColumn.StackFrame);
 			var renderer = (StackFrameCellRenderer)cr;
