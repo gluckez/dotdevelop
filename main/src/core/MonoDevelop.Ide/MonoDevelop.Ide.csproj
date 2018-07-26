@@ -1,6 +1,6 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\MonoDevelop.props" />
-  <Import Project="$(ReferencesGtk)" />
+  <Import Project="$(ReferencesRoslyn)" />
   <Import Project="$(ReferencesVSEditor)" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,6 +10,12 @@
     <OutputPath>..\..\..\build\bin</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>LINUX</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>LINUX</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMac|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMac|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugWin32|AnyCPU' " />
@@ -17,11 +23,21 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugGnome|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGnome|AnyCPU' " />
   <ItemGroup>
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gdk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>glib-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\..\packages\JetBrains.SharpZipLib.Stripped.0.87.20170615.10\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -53,7 +69,6 @@
       <HintPath>..\..\..\packages\Microsoft.VisualStudio.Validation.15.3.32\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Mono.Cairo" />
     <Reference Include="Mono.Posix" />
     <Reference Include="monodoc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <Reference Include="System" />
@@ -89,45 +104,16 @@
       <HintPath>$(MSBuildToolsPath)\Microsoft.Build.Utilities.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.TemplateEngine.Edge" Version="$(NuGetVersionMicrosoftTemplateEngine)" PrivateAssets="runtime" />
-    <PackageReference Include="Microsoft.TemplateEngine.Orchestrator.RunnableProjects" Version="$(NuGetVersionMicrosoftTemplateEngine)" PrivateAssets="runtime" />
-    <PackageReference Include="Microsoft.VisualStudio.CodingConventions" Version="1.1.20191022.5" PrivateAssets="runtime" />
-    <PackageReference Include="YamlDotNet" Version="5.4.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <IncludeCopyLocal Include="ICSharpCode.NRefactory.Cecil.dll" />
-    <IncludeCopyLocal Include="ICSharpCode.NRefactory.CSharp.dll" />
-    <IncludeCopyLocal Include="ICSharpCode.NRefactory.dll" />
-    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Abstractions.dll" />
-    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Core.Contracts.dll" />
-    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Core.dll" />
-    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Edge.dll" />
-    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Orchestrator.RunnableProjects.dll" />
-    <IncludeCopyLocal Include="Microsoft.TemplateEngine.Utils.dll" />
-    <IncludeCopyLocal Include="Mono.Addins.Gui.dll" />
-    <IncludeCopyLocal Include="Mono.Debugging.dll" />
-    <IncludeCopyLocal Include="Xwt.dll" />
-    <IncludeCopyLocal Include="Xwt.Gtk.dll" />
-    <IncludeCopyLocal Include="YamlDotNet.dll" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)' == 'DebugWin32' Or '$(Configuration)' == 'ReleaseWin32' ">
-    <Reference Include="System.Windows" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)' == 'DebugMac' Or '$(Configuration)' == 'ReleaseMac' ">
-    <ProjectReference Include="..\..\..\external\xwt\Xwt.XamMac\Xwt.XamMac.csproj">
-      <Project>{B7C1673E-5124-4BE5-8D21-EC8B12F85B6B}</Project>
-      <Name>Xwt.XamMac</Name>
-    </ProjectReference>
-    <Reference Include="Xamarin.Mac">
-      <HintPath>..\..\..\external\Xamarin.Mac.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.CodingConventions">
+      <HintPath>..\..\..\build\bin\Microsoft.VisualStudio.CodingConventions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <IncludeCopyLocal Include="Xamarin.Mac.dll" />
-    <IncludeCopyLocal Include="Xwt.XamMac.dll" />
+    <Reference Include="gio-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gio-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="cairo-sharp, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoDevelop.Core\MonoDevelop.Core.csproj">
@@ -166,6 +152,14 @@
       <Name>Mono.Addins.Setup</Name>
       <Private>False</Private>
     </ProjectReference>
+<!--    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.Gui\Mono.Addins.Gui.csproj">
+      <Project>{FEC19BDA-4904-4005-8C09-68E82E8BEF6A}</Project>
+      <Name>Mono.Addins.Gui</Name>
+    </ProjectReference>-->
+    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.GuiGtk3\Mono.Addins.GuiGtk3.csproj">
+      <Project>{410A7DC9-E7DA-43E6-B592-93E2A344B660}</Project>
+      <Name>Mono.Addins.GuiGtk3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\external\debugger-libs\Mono.Debugging\Mono.Debugging.csproj">
       <Project>{90C99ADB-7D4B-4EB4-98C2-40BD1B14C7D2}</Project>
       <Name>Mono.Debugging</Name>
@@ -173,30 +167,6 @@
     <ProjectReference Include="..\..\..\external\nrefactory\ICSharpCode.NRefactory.Cecil\ICSharpCode.NRefactory.Cecil.csproj">
       <Project>{2B8F4F83-C2B3-4E84-A27B-8DEE1BE0E006}</Project>
       <Name>ICSharpCode.NRefactory.Cecil</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup Condition="$(HaveGtkSharp)">
-    <ProjectReference Include="..\MonoDevelop.GtkExtensions\MonoDevelop.GtkExtensions.csproj">
-      <Project>{288994D1-C7E1-4740-99AB-A52B572EBA8A}</Project>
-      <Name>MonoDevelop.GtkExtensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\external\xwt\Xwt.GtkSharp\Xwt.GtkSharp.csproj">
-      <Project>{8F0B736F-8353-4A6C-B471-192D826BDD81}</Project>
-      <Name>Xwt.GtkSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.GuiGtk3\Mono.Addins.GuiGtk3.csproj">
-      <Project>{410A7DC9-E7DA-43E6-B592-93E2A344B660}</Project>
-      <Name>Mono.Addins.GuiGtk3</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup Condition="!$(HaveGtkSharp)">
-    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk2\Xwt.Gtk2.csproj">
-      <Project>{FED3E127-B64A-4E57-8D2A-C8817C5D593A}</Project>
-      <Name>Xwt.Gtk2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.Gui\Mono.Addins.Gui.csproj">
-      <Project>{FEC19BDA-4904-4005-8C09-68E82E8BEF6A}</Project>
-      <Name>Mono.Addins.Gui</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

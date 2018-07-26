@@ -34,9 +34,6 @@ using MonoDevelop.Core;
 using MonoDevelop.Ide.Gui.Dialogs;
 using MonoDevelop.Components;
 using Gtk;
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Projects.OptionPanels
 {
@@ -114,7 +111,7 @@ namespace MonoDevelop.Ide.Projects.OptionPanels
 			}
 		}
 
-		void OnSetConfigurationsData (Gtk.TreeViewColumn treeColumn, Gtk.CellRenderer cell, TreeModel model, Gtk.TreeIter iter)
+		void OnSetConfigurationsData (Gtk.TreeViewColumn treeColumn, Gtk.CellRenderer cell, Gtk.ITreeModel model, Gtk.TreeIter iter)
 		{
 			var item = (SolutionItem) store.GetValue (iter, ProjectCol);
 			ConfigurationData data = parentDialog.ConfigurationData.FindConfigurationData (item);

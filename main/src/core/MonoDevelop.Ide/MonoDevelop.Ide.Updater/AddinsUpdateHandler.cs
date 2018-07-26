@@ -31,7 +31,7 @@ using MonoDevelop.Core.ProgressMonitoring;
 #if GTK3
 using Mono.Addins.GuiGtk3;
 #else
-using Mono.Addins.Gui;
+using Mono.Addins.GuiGtk3;
 #endif
 using MonoDevelop.Ide.ProgressMonitoring;
 using Mono.Addins;

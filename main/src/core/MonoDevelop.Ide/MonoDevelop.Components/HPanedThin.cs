@@ -25,12 +25,6 @@
 // THE SOFTWARE.
 using MonoDevelop.Ide.Gui;
 using System.Collections.Generic;
-using System;
-
-#if MAC
-using AppKit;
-using MonoDevelop.Components.Mac;
-#endif
 
 namespace MonoDevelop.Components
 {
@@ -81,20 +75,20 @@ namespace MonoDevelop.Components
 				callback (handle);
 		}
 
-		protected override bool OnExposeEvent (Gdk.EventExpose evnt)
-		{
-			base.OnExposeEvent (evnt);
-
-			if (Child1 != null && Child1.Visible && Child2 != null && Child2.Visible) {
-				var gc = new Gdk.GC (evnt.Window);
-				gc.RgbFgColor = Styles.ThinSplitterColor.ToGdkColor ();
-				var x = Child1.Allocation.X + Child1.Allocation.Width;
-				evnt.Window.DrawLine (gc, x, Allocation.Y, x, Allocation.Y + Allocation.Height);
-				gc.Dispose ();
-			}
-
-			return true;
-		}
+//		protected override bool OnExposeEvent (Gdk.EventExpose evnt)
+//		{
+//			base.OnExposeEvent (evnt);
+//
+//			if (Child1 != null && Child1.Visible && Child2 != null && Child2.Visible) {
+//				var gc = new Gdk.GC (evnt.Window);
+//				gc.RgbFgColor = Styles.ThinSplitterColor.ToGdkColor ();
+//				var x = Child1.Allocation.X + Child1.Allocation.Width;
+//				evnt.Window.DrawLine (gc, x, Allocation.Y, x, Allocation.Y + Allocation.Height);
+//				gc.Dispose ();
+//			}
+//
+//			return true;
+//		}
 	}
 
 	abstract class CustomPanedHandle : Gtk.EventBox
@@ -289,6 +283,10 @@ namespace MonoDevelop.Components
 			GrabAreaSize = HandleGrabWidth;
 			Events |= Gdk.EventMask.EnterNotifyMask | Gdk.EventMask.LeaveNotifyMask | Gdk.EventMask.PointerMotionMask | Gdk.EventMask.ButtonPressMask | Gdk.EventMask.ButtonReleaseMask;
 
+//			parent.SizeRequested += delegate {
+//				SizeRequest ();
+//			};
+			parent.SizeAllocated += HandleSizeAllocated;
 			HandleWidget = null;
 		}
 

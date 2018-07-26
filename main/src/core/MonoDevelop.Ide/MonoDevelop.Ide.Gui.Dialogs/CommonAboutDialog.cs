@@ -70,8 +70,8 @@ Console.WriteLine( "oeDEBUG :: CommonAboutDialog ctor" );
 			Title = string.Format (GettextCatalog.GetString ("About {0}"), BrandingService.ApplicationLongName);
 			TransientFor = IdeApp.Workbench.RootWindow; // oe REVERTED from monodevelop-7.8
 
-			AllowGrow = false;
-			HasSeparator = false;
+			this.Resizable = true;
+//			HasSeparator = false;
 			BorderWidth = 0;
 
 			var notebook = new Notebook ();
@@ -80,8 +80,7 @@ Console.WriteLine( "oeDEBUG :: CommonAboutDialog ctor" );
 			notebook.BorderWidth = 0;
 			notebook.AppendPage (new AboutMonoDevelopTabPage (), new Label (Title));
 			notebook.AppendPage (new VersionInformationTabPage (), new Label (GettextCatalog.GetString ("Version Information")));
-			VBox.PackStart (notebook, true, true, 0);
-
+			ContentArea.PackStart (notebook, true, true, 0);
 			var copyButton = new Button () { Label = GettextCatalog.GetString ("Copy Information") };
 			copyButton.Clicked += (sender, e) => CopyBufferToClipboard ();
 			ActionArea.PackEnd (copyButton, false, false, 0);

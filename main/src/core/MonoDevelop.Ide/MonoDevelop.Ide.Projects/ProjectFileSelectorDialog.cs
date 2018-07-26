@@ -33,9 +33,6 @@ using MonoDevelop.Core;
 using MonoDevelop.Projects;
 using MonoDevelop.Components.Extensions;
 using MonoDevelop.Components;
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Projects
 {
@@ -188,7 +185,7 @@ namespace MonoDevelop.Ide.Projects
 			return value;
 		}
 
-		void PixDataFunc (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter)
+		void PixDataFunc (TreeViewColumn tree_column, CellRenderer cell, ITreeModel tree_model, TreeIter iter)
 		{
 			var pixRenderer = (CellRendererImage) cell;
 			string dirname = (string) tree_model.GetValue (iter, 0);
@@ -204,7 +201,7 @@ namespace MonoDevelop.Ide.Projects
 			pixRenderer.Image = dirClosedBuf;
 		}
 
-		void TxtDataFunc (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter)
+		void TxtDataFunc (TreeViewColumn tree_column, CellRenderer cell, ITreeModel tree_model, TreeIter iter)
 		{
 			CellRendererText txtRenderer = (CellRendererText) cell;
 			string dirname = (string) tree_model.GetValue (iter, 0);
@@ -217,7 +214,7 @@ namespace MonoDevelop.Ide.Projects
 			txtRenderer.Text = lastSlash < 0? dirname : dirname.Substring (lastSlash + 1);
 		}
 
-		void TxtFileDataFunc (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter)
+		void TxtFileDataFunc (TreeViewColumn tree_column, CellRenderer cell, ITreeModel tree_model, TreeIter iter)
 		{
 			CellRendererText txtRenderer = (CellRendererText) cell;
 			ProjectFile pf = (ProjectFile)tree_model.GetValue (iter, 0);

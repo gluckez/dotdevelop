@@ -1,21 +1,21 @@
-// 
+//
 // ProgressDialog.cs
-//  
+//
 // Author:
 //       Lluis Sanchez Gual <lluis@novell.com>
-// 
+//
 // Copyright (c) 2010 Novell, Inc (http://www.novell.com)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,16 +30,13 @@ using Gtk;
 using MonoDevelop.Components;
 using MonoDevelop.Core;
 using System.Threading;
-#if MAC
-using AppKit;
-#endif
 
 namespace MonoDevelop.Ide.Gui.Dialogs
 {
 	public partial class ProgressDialog : Gtk.Dialog
 	{
 		Gtk.TextBuffer buffer;
-		
+
 		TextTag tag;
 		TextTag bold;
 		int ident = 0;
@@ -51,49 +48,50 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 		public ProgressDialog (bool allowCancel, bool showDetails): this (null, allowCancel, showDetails)
 		{
 		}
-		
+
 		public ProgressDialog (MonoDevelop.Components.Window parent, bool allowCancel, bool showDetails)
 		{
 			MonoDevelop.Components.IdeTheme.ApplyTheme (this);
 			this.Build ();
 			this.Title = BrandingService.ApplicationName;
-			this.componentsWindowParent = parent; 
+//			HasSeparator = false;
+			this.componentsWindowParent = parent;
 			HasSeparator = false;
 			ActionArea.Hide ();
 			DefaultHeight = 5;
-			
+
 			btnCancel.Visible = allowCancel;
 
 			expander.Visible = showDetails;
-			
+
 			buffer = detailsTextView.Buffer;
 			detailsTextView.Editable = false;
-			
+
 			bold = new TextTag ("bold");
 			bold.Weight = Pango.Weight.Bold;
 			buffer.TagTable.Add (bold);
-			
+
 			tag = new TextTag ("0");
 			tag.Indent = 10;
 			buffer.TagTable.Add (tag);
 			tags.Add (tag);
 		}
-		
+
 		public CancellationTokenSource CancellationTokenSource {
 			get { return cancellationTokenSource; }
 			set { cancellationTokenSource = value; }
 		}
-		
+
 		public string Message {
 			get { return label.Text; }
 			set { label.Text = value; }
 		}
-		
+
 		public double Progress {
 			get { return progressBar.Fraction; }
 			set { progressBar.Fraction = value; }
 		}
-		
+
 		public void BeginTask (string name)
 		{
 			if (name != null && name.Length > 0) {
@@ -110,7 +108,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				detailsTextView.ScrollMarkOnscreen (buffer.InsertMark);
 			}
 		}
-		
+
 		public void EndTask ()
 		{
 			if (indents.Count > 0) {
@@ -121,20 +119,20 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				}
 			}
 		}
-		
+
 		public void WriteText (string text)
 		{
 			AddText (text);
 			if (text.EndsWith ("\n"))
 				detailsTextView.ScrollMarkOnscreen (buffer.InsertMark);
 		}
-		
+
 		void AddText (string s)
 		{
 			TextIter it = buffer.EndIter;
 			buffer.InsertWithTags (ref it, s, tag);
 		}
-		
+
 		void Indent ()
 		{
 			ident++;
@@ -147,7 +145,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				tag = (TextTag) tags [ident];
 			}
 		}
-		
+
 		void Unindent ()
 		{
 			if (ident >= 0) {
@@ -155,11 +153,11 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				tag = (TextTag) tags [ident];
 			}
 		}
-		
+
 		public void ShowDone (bool warnings, bool errors)
 		{
 			progressBar.Fraction = 1;
-			
+
 			btnCancel.Hide ();
 			btnClose.Show ();
 
@@ -170,13 +168,13 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			else
 				label.Text = GettextCatalog.GetString ("Operation successfully completed.");
 		}
-		
+
 		protected void OnBtnCancelClicked (object sender, EventArgs e)
 		{
 			if (cancellationTokenSource != null)
 				cancellationTokenSource.Cancel ();
 		}
-		
+
 		bool UpdateSize ()
 		{
 			int w, h;
@@ -184,12 +182,12 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			Resize (w, 1);
 			return false;
 		}
-		
+
 		protected virtual void OnExpander1Activated (object sender, System.EventArgs e)
 		{
 			GLib.Timeout.Add (100, new GLib.TimeoutHandler (UpdateSize));
 		}
-		
+
 		protected virtual void OnBtnCloseClicked (object sender, System.EventArgs e)
 		{
 			Destroy ();

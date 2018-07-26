@@ -37,10 +37,6 @@ using MonoDevelop.Ide.Gui;
 using MonoDevelop.Core;
 using System.Threading.Tasks;
 using MonoDevelop.Ide.Projects;
-using System.Collections.Generic;
-#if GTK3
- using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Projects
 {
@@ -109,7 +105,7 @@ namespace MonoDevelop.Ide.Projects
 				MoveToNextPage ().Ignore();
 		}
 
-		void SetTemplateCategoryCellData (TreeViewColumn col, CellRenderer renderer, TreeModel model, TreeIter it)
+		void SetTemplateCategoryCellData (TreeViewColumn col, CellRenderer renderer, ITreeModel model, TreeIter it)
 		{
 			var categoryTextRenderer = (GtkTemplateCategoryCellRenderer)renderer;
 			categoryTextRenderer.Category = (TemplateCategory)model.GetValue (it, TemplateCategoryColumn);
@@ -117,7 +113,7 @@ namespace MonoDevelop.Ide.Projects
 			categoryTextRenderer.CategoryName = model.GetValue (it, TemplateCategoryNameColumn) as string;
 		}
 
-		static void SetTemplateTextCellData (TreeViewColumn col, CellRenderer renderer, TreeModel model, TreeIter it)
+		static void SetTemplateTextCellData (TreeViewColumn col, CellRenderer renderer, ITreeModel model, TreeIter it)
 		{
 			var template = (SolutionTemplate)model.GetValue (it, TemplateColumn);
 			var templateTextRenderer = (GtkTemplateCellRenderer)renderer;
@@ -126,7 +122,7 @@ namespace MonoDevelop.Ide.Projects
 			templateTextRenderer.TemplateCategory = model.GetValue (it, TemplateOwnCategoryNameColumn) as string;
 		}
 
-		static void SetLanguageCellData (TreeViewColumn col, CellRenderer renderer, TreeModel model, TreeIter it)
+		static void SetLanguageCellData (TreeViewColumn col, CellRenderer renderer, ITreeModel model, TreeIter it)
 		{
 			var template = (SolutionTemplate)model.GetValue (it, TemplateColumn);
 			var language = (string)model.GetValue (it, TemplateA11yLanguageNameColumn);
@@ -223,7 +219,7 @@ namespace MonoDevelop.Ide.Projects
 			}
 		}
 
-		bool TemplateCategoriesTreeViewSelection (TreeSelection selection, TreeModel model, TreePath path, bool path_currently_selected)
+		bool TemplateCategoriesTreeViewSelection (TreeSelection selection, ITreeModel model, TreePath path, bool path_currently_selected)
 		{
 			TreeIter iter;
 			if (model.GetIter (out iter, path)) {
@@ -236,7 +232,7 @@ namespace MonoDevelop.Ide.Projects
 			return true;
 		}
 
-		bool TemplatesTreeViewSelection (TreeSelection selection, TreeModel model, TreePath path, bool path_currently_selected)
+		bool TemplatesTreeViewSelection (TreeSelection selection, ITreeModel model, TreePath path, bool path_currently_selected)
 		{
 			TreeIter iter;
 			if (model.GetIter (out iter, path)) {
@@ -678,7 +674,7 @@ namespace MonoDevelop.Ide.Projects
 
 		bool IsSolutionTemplateOnActivatedRow (TreeView treeView, RowActivatedArgs args)
 		{
-			TreeModel model = treeView.Model;
+			ITreeModel model = treeView.Model;
 			TreeIter iter;
 			if (model.GetIter (out iter, args.Path)) {
 				var template = model.GetValue (iter, TemplateColumn) as SolutionTemplate;

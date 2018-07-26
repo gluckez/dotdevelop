@@ -44,42 +44,42 @@ namespace MonoDevelop.Ide.Gui.Components
 			public TreeBuilder (ExtensibleTreeView pad, Gtk.TreeIter iter): base (pad, iter)
 			{
 			}
-			
+
 			public override void EnsureFilled ()
 			{
 				if (!(bool) store.GetValue (currentIter, ExtensibleTreeView.FilledColumn))
 					FillNode ();
 			}
-			
+
 			public bool FillNode ()
 			{
 				store.SetValue (currentIter, ExtensibleTreeView.FilledColumn, true);
-				
+
 				Gtk.TreeIter child;
 				if (store.IterChildren (out child, currentIter))
 					store.Remove (ref child);
-				
+
 				NodeBuilder[] chain = (NodeBuilder[]) store.GetValue (currentIter, ExtensibleTreeView.BuilderChainColumn);
 				object dataObject = store.GetValue (currentIter, ExtensibleTreeView.DataItemColumn);
 				CreateChildren (chain, dataObject);
 				return store.IterHasChild (currentIter);
 			}
-			
+
 			public void UpdateAll ()
 			{
 				Update ();
 				UpdateChildren ();
 			}
-			
+
 			public void Update ()
 			{
 				object data = store.GetValue (currentIter, ExtensibleTreeView.DataItemColumn);
 				NodeBuilder[] chain = (NodeBuilder[]) store.GetValue (currentIter, ExtensibleTreeView.BuilderChainColumn);
-				
+
 				NodeAttributes ats = GetAttributes (this, chain, data);
 				UpdateNode (chain, ats, data);
 			}
-			
+
 			public void ResetState ()
 			{
 				Update ();
@@ -96,22 +96,22 @@ namespace MonoDevelop.Ide.Gui.Components
 					store.SetValue (currentIter, ExtensibleTreeView.FilledColumn, false);
 				}
 			}
-			
+
 			public void UpdateChildren ()
 			{
 				object data = store.GetValue (currentIter, ExtensibleTreeView.DataItemColumn);
 				NodeBuilder[] chain = (NodeBuilder[]) store.GetValue (currentIter, ExtensibleTreeView.BuilderChainColumn);
-				
+
 				if (!(bool) store.GetValue (currentIter, ExtensibleTreeView.FilledColumn)) {
 					if (!HasChildNodes (this, chain, data))
 						FillNode ();
 					return;
 				}
-				
+
 				NodeState ns = SaveState ();
 				RestoreState (ns);
 			}
-			
+
 			public void Remove ()
 			{
 				pad.RemoveChildren (currentIter);
@@ -121,7 +121,7 @@ namespace MonoDevelop.Ide.Gui.Components
 				if (store.Remove (ref it) && !it.Equals (Gtk.TreeIter.Zero))
 					MoveToIter (it);
 			}
-			
+
 			public void Remove (bool moveToParent)
 			{
 				Gtk.TreeIter parent;
@@ -133,17 +133,17 @@ namespace MonoDevelop.Ide.Gui.Components
 					MoveToIter (parent);
 				}
 			}
-			
+
 			public void AddChild (object dataObject)
 			{
 				AddChild (dataObject, false);
 			}
-			
+
 			internal static NodeAttributes GetAttributes (ITreeBuilder tb, NodeBuilder[] chain, object dataObject)
 			{
 				NodePosition pos = tb.CurrentPosition;
 				NodeAttributes ats = NodeAttributes.None;
-				
+
 				foreach (NodeBuilder nb in chain) {
 					try {
 						nb.GetNodeAttributes (tb, dataObject, ref ats);
@@ -154,7 +154,12 @@ namespace MonoDevelop.Ide.Gui.Components
 				}
 				return ats;
 			}
-			
+
+			static int NullSortFunc (Gtk.ITreeModel model, Gtk.TreeIter a, Gtk.TreeIter b)
+			{
+				return 0;
+			}
+
 			public void AddChildren (IEnumerable dataObjects)
 			{
 				NodeBuilder[] chain = null;
@@ -195,19 +200,19 @@ namespace MonoDevelop.Ide.Gui.Components
 //				Console.WriteLine (items + " : " +(DateTime.Now - time).TotalMilliseconds);
 				MoveToIter (oldIter);
 			}
-			
+
 			public void AddChild (object dataObject, bool moveToChild)
 			{
 				if (dataObject == null) throw new ArgumentNullException ("dataObject");
-				
+
 				NodeBuilder[] chain = pad.GetBuilderChain (dataObject.GetType ());
 				if (chain == null) return;
-				
+
 				Gtk.TreeIter oldIter = currentIter;
 				NodeAttributes ats = GetAttributes (this, chain, dataObject);
 				if ((ats & NodeAttributes.Hidden) != 0)
 					return;
-				
+
 				Gtk.TreeIter it;
 				if (!currentIter.Equals (Gtk.TreeIter.Zero)) {
 					if (!Filled) return;
@@ -215,9 +220,9 @@ namespace MonoDevelop.Ide.Gui.Components
 				}
 				else
 					it = store.AppendValues (NodeInfo.Empty, dataObject, chain, false);
-				
+
 				pad.RegisterNode (it, dataObject, chain, true);
-				
+
 				BuildNode (it, chain, ats, dataObject);
 				if (moveToChild)
 					MoveToIter (it);
@@ -226,31 +231,31 @@ namespace MonoDevelop.Ide.Gui.Components
 
 				pad.NotifyInserted (it, dataObject);
 			}
-			
+
 			void BuildNode (Gtk.TreeIter it, NodeBuilder[] chain, NodeAttributes ats, object dataObject)
 			{
 				Gtk.TreeIter oldIter = currentIter;
 				object oldItem = DataItem;
 
 				InitIter (it, dataObject);
-				
+
 				// It is *critical* that we set this first. We will
 				// sort after this call, so we must give as much info
 				// to the sort function as possible.
 				store.SetValue (it, ExtensibleTreeView.DataItemColumn, dataObject);
 				store.SetValue (it, ExtensibleTreeView.BuilderChainColumn, chain);
-				
+
 				UpdateNode (chain, ats, dataObject);
-				
+
 				bool hasChildren = HasChildNodes (this, chain, dataObject);
 				store.SetValue (currentIter, ExtensibleTreeView.FilledColumn, !hasChildren);
-				
+
 				if (hasChildren)
 					store.AppendNode (currentIter);	// Dummy node
 
 				InitIter (oldIter, oldItem);
 			}
-			
+
 			internal static bool HasChildNodes (ITreeBuilder tb, NodeBuilder[] chain, object dataObject)
 			{
 				NodePosition pos = tb.CurrentPosition;
@@ -266,7 +271,7 @@ namespace MonoDevelop.Ide.Gui.Components
 				}
 				return false;
 			}
-			
+
 			void UpdateNode (NodeBuilder[] chain, NodeAttributes ats, object dataObject)
 			{
 				bool isNew = false;
@@ -286,7 +291,7 @@ namespace MonoDevelop.Ide.Gui.Components
 				else
 					store.EmitRowChanged (store.GetPath (currentIter), currentIter);
 			}
-			
+
 			internal static NodeInfo GetNodeInfo (NodeInfo nodeInfo, ExtensibleTreeView tree, ITreeBuilder tb, NodeBuilder[] chain, object dataObject)
 			{
 				NodePosition pos = tb.CurrentPosition;
@@ -299,9 +304,9 @@ namespace MonoDevelop.Ide.Gui.Components
 					}
 					tb.MoveToPosition (pos);
 				}
-					
+
 				if (nodeInfo.ClosedIcon == null) nodeInfo.ClosedIcon = nodeInfo.Icon;
-				
+
 				if (tree.CopyObjects != null && ((IList)tree.CopyObjects).Contains (dataObject) && tree.CurrentTransferOperation == DragOperation.Move) {
 					var gicon = tree.BuilderContext.GetComposedIcon (nodeInfo.Icon, "fade");
 					if (gicon == null) {
@@ -318,7 +323,7 @@ namespace MonoDevelop.Ide.Gui.Components
 				}
 				return nodeInfo;
 			}
-			
+
 			void CreateChildren (NodeBuilder[] chain, object dataObject)
 			{
 				Gtk.TreeIter it = currentIter;

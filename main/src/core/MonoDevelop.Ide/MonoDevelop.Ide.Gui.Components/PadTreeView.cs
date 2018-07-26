@@ -30,9 +30,6 @@ using System.Text;
 using Gtk;
 using MonoDevelop.Components;
 using MonoDevelop.Core;
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Gui.Components
 {
@@ -59,7 +56,7 @@ namespace MonoDevelop.Ide.Gui.Components
 			Init ();
 		}
 
-		public PadTreeView (TreeModel model) : base (model)
+		public PadTreeView (ITreeModel model) : base (model)
 		{
 			Init ();
 		}

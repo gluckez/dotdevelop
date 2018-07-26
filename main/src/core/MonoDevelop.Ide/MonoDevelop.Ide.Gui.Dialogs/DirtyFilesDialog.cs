@@ -9,9 +9,6 @@ using MonoDevelop.Ide.Gui;
 using MonoDevelop.Components;
 using MonoDevelop.Components.AtkCocoaHelper;
 using System.Threading.Tasks;
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Gui.Dialogs
 {
@@ -99,7 +96,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			sc.ShadowType = ShadowType.In;
 
 			sc.BorderWidth = 6;
-			this.VBox.PackStart (sc, true, true, 6);
+			this.ContentArea.PackStart (sc, true, true, 6);
 
 			btnSaveAndQuit = new Button (closeWorkspace ? GettextCatalog.GetString ("_Save and Quit") : GettextCatalog.GetString ("_Save and Close"));
 			btnSaveAndQuit.Accessible.Name = "Dialog.DirtyFiles.SaveAndQuit";
@@ -133,9 +130,9 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			btnQuit.Clicked += Quit;
 			btnCancel.Clicked += Cancel;
 
-			this.ActionArea.PackStart (btnCancel);
-			this.ActionArea.PackStart (btnQuit);
-			this.ActionArea.PackStart (btnSaveAndQuit);
+			this.ActionArea.PackStart (btnCancel, false, true, 0);
+			this.ActionArea.PackStart (btnQuit, false, true, 0);
+			this.ActionArea.PackStart (btnSaveAndQuit, false, true, 0);
 			this.SetDefaultSize (300, 200);
 			this.Child.ShowAll ();
 		}
@@ -147,11 +144,11 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			btnCancel.Clicked -= Cancel;
 			if (togRender != null) {
 				togRender.Toggled -= toggled;
-				togRender.Destroy ();
+//				togRender.Destroy ();
 				togRender = null;
 			}
 			if (textRender != null) {
-				textRender.Destroy ();
+//				textRender.Destroy ();
 				textRender = null;
 			}
 			base.OnDestroyed ();
@@ -162,7 +159,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			Sensitive = false;
 
 			List<Task> saveTasks = new List<Task> ();
-			tsFiles.Foreach (delegate (TreeModel model, TreePath path, TreeIter iter) {
+			tsFiles.Foreach (delegate (ITreeModel model, TreePath path, TreeIter iter) {
 				var doc = tsFiles.GetValue (iter, 2) as Document;
 				if (doc == null)
 					return false;
@@ -183,6 +180,14 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 
 		void Quit (object o, EventArgs e)
 		{
+			tsFiles.Foreach (delegate (ITreeModel model, TreePath path, TreeIter iter) {
+				var window = tsFiles.GetValue (iter, 2) as SdiWorkspaceWindow;
+				if (window == null)
+					return false;
+				window.ViewContent.DiscardChanges ();
+				return false;
+			});
+
 			Respond (Gtk.ResponseType.Ok);
 			Hide ();
 		}

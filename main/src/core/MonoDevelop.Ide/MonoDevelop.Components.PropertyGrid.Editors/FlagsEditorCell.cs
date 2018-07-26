@@ -13,10 +13,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -87,46 +87,46 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 			return txt;
 		}
 
-		public override void Render (Gdk.Drawable window, Cairo.Context ctx, Gdk.Rectangle bounds, Gtk.StateType state)
-		{
-			var values = Enum.GetValues (Property.PropertyType);
-			if (values.Length < MaxCheckCount) {
-				if (style == null)
-					InitializeStyle (Container);
+//		public override void Render (Gdk.Drawable window, Cairo.Context ctx, Gdk.Rectangle bounds, Gtk.StateType state)
+//		{
+//			var values = Enum.GetValues (Property.PropertyType);
+//			if (values.Length < MaxCheckCount) {
+//				if (style == null)
+//					InitializeStyle (Container);
+//
+//				var container = (Widget)Container;
+//				using (var layout = new Pango.Layout (container.PangoContext)) {
+//					layout.Width = -1;
+//					layout.FontDescription = IdeServices.FontService.SansFont.CopyModified (Ide.Gui.Styles.FontScale11);
+//
+//					ulong value = Convert.ToUInt64 (Value);
+//					int dy = 2;
+//					foreach (var val in values) {
+//						ulong uintVal = Convert.ToUInt64 (val);
+//						Gtk.ShadowType sh = (value & uintVal) != 0 ? Gtk.ShadowType.In : Gtk.ShadowType.Out;
+//						if (value == 0 && uintVal == 0)
+//							sh = Gtk.ShadowType.In;
+//						int s = indicatorSize - 1;
+//						Gtk.Style.PaintCheck (style, window, state, sh, bounds, Container, "checkbutton", bounds.X + indicatorSpacing - 1, bounds.Y + dy, s, s);
+//
+//						layout.SetText (val.ToString ());
+//						int tw, th;
+//						layout.GetPixelSize (out tw, out th);
+//						ctx.Save ();
+//						ctx.SetSourceColor (container.Style.Text (state).ToCairoColor ());
+//						ctx.MoveTo (bounds.X + indicatorSize + indicatorSpacing, dy + bounds.Y + ((indicatorSize - th) / 2));
+//						Pango.CairoHelper.ShowLayout (ctx, layout);
+//						ctx.Restore ();
+//
+//						dy += indicatorSize + CheckSpacing;
+//					}
+//				}
+//			} else {
+//				base.Render (window, ctx, bounds, state);
+//				return;
+//			}
+//		}
 
-				var container = (Widget)Container;
-				using (var layout = new Pango.Layout (container.PangoContext)) {
-					layout.Width = -1;
-					layout.FontDescription = IdeServices.FontService.SansFont.CopyModified (Ide.Gui.Styles.FontScale11);
-
-					ulong value = Convert.ToUInt64 (Value);
-					int dy = 2;
-					foreach (var val in values) {
-						ulong uintVal = Convert.ToUInt64 (val);
-						Gtk.ShadowType sh = (value & uintVal) != 0 ? Gtk.ShadowType.In : Gtk.ShadowType.Out;
-						if (value == 0 && uintVal == 0)
-							sh = Gtk.ShadowType.In;
-						int s = indicatorSize - 1;
-						Gtk.Style.PaintCheck (style, window, state, sh, bounds, Container, "checkbutton", bounds.X + indicatorSpacing - 1, bounds.Y + dy, s, s);
-
-						layout.SetText (val.ToString ());
-						int tw, th;
-						layout.GetPixelSize (out tw, out th);
-						ctx.Save ();
-						ctx.SetSourceColor (container.Style.Text (state).ToCairoColor ());
-						ctx.MoveTo (bounds.X + indicatorSize + indicatorSpacing, dy + bounds.Y + ((indicatorSize - th) / 2));
-						Pango.CairoHelper.ShowLayout (ctx, layout);
-						ctx.Restore ();
-
-						dy += indicatorSize + CheckSpacing;
-					}
-				}
-			} else {
-				base.Render (window, ctx, bounds, state);
-				return;
-			}
-		}
-		
 		protected override IPropertyEditor CreateEditor (Gdk.Rectangle cell_area, Gtk.StateType state)
 		{
 			return new FlagsEditor ();
@@ -144,7 +144,7 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 			}
 		}
 	}
-	
+
 	public class FlagsEditor : Gtk.HBox, IPropertyEditor
 	{
 		Hashtable flags;
@@ -156,17 +156,17 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 		public FlagsEditor ()
 		{
 		}
-		
+
 		public void Initialize (EditSession session)
 		{
 			PropertyDescriptor prop = session.Property;
-			
+
 			if (!prop.PropertyType.IsEnum)
 				throw new ApplicationException ("Flags editor does not support editing values of type " + prop.PropertyType);
-			
+
 			Spacing = FlagsEditorCell.CheckSpacing;
 			propType = prop.PropertyType;
-			
+
 			property = prop.Description;
 			if (property == null || property.Length == 0)
 				property = prop.Name;
@@ -175,8 +175,8 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 			// For large enums (>5), use a selector dialog.
 
 			values = System.Enum.GetValues (prop.PropertyType);
-			
-			if (values.Length < FlagsEditorCell.MaxCheckCount) 
+
+			if (values.Length < FlagsEditorCell.MaxCheckCount)
 			{
 				Gtk.VBox vbox = new Gtk.VBox (true, FlagsEditorCell.CheckSpacing);
 
@@ -191,7 +191,7 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 					check.TooltipText = value.ToString ();
 					flags[check] = uintVal;
 					flags[uintVal] = check;
-					
+
 					check.Toggled += FlagToggled;
 					vbox.PackStart (check, false, false, 3);
 				}
@@ -200,22 +200,22 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 				frame.Add (vbox);
 				frame.ShowAll ();
 				PackStart (frame, true, true, 0);
-			} 
-			else 
+			}
+			else
 			{
 				flagsLabel = new Gtk.Entry ();
 				flagsLabel.IsEditable = false;
 				flagsLabel.HasFrame = false;
 				flagsLabel.ShowAll ();
 				PackStart (flagsLabel, true, true, 0);
-				
+
 				Gtk.Button but = new Gtk.Button ("...");
 				but.Clicked += OnSelectFlags;
 				but.ShowAll ();
 				PackStart (but, false, false, 0);
 			}
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			base.OnDestroyed ();
@@ -238,7 +238,7 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 		public event EventHandler ValueChanged;
 
 		ulong uintValue;
-		
+
 		ulong UIntValue {
 			get {
 				return uintValue;
@@ -292,7 +292,7 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors {
 				}
 			}
 		}
-		
+
 		void OnSelectFlags (object o, EventArgs args)
 		{
 			using (FlagsSelectorDialog dialog = new FlagsSelectorDialog (null, propType, UIntValue, property)) {

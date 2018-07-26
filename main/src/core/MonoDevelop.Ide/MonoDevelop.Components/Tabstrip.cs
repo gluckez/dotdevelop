@@ -1,21 +1,21 @@
-﻿// 
+﻿//
 // Tabstrip.cs
-//  
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
-// 
+//
 // Copyright (c) 2010 Novell, Inc (http://www.novell.com)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +51,7 @@ namespace MonoDevelop.Components
 		int activeTab;
 		public int ActiveTab {
 			get {
-				return activeTab; 
+				return activeTab;
 			}
 			set {
 				if (activeTab == value)
@@ -64,30 +64,30 @@ namespace MonoDevelop.Components
 				QueueDraw ();
 			}
 		}
-		
+
 		public IList<Tab> Tabs {
 			get { return tabs.AsReadOnly (); }
 		}
-		
+
 		public int TabCount {
 			get {
 				return tabs.Count;
 			}
 		}
-		
+
 		public Tabstrip ()
 		{
 			Accessible.SetRole (AtkCocoa.Roles.AXTabGroup);
 			Events |= Gdk.EventMask.ButtonPressMask | Gdk.EventMask.PointerMotionMask | Gdk.EventMask.LeaveNotifyMask | Gdk.EventMask.FocusChangeMask;
 			CanFocus = true;
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			base.OnDestroyed ();
 			tabs.ForEach (t => t.Dispose ());
 		}
-		
+
 		public void AddTab (Tab tab)
 		{
 			InsertTab (tabs.Count, tab);
@@ -240,7 +240,7 @@ namespace MonoDevelop.Components
 		{
 			if (tab == null)
 				return new Cairo.Rectangle (0, 0, 0, 0);
-			
+
 			int spacerWidth = 0;
 			int idx = tabs.IndexOf (tab);
 			double distance = 0;
@@ -254,14 +254,14 @@ namespace MonoDevelop.Components
 				tabSizes[idx].X,
 				tabSizes[idx].Y);
 		}
-		
+
 		protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
 		{
 			mx = evnt.X;
 			my = evnt.Y;
 			var oldHoverTab = hoverTab;
 			hoverTab = null;
-			
+
 			foreach (var tab in tabs) {
 				if (tab.IsSeparator || !tab.Visible)
 					continue;
@@ -271,32 +271,32 @@ namespace MonoDevelop.Components
 					break;
 				}
 			}
-			
+
 			if (hoverTab != oldHoverTab && oldHoverTab != null) {
 				var oldBounds = GetBounds (oldHoverTab);
 				QueueDrawArea ((int)oldBounds.X, (int)oldBounds.Y, (int)oldBounds.Width, (int)oldBounds.Height);
 			}
-			
+
 			if (hoverTab != null) {
 				var bounds = GetBounds (hoverTab);
 				QueueDrawArea ((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
 			}
-			
+
 			return base.OnMotionNotifyEvent (evnt);
 		}
-		
+
 		protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
 			if (hoverTab != null) {
 				try {
 					ActiveTab = tabs.IndexOf (hoverTab);
 				} catch (Exception ex) {
-					LoggingService.LogInternalError (ex);	
+					LoggingService.LogInternalError (ex);
 				}
 			}
 			return base.OnButtonPressEvent (evnt);
 		}
-		
+
 		protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
 		{
 			if (hoverTab != null) {
@@ -306,41 +306,40 @@ namespace MonoDevelop.Components
 			}
 			return base.OnLeaveNotifyEvent (evnt);
 		}
-		
-		protected override void OnSizeRequested (ref Requisition requisition)
+
+		protected override void OnGetPreferredHeight (out int min_height, out int natural_height)
 		{
-			requisition.Height = (int)Math.Ceiling (tabSizes.Max (p => p.Y));
+			natural_height = 0;
+			min_height = (int)Math.Ceiling (tabSizes.Max (p => p.Y));
 			requisition.Width = tabs.Count == 0 ? 10 : tabs.Where (t => t.Visible).Sum (t => (int)Math.Ceiling (t.Size.X));
 		}
 
-		protected override bool OnExposeEvent (Gdk.EventExpose evnt)
-		{
-			using (var cr = Gdk.CairoHelper.Create (evnt.Window)) {
-				cr.Rectangle (0, 0, Allocation.Width, Allocation.Height);
-				cr.SetSourceColor (Styles.SubTabBarBackgroundColor.ToCairoColor ());
-				cr.Fill ();
-
-				Tab active = null;
-				for (int i = tabs.Count; i --> 0;) {
-					if (i == ActiveTab) {
-						active = tabs [i];
-						continue;
-					}
-					var tab = tabs[i];
-					if (!tab.Visible)
-						continue;
-					var bounds = GetBounds (tab);
-					tab.HoverPosition = tab == hoverTab ? new Cairo.PointD (mx - bounds.X, my) : new Cairo.PointD (-1, -1);
-					tab.Draw (cr, bounds);
-				}
-
-				if (active != null && active.Visible) {
-					active.Draw (cr, GetBounds (active));
-				}
-			}
-
-			return base.OnExposeEvent (evnt);
-		}
+//		protected override bool OnExposeEvent (Gdk.EventExpose evnt)
+//		{
+//			using (var cr = Gdk.CairoHelper.Create (evnt.Window)) {
+//				cr.Rectangle (0, 0, Allocation.Width, Allocation.Height);
+//				cr.SetSourceColor (Styles.SubTabBarBackgroundColor.ToCairoColor ());
+//				cr.Fill ();
+//
+//				Tab active = null;
+//				for (int i = tabs.Count; i --> 0;) {
+//					if (i == ActiveTab) {
+//						active = tabs [i];
+//						continue;
+//					}
+//					var tab = tabs[i];
+//					var bounds = GetBounds (tab);
+//					tab.HoverPosition = tab == hoverTab ? new Cairo.PointD (mx - bounds.X, my) : new Cairo.PointD (-1, -1);
+//					tab.Draw (cr, bounds);
+//				}
+//
+//				if (active != null) {
+//					active.Draw (cr, GetBounds (active));
+//				}
+//			}
+//
+//			return base.OnExposeEvent (evnt);
+//		}
 
 		int focusedTab = -1;
 
@@ -431,7 +430,7 @@ namespace MonoDevelop.Components
 		Left,
 		Right
 	}
-	
+
 	class Tab : IDisposable
 	{
 		internal static readonly int SpacerWidth = 8;
@@ -464,17 +463,17 @@ namespace MonoDevelop.Components
 				}
 			}
 		}
-		
+
 		public TabPosition TabPosition {
 			get;
 			private set;
 		}
-		
+
 		public Cairo.PointD HoverPosition {
 			get;
 			set;
 		}
-		
+
 		bool active;
 		public bool Active {
 			get { return active; }
@@ -495,7 +494,7 @@ namespace MonoDevelop.Components
 		public bool IsSeparator {
 			get { return Label == "|"; }
 		}
-		
+
 		public object Tag {
 			get;
 			set;
@@ -523,16 +522,16 @@ namespace MonoDevelop.Components
 				}
 			}
 		}
-		
+
 		public Tab (Tabstrip parent, string label) : this (parent, label, TabPosition.Left)
 		{
 		}
-		
+
 		public void Activate ()
 		{
 			OnActivated (EventArgs.Empty);
 		}
-		
+
 		public void Dispose ()
 		{
 			if (Accessible != null) {
@@ -594,7 +593,7 @@ namespace MonoDevelop.Components
 					return new Cairo.PointD (Math.Max (45, w + SpacerWidth * 2), h + Padding * 2);
 			}
 		}
-		
+
 		public void Draw (Cairo.Context cr, Cairo.Rectangle rectangle)
 		{
 			if (IsSeparator) {
@@ -608,7 +607,7 @@ namespace MonoDevelop.Components
 				cr.Stroke ();
 				return;
 			}
-			
+
 			if (Active || HoverPosition.X >= 0) {
 				if (Active) {
 					cr.Rectangle (rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
@@ -647,12 +646,12 @@ namespace MonoDevelop.Components
 				cr.Stroke ();
 			}
 		}
-		
+
 		public override string ToString ()
 		{
 			return string.Format ("[Tab: Label={0}, TabPosition={1}, Active={2}]", Label, TabPosition, Active);
 		}
-		
+
 		protected virtual void OnActivated (EventArgs e)
 		{
 			EventHandler handler = this.Activated;

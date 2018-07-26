@@ -36,10 +36,6 @@ using System.Collections.Generic;
 using MonoDevelop.Components;
 using MonoDevelop.Components.Commands;
 using System.IO;
-using System.Runtime.InteropServices;
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Projects
 {
@@ -343,7 +339,7 @@ namespace MonoDevelop.Ide.Projects
 		protected void RemoveReference (object sender, EventArgs e)
 		{
 			TreeIter iter;
-			TreeModel mdl;
+			ITreeModel mdl;
 			if (ReferencesTreeView.Selection.GetSelected (out mdl, out iter)) {
 				ProjectReference pref = (ProjectReference)refTreeStore.GetValue (iter, ProjectReferenceColumn);
 				foreach (var p in panels)
@@ -541,12 +537,13 @@ namespace MonoDevelop.Ide.Projects
 			RepositionFilter ();
 		}
 
-		protected override void OnSizeRequested (ref Requisition requisition)
+		protected override void OnGetPreferredWidth (out int min_width, out int natural_width)
 		{
-			requisition = Child?.SizeRequest () ?? Requisition.Zero;
-			var entryRequest = filterEntry.SizeRequest ();
-			requisition.Width += entryRequest.Width;
-			requisition.Height = Math.Max (requisition.Height, entryRequest.Height);
+			min_width = 0;
+			natural_width = 0;
+			if (Child != null)
+				min_width = Child.SizeRequest ().Width;
+			min_width += filterEntry.SizeRequest ().Width;
 		}
 
 		void RepositionFilter ()

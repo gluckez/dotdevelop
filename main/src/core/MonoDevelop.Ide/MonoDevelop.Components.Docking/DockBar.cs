@@ -15,10 +15,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -57,22 +57,22 @@ namespace MonoDevelop.Components.Docking
 
 			al.Add (box);
 			Add (al);
-			
+
 			filler = new Label ();
 			filler.WidthRequest = 4;
 			filler.HeightRequest = 4;
-			box.PackEnd (filler);
-			
+			box.PackEnd (filler, false, true, 0);
+
 			ShowAll ();
 			UpdateVisibility ();
 		}
-		
+
 		public bool IsExtracted {
 			get { return OriginalBar != null; }
 		}
-		
+
 		internal DockBar OriginalBar { get; set; }
-		
+
 		public bool AlwaysVisible {
 			get { return this.alwaysVisible; }
 			set { this.alwaysVisible = value; UpdateVisibility (); }
@@ -84,13 +84,13 @@ namespace MonoDevelop.Components.Docking
 			get { return showBorder; }
 			set { showBorder = value; QueueResize (); }
 		}
-		
+
 		internal Gtk.Orientation Orientation {
 			get {
 				return (position == PositionType.Left || position == PositionType.Right) ? Gtk.Orientation.Vertical : Gtk.Orientation.Horizontal;
 			}
 		}
-		
+
 		internal Gtk.PositionType Position {
 			get {
 				return position;
@@ -116,7 +116,7 @@ namespace MonoDevelop.Components.Docking
 		internal bool HoverActivationEnabled {
 			get { return DateTime.Now >= hoverActivationDelay; }
 		}
-		
+
 		internal DockBarItem AddItem (DockItem item, int size)
 		{
 			DisableHoverActivation ();
@@ -128,7 +128,7 @@ namespace MonoDevelop.Components.Docking
 			it.Hidden += OnItemVisibilityHidden;
 			return it;
 		}
-		
+
 		void OnItemVisibilityShown (object o, EventArgs args)
 		{
 			DisableHoverActivation ();
@@ -146,7 +146,7 @@ namespace MonoDevelop.Components.Docking
 			if (OriginalBar != null)
 				OriginalBar.UpdateVisibility ();
 		}
-		
+
 		internal void UpdateVisibility ()
 		{
 			if (Frame.OverlayWidgetVisible) {
@@ -161,7 +161,7 @@ namespace MonoDevelop.Components.Docking
 				Visible = alwaysVisible || filler.Visible || visibleCount > 0;
 			}
 		}
-		
+
 		internal void RemoveItem (DockBarItem it)
 		{
 			DisableHoverActivation ();
@@ -181,21 +181,30 @@ namespace MonoDevelop.Components.Docking
 				}
 			}
 		}
-		
+
 		internal void UpdateStyle (DockItem item)
 		{
 		}
 
-		protected override void OnSizeRequested (ref Requisition requisition)
+		protected override void OnGetPreferredHeight (out int min_height, out int natural_height)
 		{
-			base.OnSizeRequested (ref requisition);
+			base.OnGetPreferredHeight (out min_height, out natural_height);
+
+			if (ShowBorder) {
+				// Add space for the separator
+				if (Orientation == Gtk.Orientation.Horizontal)
+					min_height++;
+			}
+		}
+
+		protected override void OnGetPreferredWidth (out int min_width, out int natural_width)
+		{
+			base.OnGetPreferredWidth (out min_width, out natural_width);
 
 			if (ShowBorder) {
 				// Add space for the separator
 				if (Orientation == Gtk.Orientation.Vertical)
-					requisition.Width++;
-				else
-					requisition.Height++;
+					min_width++;
 			}
 		}
 
@@ -213,35 +222,35 @@ namespace MonoDevelop.Components.Docking
 			}
 		}
 
-		protected override bool OnExposeEvent (Gdk.EventExpose evnt)
-		{
-			var alloc = Allocation;
-			using (var ctx = Gdk.CairoHelper.Create (GdkWindow)) {
-				ctx.Rectangle (alloc.X, alloc.Y, alloc.X + alloc.Width, alloc.Y + alloc.Height);
-				ctx.SetSourceColor (Styles.DockBarBackground.ToCairoColor ());
-				ctx.Fill ();
-			}
-
-			if (Child != null)
-				PropagateExpose (Child, evnt);
-
-			if (ShowBorder) {
-				using (var ctx = Gdk.CairoHelper.Create (GdkWindow)) {
-					ctx.LineWidth = 1;
-
-					// Dark separator
-					switch (Position) {
-					case PositionType.Left:ctx.MoveTo (alloc.X + alloc.Width - 0.5, alloc.Y); ctx.RelLineTo (0, Allocation.Height); break;
-					case PositionType.Right: ctx.MoveTo (alloc.X + 0.5, alloc.Y); ctx.RelLineTo (0, Allocation.Height); break;
-					case PositionType.Top: ctx.MoveTo (alloc.X, alloc.Y + alloc.Height + 0.5); ctx.RelLineTo (Allocation.Width, 0); break;
-					case PositionType.Bottom: ctx.MoveTo (alloc.X, alloc.Y + 0.5); ctx.RelLineTo (Allocation.Width, 0); break;
-					}
-					ctx.SetSourceColor (Styles.DockSeparatorColor.ToCairoColor ());
-					ctx.Stroke ();
-				}
-			}
-			return true;
-		}
+//		protected override bool OnExposeEvent (Gdk.EventExpose evnt)
+//		{
+//			var alloc = Allocation;
+//			using (var ctx = Gdk.CairoHelper.Create (GdkWindow)) {
+//				ctx.Rectangle (alloc.X, alloc.Y, alloc.X + alloc.Width, alloc.Y + alloc.Height);
+//				ctx.SetSourceColor (Styles.DockBarBackground.ToCairoColor ());
+//				ctx.Fill ();
+//			}
+//
+//			if (Child != null)
+//				PropagateExpose (Child, evnt);
+//
+//			if (ShowBorder) {
+//				using (var ctx = Gdk.CairoHelper.Create (GdkWindow)) {
+//					ctx.LineWidth = 1;
+//
+//					// Dark separator
+//					switch (Position) {
+//					case PositionType.Left:ctx.MoveTo (alloc.X + alloc.Width - 0.5, alloc.Y); ctx.RelLineTo (0, Allocation.Height); break;
+//					case PositionType.Right: ctx.MoveTo (alloc.X + 0.5, alloc.Y); ctx.RelLineTo (0, Allocation.Height); break;
+//					case PositionType.Top: ctx.MoveTo (alloc.X, alloc.Y + alloc.Height + 0.5); ctx.RelLineTo (Allocation.Width, 0); break;
+//					case PositionType.Bottom: ctx.MoveTo (alloc.X, alloc.Y + 0.5); ctx.RelLineTo (Allocation.Width, 0); break;
+//					}
+//					ctx.SetSourceColor (Styles.DockSeparatorColor.ToCairoColor ());
+//					ctx.Stroke ();
+//				}
+//			}
+//			return true;
+//		}
 	}
 }
 

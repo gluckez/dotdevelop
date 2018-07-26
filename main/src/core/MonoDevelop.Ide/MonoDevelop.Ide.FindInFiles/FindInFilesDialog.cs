@@ -61,8 +61,8 @@ namespace MonoDevelop.Ide.FindInFiles
 		}
 
 		CheckButton checkbuttonRecursively;
-		ComboBoxEntry comboboxentryReplace;
-		ComboBoxEntry comboboxentryPath;
+		ComboBoxText comboboxentryReplace;
+		ComboBoxText comboboxentryPath;
 		MonoDevelop.Components.SearchEntry searchentryFileMask;
 		Button buttonBrowsePaths;
 		Button buttonReplace;
@@ -362,7 +362,7 @@ namespace MonoDevelop.Ide.FindInFiles
 				return;
 
 			labelReplace = new Label { Text = GettextCatalog.GetString ("_Replace:"), Xalign = 0f, UseUnderline = true };
-			comboboxentryReplace = new ComboBoxEntry ();
+			comboboxentryReplace = new ComboBoxText ();
 			LoadHistory ("MonoDevelop.FindReplaceDialogs.ReplaceHistory", comboboxentryReplace);
 			comboboxentryReplace.Show ();
 			labelReplace.Show ();
@@ -430,12 +430,11 @@ namespace MonoDevelop.Ide.FindInFiles
 			labelPath.Show ();
 
 			hboxPath = new HBox ();
-			comboboxentryPath = new ComboBoxEntry ();
+			comboboxentryPath = new ComboBoxText ();
 			comboboxentryPath.Destroyed += ComboboxentryPathDestroyed;
 			LoadHistory ("MonoDevelop.FindReplaceDialogs.PathHistory", comboboxentryPath);
 			comboboxentryPath.Show ();
-			hboxPath.PackStart (comboboxentryPath);
-
+			hboxPath.PackStart (comboboxentryPath, false, true, 0);
 			labelPath.MnemonicWidget = comboboxentryPath;
 
 			buttonBrowsePaths = new Button { Label = "…" };
@@ -594,15 +593,15 @@ namespace MonoDevelop.Ide.FindInFiles
 				buttonReplace.Sensitive = isSensitive;
 		}
 
-		protected override void OnSizeRequested (ref Requisition requisition)
+		protected override void OnGetPreferredWidth (out int min_width, out int natural_width)
 		{
-			base.OnSizeRequested (ref requisition);
-			requisition.Width = Math.Max (480, requisition.Width);
+			base.OnGetPreferredWidth (out min_width, out natural_width);
+			min_width = Math.Max (480, min_width);
 		}
 
 		static void ComboboxentryPathDestroyed (object sender, EventArgs e)
 		{
-			StoreHistory ("MonoDevelop.FindReplaceDialogs.PathHistory", (ComboBoxEntry)sender);
+			StoreHistory ("MonoDevelop.FindReplaceDialogs.PathHistory", (ComboBox)sender);
 		}
 
 		void ButtonBrowsePathsClicked (object sender, EventArgs e)
@@ -643,7 +642,7 @@ namespace MonoDevelop.Ide.FindInFiles
 //			LoadHistory ("MonoDevelop.FindReplaceDialogs.FileMaskHistory", comboboxentryFileMask);
 		}
 
-		static void LoadHistory (string propertyName, ComboBoxEntry entry)
+		static void LoadHistory (string propertyName, ComboBoxText entry)
 		{
 			var ec = new EntryCompletion ();
 /*			entry.Changed += delegate {
@@ -658,7 +657,7 @@ namespace MonoDevelop.Ide.FindInFiles
 			entry.Entry.Completion.Model = store;
 			entry.Model = store;
 			entry.Entry.ActivatesDefault = true;
-			entry.TextColumn = 0;
+			entry.Active = 0;
 			var history = PropertyService.Get<string> (propertyName);
 			if (!string.IsNullOrEmpty (history)) {
 				string[] items = history.Split (historySeparator);
@@ -690,7 +689,7 @@ namespace MonoDevelop.Ide.FindInFiles
 			//StoreHistory ("MonoDevelop.FindReplaceDialogs.FileMaskHistory", comboboxentryFileMask);
 		}
 
-		static void StoreHistory (string propertyName, ComboBoxEntry comboBox)
+		static void StoreHistory (string propertyName, ComboBox comboBox)
 		{
 			var store = (ListStore)comboBox.Model;
 			var history = new List<string> ();

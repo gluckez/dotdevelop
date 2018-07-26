@@ -1,17 +1,17 @@
-/* 
+/*
  * EventEditor.cs - Visual editor for Events
- * 
- * Part of PropertyGrid - A Gtk# widget that displays and allows 
- * editing of all of an object's public properties 
- * 
- * Authors: 
+ *
+ * Part of PropertyGrid - A Gtk# widget that displays and allows
+ * editing of all of an object's public properties
+ *
+ * Authors:
  *  Michael Hutchinson <m.j.hutchinson@gmail.com>
  *  Lluis Sanchez Gual
- *  
+ *
  * Copyright (C) 2005 Michael Hutchinson
  *
  * This sourcecode is licenced under The MIT License:
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -19,7 +19,7 @@
  * distribute, sublicense, and/or sell copies of the Software, and to permit
  * persons to whom the Software is furnished to do so, subject to the
  * following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
@@ -52,7 +52,7 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors
 				base.Initialize ();
 			}
 		}
-		
+
 		protected override IPropertyEditor CreateEditor (Gdk.Rectangle cell_area, Gtk.StateType state)
 		{
 			if (evtBind == null) {
@@ -63,34 +63,34 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors
 			ICollection IColl = evtBind.GetCompatibleMethods (evtBind.GetEvent (Property)) ;
 			string[] methods = new string [IColl.Count + 1];
 			IColl.CopyTo (methods, 1);
-			
+
 			//add a suggestion
 			methods [0] = evtBind.CreateUniqueMethodName ((IComponent) Instance, evtBind.GetEvent (Property));
-			
+
 			EventEditor combo = new EventEditor (evtBind, methods);
 
 			if (Value != null)
 				combo.Entry.Text = (string) Value;
-			
+
 			combo.WidthRequest = 30; //Don't artificially inflate the width. It expands anyway.
 
 			return combo;
 		}
-		
+
 	}
-	
-	class EventEditor: ComboBoxEntry, IPropertyEditor
+
+	class EventEditor: ComboBox, IPropertyEditor
 	{
 		bool isNull;
 		PropertyDescriptor prop;
 		IEventBindingService evtBind;
 		object component;
-		
+
 		public EventEditor (IEventBindingService evtBind, string[] ops): base (ops)
 		{
 			this.evtBind = evtBind;
 		}
-		
+
 		public void Initialize (EditSession session)
 		{
 			this.prop = session.Property;
@@ -129,13 +129,13 @@ namespace MonoDevelop.Components.PropertyGrid.PropertyEditors
 			entry_Changed (sender, e);
 			evtBind.ShowCode ((IComponent) component, evtBind.GetEvent (prop));
 		}
-		
+
 		void entry_Changed (object sender, EventArgs e)
 		{
 			if (ValueChanged != null)
 				ValueChanged (this, EventArgs.Empty);
 		}
-		
+
 		public event EventHandler ValueChanged;
 	}
 }

@@ -33,14 +33,9 @@ using System;
 using MonoDevelop.Core;
 using MonoDevelop.Core.Instrumentation;
 using Mono.Addins;
-#if GTK3
 using Mono.Addins.GuiGtk3;
-#else
-using Mono.Addins.Gui;
-#endif
 using Mono.Addins.Setup;
 using MonoDevelop.Components.Commands;
-
 using MonoDevelop.Projects;
 using MonoDevelop.Ide.CustomTools;
 using System.Linq;
@@ -293,7 +288,7 @@ namespace MonoDevelop.Ide
 			AutoTestService.Start (commandService, Preferences.EnableAutomatedTesting);
 			AutoTestService.NotifyEvent ("MonoDevelop.Ide.IdeStart");
 
-			Gtk.LinkButton.SetUriHook ((button, uri) => Xwt.Desktop.OpenUrl (uri));
+//			Gtk.LinkButton.SetUriHook ((button, uri) => Xwt.Desktop.OpenUrl (uri));
 
 			// Start initializing the type system service in the background
 			Runtime.GetService<TypeSystemService> ().Ignore ();
@@ -380,9 +375,9 @@ namespace MonoDevelop.Ide
 					}
 				} else if (file.FileName.HasExtension ("mpack")) {
 					var service = new SetupService (AddinManager.Registry);
-					AddinManagerWindow.RunToInstallFile (Workbench.RootWindow.Visible ? Workbench.RootWindow : null,
-					                                     service,
-					                                     file.FileName.FullPath);
+//					AddinManagerWindow.RunToInstallFile (Workbench.RootWindow.Visible ? Workbench.RootWindow : null,
+//					                                     service,
+//					                                     file.FileName.FullPath);
 				} else {
 					filteredFiles.Add (file);
 				}

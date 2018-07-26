@@ -1,21 +1,21 @@
-﻿// 
+﻿//
 // PathBar.cs
-//  
+//
 // Author:
 //       Michael Hutchinson <mhutchinson@novell.com>
-// 
+//
 // Copyright (c) 2010 Novell, Inc. (http://www.novell.com)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -43,7 +43,7 @@ namespace MonoDevelop.Components
 		Left,
 		Right
 	}
-	
+
 	public class PathEntry : IDisposable
 	{
 		Xwt.Drawing.Image darkIcon;
@@ -52,22 +52,22 @@ namespace MonoDevelop.Components
 			get;
 			private set;
 		}
-		
+
 		public string Markup {
 			get;
 			private set;
 		}
-		
+
 		public object Tag {
 			get;
 			set;
 		}
-		
+
 		public bool IsPathEnd {
 			get;
 			set;
 		}
-		
+
 		public EntryPosition Position {
 			get;
 			set;
@@ -93,12 +93,12 @@ namespace MonoDevelop.Components
 		{
 			this.Icon = icon;
 		}
-		
+
 		public PathEntry (string markup)
 		{
 			this.Markup = markup;
 		}
-		
+
 		public override bool Equals (object obj)
 		{
 			if (obj == null)
@@ -145,7 +145,7 @@ namespace MonoDevelop.Components
 			}
 		}
 	}
-	
+
 	class PathBar : Gtk.DrawingArea
 	{
 		const int DefaultTopPadding = 2;
@@ -177,7 +177,7 @@ namespace MonoDevelop.Components
 		const int arrowSize = 6;
 		const int spacing = arrowLeftPadding + arrowRightPadding + arrowSize;
 		const int minRegionSelectorWidth = 30;
-		
+
 		Func<int, Control> createMenuForItem;
 		Widget menuWidget;
 		bool pressMenuWasVisible;
@@ -196,12 +196,12 @@ namespace MonoDevelop.Components
 			CanFocus = true;
 
 			this.topPadding = topPadding;
-			this.Events =  EventMask.ExposureMask | 
+			this.Events =  EventMask.ExposureMask |
 				           EventMask.EnterNotifyMask |
 				           EventMask.LeaveNotifyMask |
-				           EventMask.ButtonPressMask | 
-				           EventMask.ButtonReleaseMask | 
-				           EventMask.KeyPressMask | 
+				           EventMask.ButtonPressMask |
+				           EventMask.ButtonReleaseMask |
+				           EventMask.KeyPressMask |
 					       EventMask.PointerMotionMask;
 			boldAtts.Insert (new Pango.AttrWeight (Pango.Weight.Bold));
 			this.createMenuForItem = createMenuForItem;
@@ -210,12 +210,12 @@ namespace MonoDevelop.Components
 
 		internal static string GetFirstLineFromMarkup (string markup)
 		{
-			var idx = markup.IndexOfAny (new [] { NewLine.CR, NewLine.LF }); 
+			var idx = markup.IndexOfAny (new [] { NewLine.CR, NewLine.LF });
 			if (idx >= 0)
 				return markup.Substring (0, idx);
 			return markup;
 		}
-		
+
 		public new PathEntry[] Path { get; private set; }
 		public int ActiveIndex { get { return activeIndex; } }
 		public bool DrawBottomBorder { get; set; } = true;
@@ -249,7 +249,7 @@ namespace MonoDevelop.Components
 		{
 			if (Path == null)
 				return;
-			
+
 			foreach (var entry in Path) {
 				entry.PerformShowMenu -= PerformShowMenu;
 				entry.Dispose ();
@@ -267,7 +267,7 @@ namespace MonoDevelop.Components
 			this.Path = path ?? new PathEntry[0];
 			this.leftPath = Path.Where (p => p.Position == EntryPosition.Left).ToArray ();
 			this.rightPath = Path.Where (p => p.Position == EntryPosition.Right).ToArray ();
-			
+
 			activeIndex = -1;
 			widths = null;
 			EnsureWidths ();
@@ -275,7 +275,7 @@ namespace MonoDevelop.Components
 
 			UpdatePathAccessibility ();
 		}
-		
+
 		bool ArrSame (PathEntry[] a, PathEntry[] b)
 		{
 			if ((a == null || b == null) && a != b)
@@ -287,24 +287,30 @@ namespace MonoDevelop.Components
 					return false;
 			return true;
 		}
-		
+
 		public void SetActive (int index)
 		{
 			if (index >= leftPath.Length)
 				throw new IndexOutOfRangeException ();
-			
+
 			if (activeIndex != index) {
 				activeIndex = index;
 				widths = null;
 				QueueResize ();
 			}
 		}
-		
-		protected override void OnSizeRequested (ref Requisition requisition)
+
+		protected override void OnGetPreferredHeight (out int min_height, out int natural_height)
 		{
+			natural_height = 0;
+			min_height = height + topPadding + bottomPadding;
+		}
+
+		protected override void OnGetPreferredWidth (out int min_width, out int natural_width)
+		{
+			natural_width = 0;
 			EnsureWidths ();
-			requisition.Width = Math.Max (WidthRequest, 0);
-			requisition.Height = height + topPadding + bottomPadding;
+			min_width = Math.Max (WidthRequest, 0);
 		}
 
 		int[] GetCurrentWidths (out bool widthReduced)
@@ -336,161 +342,161 @@ namespace MonoDevelop.Components
 			entry.Accessible.FrameInParent = rect;
 		}
 
-		protected override bool OnExposeEvent (EventExpose evnt)
-		{
-			Gdk.Rectangle focusRect = new Gdk.Rectangle (0, 0, 0, 0);
-
-			using (var ctx = Gdk.CairoHelper.Create (GdkWindow)) {
-				int index = 0;
-				ctx.Rectangle (0, 0, Allocation.Width, Allocation.Height);
-				ctx.SetSourceColor (Styles.BreadcrumbBackgroundColor.ToCairoColor ());
-				ctx.Fill ();
-
-				if (widths == null)
-					return true;
-
-				// Calculate the total required with, and the reduction to be applied in case it doesn't fit the available space
-
-				bool widthReduced;
-				var currentWidths = GetCurrentWidths (out widthReduced);
-
-				// Render the paths
-
-				int textTopPadding = topPadding + (height - textHeight) / 2;
-				int xpos = leftPadding, ypos = topPadding;
-
-				for (int i = 0; i < leftPath.Length; i++, index++) {
-					bool last = i == leftPath.Length - 1;
-
-					// Reduce the item size when required
-					int itemWidth = currentWidths [i];
-					int x = xpos;
-					xpos += itemWidth;
-
-					SetAccessibilityFrame (leftPath [i], x, itemWidth);
-
-					if (hoverIndex >= 0 && hoverIndex < Path.Length && leftPath [i] == Path [hoverIndex] && (menuVisible || pressed || hovering))
-						DrawButtonBorder (ctx, x - padding, itemWidth + padding + padding);
-
-					if (index == focusedPathIndex) {
-						focusRect = new Gdk.Rectangle (x - padding, 0, itemWidth + (padding * 2) ,0);
-					}
-					int textOffset = 0;
-					if (leftPath [i].DarkIcon != null) {
-						int iy = (height - (int)leftPath [i].DarkIcon.Height) / 2 + topPadding;
-						ctx.DrawImage (this, leftPath [i].DarkIcon, x, iy);
-						textOffset += (int) leftPath [i].DarkIcon.Width + iconSpacing;
-					}
-					
-					layout.Attributes = (i == activeIndex) ? boldAtts : null;
-					layout.FontDescription = IdeServices.FontService.SansFont.CopyModified (Styles.FontScale11);
-					layout.SetMarkup (GetFirstLineFromMarkup (leftPath [i].Markup));
-
-					ctx.Save ();
-
-					// If size is being reduced, ellipsize it
-					bool showText = true;
-					if (widthReduced) {
-						int w = itemWidth - textOffset;
-						if (w > 0) {
-							ctx.Rectangle (x + textOffset, textTopPadding, w, height);
-							ctx.Clip ();
-						} else
-							showText = false;
-					} else
-						layout.Width = -1;
-
-					if (showText) {
-						// Text
-						ctx.SetSourceColor (Styles.BreadcrumbTextColor.ToCairoColor ());
-						ctx.MoveTo (x + textOffset, textTopPadding);
-						Pango.CairoHelper.ShowLayout (ctx, layout);
-					}
-					ctx.Restore ();
-
-					if (!last) {
-						xpos += arrowLeftPadding;
-						if (leftPath [i].IsPathEnd) {
-							Style.PaintVline (Style, GdkWindow, State, evnt.Area, this, "", ypos, ypos + height, xpos - arrowSize / 2);
-						} else {
-							int arrowH = Math.Min (height, arrowSize);
-							int arrowY = ypos + (height - arrowH) / 2;
-							DrawPathSeparator (ctx, xpos, arrowY, arrowH);
-						}
-						xpos += arrowSize + arrowRightPadding;
-					}
-				}
-				
-				int xposRight = Allocation.Width - rightPadding;
-				for (int i = 0; i < rightPath.Length; i++, index++) {
-					//				bool last = i == rightPath.Length - 1;
-
-					// Reduce the item size when required
-					int itemWidth = currentWidths [i + leftPath.Length];
-					xposRight -= itemWidth;
-					xposRight -= arrowSize;
-						
-					int x = xposRight;
-
-					SetAccessibilityFrame (rightPath [i], x, itemWidth);
-
-					if (hoverIndex >= 0 && hoverIndex < Path.Length && rightPath [i] == Path [hoverIndex] && (menuVisible || pressed || hovering))
-						DrawButtonBorder (ctx, x - padding, itemWidth + padding + padding);
-
-					if (index == focusedPathIndex) {
-						focusRect = new Gdk.Rectangle (x - padding, 0, itemWidth + (padding * 2), 0);
-					}
-
-					int textOffset = 0;
-					if (rightPath [i].DarkIcon != null) {
-						ctx.DrawImage (this, rightPath [i].DarkIcon, x, ypos);
-						textOffset += (int) rightPath [i].DarkIcon.Width + padding;
-					}
-					
-					layout.Attributes = (i == activeIndex) ? boldAtts : null;
-					layout.FontDescription = IdeServices.FontService.SansFont.CopyModified (Styles.FontScale11);
-					layout.SetMarkup (GetFirstLineFromMarkup (rightPath [i].Markup));
-
-					ctx.Save ();
-
-					// If size is being reduced, ellipsize it
-					bool showText = true;
-					if (widthReduced) {
-						int w = itemWidth - textOffset;
-						if (w > 0) {
-							ctx.Rectangle (x + textOffset, textTopPadding, w, height);
-							ctx.Clip ();
-						} else
-							showText = false;
-					} else
-						layout.Width = -1;
-
-					if (showText) {
-						// Text
-						ctx.SetSourceColor (Styles.BreadcrumbTextColor.ToCairoColor ());
-						ctx.MoveTo (x + textOffset, textTopPadding);
-						Pango.CairoHelper.ShowLayout (ctx, layout);
-					}
-
-					ctx.Restore ();
-				}
-
-				if (DrawBottomBorder) {
-					ctx.MoveTo (0, Allocation.Height - 0.5);
-					ctx.RelLineTo (Allocation.Width, 0);
-					ctx.SetSourceColor (Styles.BreadcrumbBottomBorderColor.ToCairoColor ());
-					ctx.LineWidth = 1;
-					ctx.Stroke ();
-				}
-				if (HasFocus) {
-					int focusY = topPadding - buttonPadding;
-					int focusHeight = Allocation.Height - topPadding - bottomPadding + buttonPadding * 2;
-
-					Gtk.Style.PaintFocus (Style, GdkWindow, State, Allocation, this, "label", focusRect.X, focusY, focusRect.Width, focusHeight);
-				}
-			}
-			return true;
-		}
+//		protected override bool OnExposeEvent (EventExpose evnt)
+//		{
+//			Gdk.Rectangle focusRect = new Gdk.Rectangle (0, 0, 0, 0);
+//
+//			using (var ctx = Gdk.CairoHelper.Create (GdkWindow)) {
+//				int index = 0;
+//				ctx.Rectangle (0, 0, Allocation.Width, Allocation.Height);
+//				ctx.SetSourceColor (Styles.BreadcrumbBackgroundColor.ToCairoColor ());
+//				ctx.Fill ();
+//
+//				if (widths == null)
+//					return true;
+//
+//				// Calculate the total required with, and the reduction to be applied in case it doesn't fit the available space
+//
+//				bool widthReduced;
+//				var currentWidths = GetCurrentWidths (out widthReduced);
+//
+//				// Render the paths
+//
+//				int textTopPadding = topPadding + (height - textHeight) / 2;
+//				int xpos = leftPadding, ypos = topPadding;
+//
+//				for (int i = 0; i < leftPath.Length; i++, index++) {
+//					bool last = i == leftPath.Length - 1;
+//
+//					// Reduce the item size when required
+//					int itemWidth = currentWidths [i];
+//					int x = xpos;
+//					xpos += itemWidth;
+//
+//					SetAccessibilityFrame (leftPath [i], x, itemWidth);
+//
+//					if (hoverIndex >= 0 && hoverIndex < Path.Length && leftPath [i] == Path [hoverIndex] && (menuVisible || pressed || hovering))
+//						DrawButtonBorder (ctx, x - padding, itemWidth + padding + padding);
+//
+//					if (index == focusedPathIndex) {
+//						focusRect = new Gdk.Rectangle (x - padding, 0, itemWidth + (padding * 2) ,0);
+//					}
+//					int textOffset = 0;
+//					if (leftPath [i].DarkIcon != null) {
+//						int iy = (height - (int)leftPath [i].DarkIcon.Height) / 2 + topPadding;
+//						ctx.DrawImage (this, leftPath [i].DarkIcon, x, iy);
+//						textOffset += (int) leftPath [i].DarkIcon.Width + iconSpacing;
+//					}
+//
+//					layout.Attributes = (i == activeIndex) ? boldAtts : null;
+//					layout.FontDescription = IdeServices.FontService.SansFont.CopyModified (Styles.FontScale11);
+//					layout.SetMarkup (GetFirstLineFromMarkup (leftPath [i].Markup));
+//
+//					ctx.Save ();
+//
+//					// If size is being reduced, ellipsize it
+//					bool showText = true;
+//					if (widthReduced) {
+//						int w = itemWidth - textOffset;
+//						if (w > 0) {
+//							ctx.Rectangle (x + textOffset, textTopPadding, w, height);
+//							ctx.Clip ();
+//						} else
+//							showText = false;
+//					} else
+//						layout.Width = -1;
+//
+//					if (showText) {
+//						// Text
+//						ctx.SetSourceColor (Styles.BreadcrumbTextColor.ToCairoColor ());
+//						ctx.MoveTo (x + textOffset, textTopPadding);
+//						Pango.CairoHelper.ShowLayout (ctx, layout);
+//					}
+//					ctx.Restore ();
+//
+//					if (!last) {
+//						xpos += arrowLeftPadding;
+//						if (leftPath [i].IsPathEnd) {
+//							Style.PaintVline (Style, GdkWindow, State, evnt.Area, this, "", ypos, ypos + height, xpos - arrowSize / 2);
+//						} else {
+//							int arrowH = Math.Min (height, arrowSize);
+//							int arrowY = ypos + (height - arrowH) / 2;
+//							DrawPathSeparator (ctx, xpos, arrowY, arrowH);
+//						}
+//						xpos += arrowSize + arrowRightPadding;
+//					}
+//				}
+//
+//				int xposRight = Allocation.Width - rightPadding;
+//				for (int i = 0; i < rightPath.Length; i++, index++) {
+//					//				bool last = i == rightPath.Length - 1;
+//
+//					// Reduce the item size when required
+//					int itemWidth = currentWidths [i + leftPath.Length];
+//					xposRight -= itemWidth;
+//					xposRight -= arrowSize;
+//
+//					int x = xposRight;
+//
+//					SetAccessibilityFrame (rightPath [i], x, itemWidth);
+//
+//					if (hoverIndex >= 0 && hoverIndex < Path.Length && rightPath [i] == Path [hoverIndex] && (menuVisible || pressed || hovering))
+//						DrawButtonBorder (ctx, x - padding, itemWidth + padding + padding);
+//
+//					if (index == focusedPathIndex) {
+//						focusRect = new Gdk.Rectangle (x - padding, 0, itemWidth + (padding * 2), 0);
+//					}
+//
+//					int textOffset = 0;
+//					if (rightPath [i].DarkIcon != null) {
+//						ctx.DrawImage (this, rightPath [i].DarkIcon, x, ypos);
+//						textOffset += (int) rightPath [i].DarkIcon.Width + padding;
+//					}
+//
+//					layout.Attributes = (i == activeIndex) ? boldAtts : null;
+//					layout.FontDescription = IdeServices.FontService.SansFont.CopyModified (Styles.FontScale11);
+//					layout.SetMarkup (GetFirstLineFromMarkup (rightPath [i].Markup));
+//
+//					ctx.Save ();
+//
+//					// If size is being reduced, ellipsize it
+//					bool showText = true;
+//					if (widthReduced) {
+//						int w = itemWidth - textOffset;
+//						if (w > 0) {
+//							ctx.Rectangle (x + textOffset, textTopPadding, w, height);
+//							ctx.Clip ();
+//						} else
+//							showText = false;
+//					} else
+//						layout.Width = -1;
+//
+//					if (showText) {
+//						// Text
+//						ctx.SetSourceColor (Styles.BreadcrumbTextColor.ToCairoColor ());
+//						ctx.MoveTo (x + textOffset, textTopPadding);
+//						Pango.CairoHelper.ShowLayout (ctx, layout);
+//					}
+//
+//					ctx.Restore ();
+//				}
+//
+//				if (DrawBottomBorder) {
+//					ctx.MoveTo (0, Allocation.Height - 0.5);
+//					ctx.RelLineTo (Allocation.Width, 0);
+//					ctx.SetSourceColor (Styles.BreadcrumbBottomBorderColor.ToCairoColor ());
+//					ctx.LineWidth = 1;
+//					ctx.Stroke ();
+//				}
+//				if (HasFocus) {
+//					int focusY = topPadding - buttonPadding;
+//					int focusHeight = Allocation.Height - topPadding - bottomPadding + buttonPadding * 2;
+//
+//					Gtk.Style.PaintFocus (Style, GdkWindow, State, Allocation, this, "label", focusRect.X, focusY, focusRect.Width, focusHeight);
+//				}
+//			}
+//			return true;
+//		}
 
 		void DrawPathSeparator (Cairo.Context ctx, double x, double y, double size)
 		{
@@ -586,7 +592,7 @@ namespace MonoDevelop.Components
 			}
 			return true;
 		}
-		
+
 		void ShowMenu ()
 		{
 			if (hoverIndex < 0)
@@ -600,8 +606,8 @@ namespace MonoDevelop.Components
 			menuWidget.Hidden += delegate {
 				menuVisible = false;
 				QueueDraw ();
-				
-				//FIXME: for some reason the menu's children don't get activated if we destroy 
+
+				//FIXME: for some reason the menu's children don't get activated if we destroy
 				//directly here, so use a timeout to delay it
 				hideTimeout = GLib.Timeout.Add (100, delegate {
 					hideTimeout = 0;
@@ -627,7 +633,7 @@ namespace MonoDevelop.Components
 		public void HideMenu ()
 		{
 			if (hideTimeout != 0) {
-				GLib.Source.Remove (hideTimeout); 
+				GLib.Source.Remove (hideTimeout);
 			}
 			if (menuWidget != null) {
 				menuWidget.Destroy ();
@@ -643,7 +649,7 @@ namespace MonoDevelop.Components
 				GrabFocus ();
 			}
 		}
-		
+
 		public int GetHoverXPosition (out int w)
 		{
 			bool widthReduced;
@@ -651,7 +657,7 @@ namespace MonoDevelop.Components
 
 			if (Path[hoverIndex].Position == EntryPosition.Left) {
 				int idx = leftPath.TakeWhile (p => p != Path[hoverIndex]).Count ();
-				
+
 				if (idx >= 0) {
 					w = currentWidths[idx];
 					return currentWidths.Take (idx).Sum () + idx * spacing;
@@ -677,7 +683,7 @@ namespace MonoDevelop.Components
 			int itemXPosition = GetHoverXPosition (out w);
 			int dx = ox + this.Allocation.X + itemXPosition;
 			int dy = oy + this.Allocation.Bottom;
-			
+
 			var req = widget.SizeRequest ();
 
 			Xwt.Rectangle geometry = IdeServices.DesktopService.GetUsableMonitorGeometry (Screen.Number, Screen.GetMonitorAtPoint (dx, dy));
@@ -698,9 +704,9 @@ namespace MonoDevelop.Components
 			(widget as Gtk.Window).Resize (width, req.Height);
 			widget.GrabFocus ();
 		}
-		
-		
-		
+
+
+
 		void PositionFunc (Menu mn, out int x, out int y, out bool push_in)
 		{
 			this.GdkWindow.GetOrigin (out x, out y);
@@ -713,42 +719,42 @@ namespace MonoDevelop.Components
 				y -= mn.Requisition.Height;
 				y -= rect.Height;
 			}
-			
+
 			//let GTK reposition the button if it still doesn't fit on the screen
 			push_in = true;
 		}
-		
+
 		protected override bool OnMotionNotifyEvent (EventMotion evnt)
 		{
 			SetHover (GetItemAt ((int)evnt.X, (int)evnt.Y));
 			return true;
 		}
-		
+
 		protected override bool OnLeaveNotifyEvent (EventCrossing evnt)
 		{
 			pressed = false;
 			SetHover (-1);
 			return true;
 		}
-		
+
 		protected override bool OnEnterNotifyEvent (EventCrossing evnt)
 		{
 			SetHover (GetItemAt ((int)evnt.X, (int)evnt.Y));
 			return true;
 		}
-		
+
 		void SetHover (int i)
 		{
 			bool oldHovering = hovering;
 			hovering = i > -1;
-			
+
 			if (hoverIndex != i || oldHovering != hovering) {
 				if (hovering)
 					hoverIndex = i;
 				QueueDraw ();
 			}
 		}
-		
+
 		public int IndexOf (PathEntry entry)
 		{
 			return Path.TakeWhile (p => p != entry).Count ();
@@ -776,14 +782,14 @@ namespace MonoDevelop.Components
 			}
 			return -1;
 		}
-		
+
 		void EnsureLayout ()
 		{
 			if (layout != null)
 				layout.Dispose ();
 			layout = new Pango.Layout (PangoContext);
 		}
-		
+
 		void CreateWidthArray (int[] result, int index, PathEntry[] path)
 		{
 			// Assume that there will be icons of at least 16 pixels. This avoids
@@ -809,9 +815,9 @@ namespace MonoDevelop.Components
 
 		void EnsureWidths ()
 		{
-			if (widths != null) 
+			if (widths != null)
 				return;
-			
+
 			layout.SetText ("#");
 			int w;
 			layout.GetPixelSize (out w, out this.height);
@@ -821,14 +827,14 @@ namespace MonoDevelop.Components
 			CreateWidthArray (widths, 0, leftPath);
 			CreateWidthArray (widths, leftPath.Length, rightPath);
 		}
-		
+
 		protected override void OnStyleSet (Style previous)
 		{
 			base.OnStyleSet (previous);
 			KillLayout ();
 			EnsureLayout ();
 		}
-		
+
 		void KillLayout ()
 		{
 			if (layout == null)
@@ -836,7 +842,7 @@ namespace MonoDevelop.Components
 			layout.Dispose ();
 			layout = null;
 			boldAtts.Dispose ();
-			
+
 			widths = null;
 		}
 

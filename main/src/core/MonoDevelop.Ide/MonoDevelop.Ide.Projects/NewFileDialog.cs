@@ -41,9 +41,6 @@ using System.Linq;
 using MonoDevelop.Components;
 using MonoDevelop.Components.AutoTest;
 using System.ComponentModel;
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Projects
 {
@@ -78,7 +75,8 @@ namespace MonoDevelop.Ide.Projects
 			this.basePath = basePath;
 
 			BorderWidth = 6;
-			HasSeparator = false;
+			TransientFor = IdeApp.Workbench.RootWindow;
+//			HasSeparator = false;
 
 			InitializeComponents ();
 
@@ -172,7 +170,7 @@ namespace MonoDevelop.Ide.Projects
 
 		void CategoryChange (object sender, EventArgs e)
 		{
-			TreeModel treeModel;
+			ITreeModel treeModel;
 			TreeIter treeIter;
 
 			if (catView.Selection.GetSelected (out treeModel, out treeIter)) {

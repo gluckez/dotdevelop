@@ -45,7 +45,7 @@ namespace MonoDevelop.Components
 			ActionHandler.PerformShowMenu += PerformShowMenu;
 		}
 
-		public ContextMenuTreeView (TreeModel model) : base (model)
+		public ContextMenuTreeView (Gtk.ITreeModel model) : base (model)
 		{
 		}
 

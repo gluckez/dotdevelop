@@ -36,9 +36,6 @@ using MonoDevelop.Core;
 using MonoDevelop.Ide.Gui;
 using MonoDevelop.Projects;
 using MonoDevelop.Components;
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
-#endif
 
 namespace MonoDevelop.Ide.Gui.Pads
 {
@@ -62,7 +59,7 @@ namespace MonoDevelop.Ide.Gui.Pads
 			tree_view.RowExpanded += new Gtk.RowExpandedHandler (RowExpanded);
 			tree_view.RowActivated += RowActivated;
 
-			store = new TreeStore (typeof (string), typeof (Node));
+			store = new TreeStore (typeof (string), typeof (Monodoc.Node));
 			tree_view.Model = store;
 			tree_view.HeadersVisible = false;
 
@@ -92,7 +89,7 @@ namespace MonoDevelop.Ide.Gui.Pads
 		Hashtable populated = new Hashtable ();
 		void RowExpanded (object o, Gtk.RowExpandedArgs args)
 		{
-			Node node = (Node)store.GetValue (args.Iter, 1);
+			Monodoc.Node node = (Monodoc.Node)store.GetValue (args.Iter, 1);
 			if (node == null)
 				return;
 			if (populated.ContainsKey (node))
@@ -112,7 +109,7 @@ namespace MonoDevelop.Ide.Gui.Pads
 		void RowActivated (object o, EventArgs e)
 		{
 			Gtk.TreeIter iter;
-			Gtk.TreeModel model;
+			Gtk.ITreeModel model;
 
 			if (tree_view.Selection.GetSelected (out model, out iter)) {
 				var path = store.GetPath (iter);
@@ -124,7 +121,7 @@ namespace MonoDevelop.Ide.Gui.Pads
 					return;
 				}
 
-				Node n = (Node)store.GetValue (iter, 1);
+				Monodoc.Node n = (Monodoc.Node)store.GetValue (iter, 1);
 
 				IdeServices.HelpOperations.ShowHelp (n.PublicUrl);
 			}
@@ -133,11 +130,11 @@ namespace MonoDevelop.Ide.Gui.Pads
 #pragma warning disable 618
 		void PopulateNode (TreeIter parent)
 		{
-			Node node = (Node)store.GetValue (parent, 1);
+			Monodoc.Node node = (Monodoc.Node)store.GetValue (parent, 1);
 			if (node.Nodes == null)
 				return;
 
-			foreach (Node n in node.Nodes) {
+			foreach (Monodoc.Node n in node.Nodes) {
 				store.AppendValues (parent, n.Caption, n);
 			}
 		}

@@ -44,21 +44,21 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 		Gtk.ComboBox configCombo;
 		Gtk.ListStore configListStore;
 		const int configListStoreConfigNameColumn = 1;
-		Gtk.ComboBox platformCombo;
+		Gtk.ComboBoxText platformCombo;
 		List<ItemConfiguration> currentConfigs = new List<ItemConfiguration> ();
 		List<string> platforms = new List<string> ();
 		Gtk.Widget panelWidget;
-		
+
 		bool loading;
 		bool widgetCreated;
 		bool allowMixedConfigurations;
 		int lastConfigSelection = -1;
 		int lastPlatformSelection = -1;
-		
+
 		internal ConfigurationData ConfigurationData {
 			get { return dialog.ConfigurationData; }
 		}
-		
+
 		public override void Initialize (OptionsDialog dialog, object dataObject)
 		{
 			base.Initialize (dialog, dataObject);
@@ -67,7 +67,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				throw new System.InvalidOperationException ("MultiConfigItemOptionsPanel can only be used in options dialogs of type MultiConfigItemOptionsDialog. Panel type: " + GetType ());
 			this.dialog.ConfigurationData.ConfigurationsChanged += OnConfigurationsChanged;
 		}
-		
+
 		public ItemConfiguration CurrentConfiguration {
 			get {
 				if (allowMixedConfigurations)
@@ -99,7 +99,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				}
 			}
 		}
-		
+
 		Control IOptionsPanel.CreatePanelWidget ()
 		{
 			Gtk.VBox cbox = new Gtk.VBox (false, 6);
@@ -117,7 +117,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			combosBox.PackStart (configCombo, false, false, 0);
 			var platformLabel = new Gtk.Label (GettextCatalog.GetString ("Platform:"));
 			combosBox.PackStart (platformLabel, false, false, 0);
-			platformCombo = Gtk.ComboBox.NewText ();
+			platformCombo = new Gtk.ComboBoxText ();
 			platformCombo.Name = "panelWidgetPlatformCombo";
 			combosBox.PackStart (platformCombo, false, false, 0);
 			cbox.PackStart (new Gtk.HSeparator (), false, false, 0);
@@ -135,25 +135,25 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 
 			cbox.Hidden += OnPageHidden;
 			cbox.Shown += OnPageShown;
-			
+
 			lastConfigSelection = -1;
 			lastPlatformSelection = -1;
-			
+
 			FillConfigurations ();
 			UpdateSelection ();
-			
+
 			configCombo.Changed += OnConfigChanged;
 			platformCombo.Changed += OnConfigChanged;
-			
+
 			bool oldMixed = allowMixedConfigurations;
 			Gtk.Widget child = CreatePanelWidget ();
-			
+
 			//HACK: work around bug 469427 - broken themes match on widget names
 			if (child.Name.IndexOf ("Panel") > 0)
 				child.Name = child.Name.Replace ("Panel", "_");
-			
+
 			cbox.PackStart (child, true, true, 0);
-			
+
 			if (allowMixedConfigurations != oldMixed) {
 				// If mixed mode has changed, update the configuration list
 				FillConfigurations ();
@@ -161,22 +161,22 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			}
 			widgetCreated = true;
 			panelWidget = child;
-			
+
 			if (currentConfigs.Count > 0) {
 				panelWidget.Sensitive = true;
 				LoadConfigData ();
 			}
 			else
 				panelWidget.Sensitive = false;
-			
+
 			return cbox;
 		}
-		
+
 		void FillConfigurations ()
 		{
 			loading = true;
 			configListStore.Clear ();
-			
+
 			if (allowMixedConfigurations)
 				AppendComboConfig (GettextCatalog.GetString ("All Configurations"));
 
@@ -185,7 +185,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				if (configs.Add (config.Name))
 					AppendComboConfig (config.Name);
 			}
-			
+
 			loading = false;
 		}
 
@@ -203,21 +203,21 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 
 			configListStore.AppendValues (displayName, configName);
 		}
-		
+
 		protected virtual bool ConfigurationsAreEqual (IEnumerable<ItemConfiguration> configs)
 		{
 			return false;
 		}
-		
+
 		protected virtual IEnumerable<ItemConfiguration> FilterConfigurations (IEnumerable<ItemConfiguration> configurations)
 		{
 			return configurations;
 		}
-		
+
 		void FillPlatforms ()
 		{
 			loading = true;
-			
+
 			((Gtk.ListStore)platformCombo.Model).Clear ();
 			platforms.Clear ();
 
@@ -242,12 +242,12 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			}
 			return null;
 		}
-		
+
 		void OnConfigChanged (object s, EventArgs a)
 		{
 			if (loading)
 				return;
-			
+
 			if (!ValidateChanges ()) {
 				loading = true;
 				configCombo.Active = lastConfigSelection;
@@ -255,7 +255,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				loading = false;
 				return;
 			}
-			
+
 			if (s == configCombo) {
 				FillPlatforms ();
 				SelectPlatform (dialog.CurrentPlatform);
@@ -277,25 +277,25 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			lastPlatformSelection = platformCombo.Active;
 
 			currentConfigs.Clear ();
-			
+
 			string configName = dialog.CurrentConfig = GetSelectedComboConfig ();
 			if (configName == GettextCatalog.GetString ("All Configurations"))
 				configName = null;
-			
+
 			string platform = GetPlatformId (dialog.CurrentPlatform = platformCombo.ActiveText);
-			
+
 			foreach (ItemConfiguration config in FilterConfigurations (dialog.ConfigurationData.Configurations)) {
 				if ((configName == null || config.Name == configName) && config.Platform == platform)
 					currentConfigs.Add (config);
 			}
-			
+
 			if (widgetCreated && currentConfigs.Count > 0) {
 				panelWidget.Sensitive = true;
 				LoadConfigData ();
 			} else if (widgetCreated)
 				panelWidget.Sensitive = false;
 		}
-		
+
 		void OnConfigurationsChanged (object s, EventArgs a)
 		{
 			if (!widgetCreated)
@@ -306,7 +306,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			FillConfigurations ();
 			UpdateSelection ();
 		}
-		
+
 		void UpdateSelection ()
 		{
 			if (allowMixedConfigurations && ConfigurationsAreEqual (FilterConfigurations (dialog.ConfigurationData.Configurations))) {
@@ -317,7 +317,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 
 			if (lastConfigSelection != configCombo.Active)
 				FillPlatforms ();
-			
+
 			SelectPlatform (dialog.CurrentPlatform);
 			UpdateCurrentConfiguration ();
 		}
@@ -326,16 +326,16 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 		{
 			SaveConfigurations ();
 		}
-		
+
 		void OnPageShown (object s, EventArgs a)
 		{
 			UpdateSelection ();
 		}
-		
+
 		void SelectConfiguration (string config)
 		{
 			loading = true;
-			
+
 			Gtk.TreeIter it;
 			if (configCombo.Model.GetIterFirst (out it)) {
 				do {
@@ -346,17 +346,17 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				}
 				while (configCombo.Model.IterNext (ref it));
 			}
-			
+
 			if (configCombo.Active == -1)
 				configCombo.Active = 0;
-			
+
 			loading = false;
 		}
-		
+
 		void SelectPlatform (string platform)
 		{
 			loading = true;
-			
+
 			Gtk.TreeIter it;
 			if (platformCombo.Model.GetIterFirst (out it)) {
 				do {
@@ -367,21 +367,21 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 				}
 				while (platformCombo.Model.IterNext (ref it));
 			}
-			
+
 			if (platformCombo.Active == -1)
 				platformCombo.Active = 0;
-			
+
 			loading = false;
 		}
-		
+
 		void IOptionsPanel.ApplyChanges ()
 		{
 			if (currentConfigs.Count > 0)
 				ApplyChanges ();
 		}
-		
+
 		public abstract void LoadConfigData ();
-		
+
 		internal static string GetPlatformName (string id)
 		{
 			if (string.IsNullOrEmpty (id))
@@ -389,7 +389,7 @@ namespace MonoDevelop.Ide.Gui.Dialogs
 			else
 				return id;
 		}
-		
+
 		internal static string GetPlatformId (string name)
 		{
 			if (name == GettextCatalog.GetString ("Any CPU"))

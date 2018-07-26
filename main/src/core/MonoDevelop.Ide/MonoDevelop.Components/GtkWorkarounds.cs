@@ -39,13 +39,9 @@ using System.Text.RegularExpressions;
 #if MAC
 using AppKit;
 using MonoDevelop.Components.Mac;
-using CoreGraphics;
 #endif
 #if WIN32
 using System.Windows.Input;
-#endif
-#if GTK3
-using TreeModel = Gtk.ITreeModel;
 #endif
 
 namespace MonoDevelop.Components
@@ -989,8 +985,8 @@ namespace MonoDevelop.Components
 
 			public void ConnectTo (Gtk.Label label)
 			{
-				var signal = GLib.Signal.Lookup (label, "activate-link", typeof(ActivateLinkEventArgs));
-				signal.AddDelegate (new EventHandler<ActivateLinkEventArgs> (HandleLink));
+//				var signal = GLib.Signal.Lookup (label, "activate-link", typeof(ActivateLinkEventArgs));
+//				signal.AddDelegate (new EventHandler<ActivateLinkEventArgs> (HandleLink));
 			}
 
 			class ActivateLinkEventArgs : GLib.SignalArgs
@@ -1056,7 +1052,7 @@ namespace MonoDevelop.Components
 #endif
 		//the GTK# version of this has 'out' instead of 'ref', preventing passing the x,y values in
 		public static bool GetTooltipContext (this TreeView tree, ref int x, ref int y, bool keyboardTip,
-			out TreeModel model, out TreePath path, out Gtk.TreeIter iter)
+			out ITreeModel model, out TreePath path, out Gtk.TreeIter iter)
 		{
 			return Xwt.GtkBackend.GtkWorkarounds.GetTooltipContext (tree, ref x, ref y, keyboardTip, out model,
 				out path, out iter);
@@ -1246,21 +1242,21 @@ namespace MonoDevelop.Components
 		[DllImport (PangoUtil.LIBGTK, CallingConvention = CallingConvention.Cdecl)]
 		static extern void gtk_object_set_data (IntPtr raw, IntPtr key, IntPtr data);
 
-		public static void SetData<T> (Gtk.Object gtkobject, string key, T data) where T: struct
-		{
-			IntPtr pkey = GLib.Marshaller.StringToPtrGStrdup (key);
-			IntPtr pdata = Marshal.AllocHGlobal(Marshal.SizeOf(data));
-			Marshal.StructureToPtr(data, pdata, false);
-			gtk_object_set_data (gtkobject.Handle, pkey, pdata);
-			Marshal.FreeHGlobal(pdata);
-			GLib.Marshaller.Free (pkey);
-			gtkobject.Data [key] = data;
-		}
+//		public static void SetData<T> (Gtk.Object gtkobject, string key, T data) where T: struct
+//		{
+//			IntPtr pkey = GLib.Marshaller.StringToPtrGStrdup (key);
+//			IntPtr pdata = Marshal.AllocHGlobal(Marshal.SizeOf(data));
+//			Marshal.StructureToPtr(data, pdata, false);
+//			gtk_object_set_data (gtkobject.Handle, pkey, pdata);
+//			Marshal.FreeHGlobal(pdata);
+//			GLib.Marshaller.Free (pkey);
+//			gtkobject.Data [key] = data;
+//		}
 #endif
 
 		public static void SetTransparentBgHint (this Widget widget, bool enable)
 		{
-			Xwt.GtkBackend.GtkWorkarounds.SetTransparentBgHint (widget,enable);
+			//SetData (widget, "transparent-bg-hint", enable);
 		}
 
 		public static void SetMarkup (this Gtk.TextView view, string pangoMarkup)
