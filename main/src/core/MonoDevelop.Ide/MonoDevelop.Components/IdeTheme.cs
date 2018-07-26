@@ -74,8 +74,8 @@ namespace MonoDevelop.Components
 
 		internal static void InitializeGtk (string progname, ref string[] args)
 		{
-			if (Gtk.Settings.Default != null)
-				throw new InvalidOperationException ("Gtk already initialized!");
+		//	if (Gtk.Settings.Default != null)
+		//		throw new InvalidOperationException ("Gtk already initialized!");
 
 			IdeStartupTracker.StartupTracker.MarkSection ("PreGtkInitialization");
 #if MAC
@@ -137,7 +137,7 @@ namespace MonoDevelop.Components
 		{
 			if (Gtk.Settings.Default == null)
 				return;
-			
+
 			if (Platform.IsLinux) {
 				DefaultTheme = Gtk.Settings.Default.ThemeName;
 				string theme = IdeApp.Preferences.UserInterfaceThemeName;
@@ -173,7 +173,7 @@ namespace MonoDevelop.Components
 
 			var use_bundled_theme = false;
 
-			
+
 			// Use the bundled gtkrc only if the Xamarin theme is installed
 			if (File.Exists (Path.Combine (Gtk.Rc.ModuleDir, "libxamarin.so")) || File.Exists (Path.Combine (Gtk.Rc.ModuleDir, "libxamarin.dll")))
 				use_bundled_theme = true;
@@ -186,12 +186,12 @@ namespace MonoDevelop.Components
 				if (File.Exists (Path.Combine (gtkBasePath, "lib\\gtk-2.0\\2.10.0\\engines\\libxamarin.dll")))
 				    use_bundled_theme = true;
 			}
-			
+
 			if (use_bundled_theme) {
-				
+
 				if (!Directory.Exists (UserProfile.Current.ConfigDir))
 					Directory.CreateDirectory (UserProfile.Current.ConfigDir);
-				
+
 				if (Platform.IsWindows) {
 					// HACK: Gtk Bug: Rc.ReparseAll () and the include "[rcfile]" gtkrc statement are broken on Windows.
 					//                We must provide our own XDG folder structure to switch bundled themes.
@@ -221,14 +221,14 @@ namespace MonoDevelop.Components
 					}
 
 				} else if (Platform.IsMac) {
-					
+
 					var gtkrc = "gtkrc.mac";
 					if (IdeApp.Preferences.UserInterfaceTheme == Theme.Dark)
 						gtkrc += "-dark";
 					gtkrc = PropertyService.EntryAssemblyPath.Combine (gtkrc);
 
 					LoggingService.LogInfo ("GTK: Using gtkrc from {0}", gtkrc);
-					
+
 					// Generate a dummy rc file and use that to include the real rc. This allows changing the rc
 					// on the fly. All we have to do is rewrite the dummy rc changing the include and call ReparseAll
 					var rcFile = UserProfile.Current.ConfigDir.Combine ("gtkrc");

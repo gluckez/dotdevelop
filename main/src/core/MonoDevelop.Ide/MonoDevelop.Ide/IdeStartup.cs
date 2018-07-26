@@ -14,10 +14,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -123,7 +123,7 @@ namespace MonoDevelop.Ide
 			SetupExceptionManager ();
 
 			// explicit GLib type system initialization for GLib < 2.36 before any other type system access
-			GLib.GType.Init ();
+			//GLib.GType.Init ();
 
 			var args = options.RemainingArgs.ToArray ();
 
@@ -159,8 +159,8 @@ namespace MonoDevelop.Ide
 
 			// XWT initialization
 			FilePath p = typeof (IdeStartup).Assembly.Location;
-			Runtime.LoadAssemblyFrom (p.ParentDirectory.Combine ("Xwt.Gtk.dll"));
-			Xwt.Application.InitializeAsGuest (Xwt.ToolkitType.Gtk);
+			Runtime.LoadAssemblyFrom (p.ParentDirectory.Combine ("Xwt.Gtk3.dll"));
+			Xwt.Application.InitializeAsGuest (Xwt.ToolkitType.Gtk3);
 			Xwt.Toolkit.CurrentEngine.RegisterBackend<IExtendedTitleBarWindowBackend, GtkExtendedTitleBarWindowBackend> ();
 			Xwt.Toolkit.CurrentEngine.RegisterBackend<IExtendedTitleBarDialogBackend, GtkExtendedTitleBarDialogBackend> ();
 			IdeTheme.SetupXwtTheme ();
@@ -339,15 +339,15 @@ namespace MonoDevelop.Ide
 					IdeApp.OpenFilesAsync (startupInfo.RequestedFileList, GetOpenWorkspaceOnStartupMetadata ()).Ignore ();
 					startupInfo.OpenedFiles = startupInfo.HasFiles;
 				}
-				
+
 				monitor.Step (1);
-			
+
 			} catch (Exception e) {
 				error = e;
 			} finally {
 				monitor.Dispose ();
 			}
-			
+
 			if (error != null) {
 				string message = BrandingService.BrandApplicationName (GettextCatalog.GetString ("MonoDevelop failed to start"));
 				message = message + "\n\n" + error.Message;
@@ -360,7 +360,7 @@ namespace MonoDevelop.Ide
 				using (AddinLoadErrorDialog dlg = new AddinLoadErrorDialog (errorsList.ToArray (), true))
 					dlg.Run ();
 			}
-			
+
 			errorsList = null;
 			AddinManager.AddinLoadError -= OnAddinError;
 
@@ -491,17 +491,17 @@ namespace MonoDevelop.Ide
 				while (lockupCheckRunning) {
 					const int waitTimeout = 5000;
 					const int maxResponseTime = 10000;
-					Thread.Sleep (waitTimeout); 
+					Thread.Sleep (waitTimeout);
 					if ((DateTime.Now - lastIdle).TotalMilliseconds > maxResponseTime) {
 						var pid = Process.GetCurrentProcess ().Id;
-						Mono.Unix.Native.Syscall.kill (pid, Mono.Unix.Native.Signum.SIGQUIT); 
+						Mono.Unix.Native.Syscall.kill (pid, Mono.Unix.Native.Signum.SIGQUIT);
 						return;
 					}
 				}
 			});
 			lockupCheckThread.Name = "Lockup check";
 			lockupCheckThread.IsBackground = true;
-			lockupCheckThread.Start (); 
+			lockupCheckThread.Start ();
 		}
 
 		[System.Runtime.InteropServices.DllImport("kernel32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode, SetLastError = true)]
@@ -566,11 +566,11 @@ namespace MonoDevelop.Ide
 			const BindingFlags flags = BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Static;
 			return md.InvokeMember ("Show", flags, null, null, new object[] { message, caption, okCancel }).Equals (ok);
 		}
-		
+
 		public bool Initialized {
 			get { return initialized; }
 		}
-		
+
 		static void OnExtensionChanged (object s, ExtensionNodeEventArgs args)
 		{
 			if (args.Change == ExtensionChange.Add) {
@@ -588,33 +588,33 @@ namespace MonoDevelop.Ide
 				});
 			}
 		}
-		
+
 		void OnAddinError (object s, AddinErrorEventArgs args)
 		{
 			if (errorsList != null)
 				errorsList.Add (new AddinError (args.AddinId, args.Message, args.Exception, false));
 		}
 
-		static bool OpenFile (string file) 
+		static bool OpenFile (string file)
 		{
 			if (string.IsNullOrEmpty (file))
 				return false;
-			
+
 			Match fileMatch = StartupInfo.FileExpression.Match (file);
 			if (null == fileMatch || !fileMatch.Success)
 				return false;
-				
+
 			int line = 1,
 			    column = 1;
-			
+
 			file = fileMatch.Groups["filename"].Value;
 			if (fileMatch.Groups["line"].Success)
 				int.TryParse (fileMatch.Groups["line"].Value, out line);
 			if (fileMatch.Groups["column"].Success)
 				int.TryParse (fileMatch.Groups["column"].Value, out column);
-				
+
 			try {
-				if (MonoDevelop.Projects.Services.ProjectService.IsWorkspaceItemFile (file) || 
+				if (MonoDevelop.Projects.Services.ProjectService.IsWorkspaceItemFile (file) ||
 					MonoDevelop.Projects.Services.ProjectService.IsSolutionItemFile (file)) {
 						IdeApp.Workspace.OpenWorkspaceItem (file);
 				} else {
@@ -625,7 +625,7 @@ namespace MonoDevelop.Ide
 			IdeApp.Workbench.Present ();
 			return false;
 		}
-		
+
 		void CheckFileWatcher ()
 		{
 			string watchesFile = "/proc/sys/fs/inotify/max_user_watches";
@@ -638,7 +638,7 @@ namespace MonoDevelop.Ide
 						msg += "MonoDevelop will switch to managed file watching.\n";
 						msg += "See http://monodevelop.com/Inotify_Watches_Limit for more info.";
 						LoggingService.LogWarning (BrandingService.BrandApplicationName (msg));
-						Runtime.ProcessService.EnvironmentVariableOverrides["MONO_MANAGED_WATCHER"] = 
+						Runtime.ProcessService.EnvironmentVariableOverrides["MONO_MANAGED_WATCHER"] =
 							Environment.GetEnvironmentVariable ("MONO_MANAGED_WATCHER");
 						Environment.SetEnvironmentVariable ("MONO_MANAGED_WATCHER", "1");
 					}
@@ -720,7 +720,7 @@ namespace MonoDevelop.Ide
 				LoggingService.LogInternalError (msg, ex);
 			}
 		}
-		
+
 		public static int Main (string[] args, IdeCustomizer customizer = null)
 		{
 
@@ -729,7 +729,7 @@ namespace MonoDevelop.Ide
 			var options = MonoDevelopOptions.Parse (args);
 			if (options.ShowHelp || options.Error != null)
 				return options.Error != null? -1 : 0;
-			
+
 			LoggingService.Initialize (options.RedirectOutput);
 
 			if (customizer == null)
