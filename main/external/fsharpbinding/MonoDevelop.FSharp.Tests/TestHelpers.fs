@@ -1,34 +1,26 @@
 ﻿namespace MonoDevelopTests
 open System
-open FSharp.Compiler.SourceCodeServices
-open FSharp.Compiler.Text
+open Microsoft.FSharp.Compiler.SourceCodeServices
 open MonoDevelop.FSharp
 open MonoDevelop.Ide.Editor
 open MonoDevelop.Ide.TypeSystem
 open MonoDevelop.Core
 open MonoDevelop.Core.Text
-open MonoDevelop.Ide
-open MonoDevelop.Core.ProgressMonitoring
-open System.Threading.Tasks
-open System.Runtime.CompilerServices
 
 module FixtureSetup =
     let firstRun = ref true
 
-    let toTask computation : Task = Async.StartImmediateAsTask computation :> _
-
-    [<AsyncStateMachine(typeof<Task>)>]
-    let initialiseMonoDevelopAsync() = toTask <| async {
+    let initialiseMonoDevelop() =
         if !firstRun then
             firstRun := false
             //Environment.SetEnvironmentVariable ("MONO_ADDINS_REGISTRY", "/tmp")
             //Environment.SetEnvironmentVariable ("XDG_CONFIG_HOME", "/tmp")
             MonoDevelop.FSharp.MDLanguageService.DisableVirtualFileSystem()
+            Xwt.Application.Initialize (Xwt.ToolkitType.Gtk3)
             Runtime.Initialize (true)
-            do! IdeApp.Initialize ((new ConsoleProgressMonitor()))
-            do! Runtime.GetService<TypeSystemService> ()
+            MonoDevelop.Ide.DesktopService.Initialize()
+
             GuiUnit.TestRunner.ExitCode |> ignore // hack to get GuiUnit into the AppDomain
-    }
 
 module TestHelpers =
     let filename = if Platform.IsWindows then "c:\\test.fsx" else "test.fsx"
@@ -37,9 +29,8 @@ module TestHelpers =
         async {
             try
                 let checker = FSharpChecker.Create()
-                let sourceText = SourceText.ofString source
-                let! projOptions, _errors = checker.GetProjectOptionsFromScript(filename, sourceText)
-                let! parseResults, checkAnswer = checker.ParseAndCheckFileInProject(filename, 0, sourceText , projOptions)
+                let! projOptions, _errors = checker.GetProjectOptionsFromScript(filename, source)
+                let! parseResults, checkAnswer = checker.ParseAndCheckFileInProject(filename, 0, source , projOptions)
 
                 // Construct new typed parse result if the task succeeded
                 let results =
@@ -56,6 +47,8 @@ module TestHelpers =
                 return ParseAndCheckResults(None, None) }
 
     let createDocWithParseResults source compilerDefines (parseFile:string -> ParseAndCheckResults) =
+        FixtureSetup.initialiseMonoDevelop()
+
         let results = parseFile source
 
         results.CheckResults |> Option.iter(fun r -> if r.Errors.Length > 0 then printfn "%A" r.Errors)
