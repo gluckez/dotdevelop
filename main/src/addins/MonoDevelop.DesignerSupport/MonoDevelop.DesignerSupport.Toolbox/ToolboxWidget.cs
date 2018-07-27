@@ -59,7 +59,7 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 			set {
 				listMode = value;
 				this.QueueResize ();
-				this.ScrollToSelectedItem ();
+//				this.ScrollToSelectedItem ();
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 			set {
 				showCategories = value;
 				this.QueueResize ();
-				this.ScrollToSelectedItem ();
+//				this.ScrollToSelectedItem ();
 			}
 		}
 
@@ -146,7 +146,7 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 			handCursor = new Cursor (CursorType.Hand1);
 
 			var actionHandler = new ActionDelegate (this);
-			actionHandler.PerformShowMenu += PerformShowMenu;
+//			actionHandler.PerformShowMenu += PerformShowMenu;
 		}
 
 		protected override void OnStyleSet (Gtk.Style previous_style)
@@ -179,7 +179,7 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 
 		protected override void OnDestroyed ()
 		{
-			HideTooltipWindow ();
+//			HideTooltipWindow ();
 			if (this.layout != null) {
 				this.layout.Dispose ();
 				this.layout = null;
@@ -326,11 +326,14 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 		void ProcessExpandAnimation (Cairo.Context cr, ToolboxWidgetCategory lastCategory, int lastCategoryYpos, Cairo.Color backColor, Gdk.Rectangle area, ref int ypos)
 		{
 			if (lastCategory != null && lastCategory.AnimatingExpand) {
-				int newypos;
-				if (lastCategory.IsExpanded) {
-					newypos = lastCategoryYpos + (int)(lastCategory.AnimationPosition * (ypos - lastCategoryYpos));
-				} else {
-					newypos = ypos - (int)(lastCategory.AnimationPosition * (ypos - lastCategoryYpos));
+				int newypos = lastCategory.IsExpanded ? lastCategoryYpos + lastCategory.AnimationHeight : ypos + lastCategory.AnimationHeight;
+				if (newypos < lastCategoryYpos) {
+					newypos = lastCategoryYpos;
+//					StopExpandAnimation (lastCategory);
+				}
+				if (newypos > ypos) {
+					newypos = ypos;
+//					StopExpandAnimation (lastCategory);
 				}
 
 				// Clear the area where the category will be drawn since it will be
@@ -342,157 +345,173 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 			}
 		}
 
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
-		{
-			ToolboxWidgetItem nextItem;
+//		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+//		{
+//			Item nextItem;
+//
+//			// Handle keyboard toolip popup
+//			if ((evnt.Key == Gdk.Key.F1 && (evnt.State & Gdk.ModifierType.ControlMask) == Gdk.ModifierType.ControlMask)) {
+//				if (this.SelectedItem != null) {
+//					int vadjustment = (this.vAdjustement != null ? (int)this.vAdjustement.Value : 0);
+//					Gdk.Rectangle rect = GetItemExtends (SelectedItem);
+//					ShowTooltip (SelectedItem, 0,rect.X, rect.Bottom - vadjustment );
+//				}
+//				return true;
+//			}
+//
+//			switch (evnt.Key) {
+//			case Gdk.Key.KP_Enter:
+//			case Gdk.Key.Return:
+//				if (this.SelectedItem != null)
+//					this.OnActivateSelectedItem (EventArgs.Empty);
+//				return true;
+//			case Gdk.Key.KP_Up:
+//			case Gdk.Key.Up:
+//				if (this.listMode || this.SelectedItem is Category) {
+//					this.SelectedItem = GetPrevItem (this.SelectedItem);
+//				} else {
+//					nextItem = GetItemAbove (this.SelectedItem);
+//					this.SelectedItem = nextItem != this.SelectedItem ? nextItem : GetCategory (this.SelectedItem);
+//				}
+//				this.QueueDraw ();
+//				return true;
+//			case Gdk.Key.KP_Down:
+//			case Gdk.Key.Down:
+//				if (this.listMode || this.SelectedItem is Category) {
+//					this.SelectedItem = GetNextItem (this.SelectedItem);
+//				} else {
+//					nextItem = GetItemBelow (this.SelectedItem);
+//					if (nextItem == this.SelectedItem) {
+//						Category category = GetCategory (this.SelectedItem);
+//						nextItem = GetNextCategory (category);
+//						if (nextItem == category)
+//							nextItem = this.SelectedItem;
+//					}
+//					this.SelectedItem = nextItem;
+//				}
+//				this.QueueDraw ();
+//				return true;
+//
+//			case Gdk.Key.KP_Left:
+//			case Gdk.Key.Left:
+//				if (this.SelectedItem is Category) {
+//					SetCategoryExpanded ((Category)this.SelectedItem, false);
+//				} else {
+//					if (this.listMode) {
+//						this.SelectedItem = GetCategory (this.SelectedItem);
+//					} else {
+//						this.SelectedItem = GetItemLeft (this.SelectedItem);
+//					}
+//				}
+//				this.QueueDraw ();
+//				return true;
+//
+//			case Gdk.Key.KP_Right:
+//			case Gdk.Key.Right:
+//				if (this.SelectedItem is Category) {
+//					Category selectedCategory = ((Category)this.SelectedItem);
+//					if (selectedCategory.IsExpanded) {
+//						if (selectedCategory.ItemCount > 0)
+//							this.SelectedItem = selectedCategory.Items[0];
+//					} else {
+//						SetCategoryExpanded (selectedCategory, true);
+//					}
+//				} else {
+//					if (this.listMode) {
+//						// nothing
+//					} else {
+//						this.SelectedItem = GetItemRight (this.SelectedItem);
+//					}
+//				}
+//				this.QueueDraw ();
+//				return true;
+//
+//			}
+//			return false;
+//		}
 
-			// Handle keyboard toolip popup
-			if ((evnt.Key == Gdk.Key.F1 && (evnt.State & Gdk.ModifierType.ControlMask) == Gdk.ModifierType.ControlMask)) {
-				if (this.SelectedItem != null) {
-					int vadjustment = (this.vAdjustement != null ? (int)this.vAdjustement.Value : 0);
-					Gdk.Rectangle rect = GetItemExtends (SelectedItem);
-					ShowTooltip (SelectedItem, 0, rect.X, rect.Bottom - vadjustment);
-				}
-				return true;
-			}
+//		protected override void OnUnrealized ()
+//		{
+//			HideTooltipWindow ();
+//			base.OnUnrealized ();
+//		}
 
-			switch (evnt.Key) {
-			case Gdk.Key.KP_Enter:
-			case Gdk.Key.Return:
-				if (this.SelectedItem != null)
-					this.OnActivateSelectedItem (EventArgs.Empty);
-				return true;
-			case Gdk.Key.KP_Up:
-			case Gdk.Key.Up:
-				if (this.listMode || this.SelectedItem is ToolboxWidgetCategory) {
-					this.SelectedItem = GetPrevItem (this.SelectedItem);
-				} else {
-					nextItem = GetItemAbove (this.SelectedItem);
-					this.SelectedItem = nextItem != this.SelectedItem ? nextItem : GetCategory (this.SelectedItem);
-				}
-				this.QueueDraw ();
-				return true;
-			case Gdk.Key.KP_Down:
-			case Gdk.Key.Down:
-				if (this.listMode || this.SelectedItem is ToolboxWidgetCategory) {
-					this.SelectedItem = GetNextItem (this.SelectedItem);
-				} else {
-					nextItem = GetItemBelow (this.SelectedItem);
-					if (nextItem == this.SelectedItem) {
-						ToolboxWidgetCategory category = GetCategory (this.SelectedItem);
-						nextItem = GetNextCategory (category);
-						if (nextItem == category)
-							nextItem = this.SelectedItem;
-					}
-					this.SelectedItem = nextItem;
-				}
-				this.QueueDraw ();
-				return true;
+//		protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
+//		{
+//			if (evnt.Mode == CrossingMode.Normal) {
+//				HideTooltipWindow ();
+//				ClearMouseOverItem ();
+//			}
+//			GdkWindow.Cursor = null;
+//			return base.OnLeaveNotifyEvent (evnt);
+//		}
 
-			case Gdk.Key.KP_Left:
-			case Gdk.Key.Left:
-				if (this.SelectedItem is ToolboxWidgetCategory) {
-					SetCategoryExpanded ((ToolboxWidgetCategory)this.SelectedItem, false);
-				} else {
-					if (this.listMode) {
-						this.SelectedItem = GetCategory (this.SelectedItem);
-					} else {
-						this.SelectedItem = GetItemLeft (this.SelectedItem);
-					}
-				}
-				this.QueueDraw ();
-				return true;
-
-			case Gdk.Key.KP_Right:
-			case Gdk.Key.Right:
-				if (this.SelectedItem is ToolboxWidgetCategory selectedCategory) {
-					if (selectedCategory.IsExpanded) {
-						if (selectedCategory.ItemCount > 0)
-							this.SelectedItem = selectedCategory.Items [0];
-					} else {
-						SetCategoryExpanded (selectedCategory, true);
-					}
-				} else {
-					if (this.listMode) {
-						// nothing
-					} else {
-						this.SelectedItem = GetItemRight (this.SelectedItem);
-					}
-				}
-				this.QueueDraw ();
-				return true;
-
-			}
-			return false;
-		}
-
-		protected override void OnUnrealized ()
-		{
-			HideTooltipWindow ();
-			base.OnUnrealized ();
-		}
-
-		protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
-		{
-			if (evnt.Mode == CrossingMode.Normal) {
-				HideTooltipWindow ();
-				ClearMouseOverItem ();
-			}
-			GdkWindow.Cursor = null;
-			return base.OnLeaveNotifyEvent (evnt);
-		}
-
-		protected override bool OnScrollEvent (Gdk.EventScroll evnt)
-		{
-			HideTooltipWindow ();
-			ClearMouseOverItem ();
-			return base.OnScrollEvent (evnt);
-		}
-
+//		protected override bool OnScrollEvent (Gdk.EventScroll evnt)
+//		{
+//			HideTooltipWindow ();
+//			ClearMouseOverItem ();
+//			return base.OnScrollEvent (evnt);
+//		}
 		public Action<Gdk.EventButton> DoPopupMenu { get; set; }
 
-		protected override bool OnButtonPressEvent (Gdk.EventButton e)
-		{
-			this.GrabFocus ();
-			HideTooltipWindow ();
-			if (this.mouseOverItem is ToolboxWidgetCategory) {
-				if (!e.TriggersContextMenu () && e.Button == 1 && e.Type == EventType.ButtonPress) {
-					ToolboxWidgetCategory mouseOverCateogry = (ToolboxWidgetCategory)this.mouseOverItem;
-					SetCategoryExpanded (mouseOverCateogry, !mouseOverCateogry.IsExpanded);
-					return true;
-				}
-				this.SelectedItem = mouseOverItem;
-				this.QueueResize ();
-			} else {
-				this.SelectedItem = mouseOverItem;
-				this.QueueDraw ();
-			}
-			if (e.TriggersContextMenu ()) {
-				if (DoPopupMenu != null) {
-					DoPopupMenu (e);
-					return true;
-				}
-			} else if (e.Type == EventType.TwoButtonPress && this.SelectedItem != null) {
-				this.OnActivateSelectedItem (EventArgs.Empty);
-				return true;
-			}
-			return base.OnButtonPressEvent (e);
-		}
+//		protected override bool OnButtonPressEvent (Gdk.EventButton e)
+//		{
+//			this.GrabFocus ();
+//			HideTooltipWindow ();
+//			if (this.mouseOverItem is Category) {
+//				if (!e.TriggersContextMenu () && e.Button == 1 && e.Type == EventType.ButtonPress) {
+//					Category mouseOverCateogry = (Category)this.mouseOverItem;
+//					SetCategoryExpanded (mouseOverCateogry, !mouseOverCateogry.IsExpanded);
+//					return true;
+//				}
+//				this.SelectedItem = mouseOverItem;
+//				this.QueueResize ();
+//			} else {
+//				this.SelectedItem = mouseOverItem;
+//				this.QueueDraw ();
+//			}
+//			if (e.TriggersContextMenu ()) {
+//				if (DoPopupMenu != null) {
+//					DoPopupMenu (e);
+//					return true;
+//				}
+//			} else if (e.Type == EventType.TwoButtonPress && this.SelectedItem != null) {
+//				this.OnActivateSelectedItem (EventArgs.Empty);
+//				return true;
+//			}
+//			return base.OnButtonPressEvent (e);
+//		}
 
-		void PerformShowMenu (object sender, EventArgs args)
-		{
-			DoPopupMenu?.Invoke (null);
-		}
+//		void PerformShowMenu (object sender, EventArgs args)
+//		{
+//			DoPopupMenu?.Invoke (null);
+//		}
 
 		void SetCategoryExpanded (ToolboxWidgetCategory cat, bool expanded)
 		{
 			if (cat.IsExpanded == expanded)
 				return;
 			cat.IsExpanded = expanded;
-			StartExpandAnimation (cat);
+//			if (cat.IsExpanded)
+//				StartExpandAnimation (cat);
+//			else
+//				StartCollapseAnimation (cat);
 		}
 
 		Xwt.Motion.Tweener tweener;
+		void StartExpandAnimation (Category cat)
+		{
+			if (cat.AnimatingExpand)
+				GLib.Source.Remove (cat.AnimationHandle);
+
+			cat.AnimationHeight = 0;
+			cat.AnimatingExpand = true;
+//			cat.AnimationHandle = GLib.Timeout.Add (animationTimeSpan, delegate {
+//				cat.AnimationHeight += animationStepSize;
+//				QueueResize ();
+//				return true;
+//			});
+		}
 
 		void StartExpandAnimation (ToolboxWidgetCategory cat)
 		{
@@ -501,77 +520,68 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 			}
 
 			cat.AnimatingExpand = true;
-			cat.AnimationPosition = 0.0f;
-
-			tweener = new Xwt.Motion.Tweener (animationDurationMs, 10) { Easing = Xwt.Motion.Easing.SinOut };
-			tweener.ValueUpdated += (sender, e) => {
-				cat.AnimationPosition = tweener.Value;
-				QueueDraw ();
-			};
-			tweener.Finished += (sender, e) => {
-				cat.AnimatingExpand = false;
-				QueueDraw ();
-			};
-			tweener.Start ();
-			QueueDraw ();
+//			cat.AnimationHandle = GLib.Timeout.Add (animationTimeSpan, delegate {
+//				cat.AnimationHeight -= animationStepSize;
+//				QueueResize ();
+//				return true;
+//			});
 		}
 
 		protected override bool OnPopupMenu ()
 		{
-			if (DoPopupMenu != null) {
-				DoPopupMenu (null);
-				return true;
-			}
-			return base.OnPopupMenu ();
-		}
+			//			if (DoPopupMenu != null) {
+			//				DoPopupMenu (null);
+			//				return true;
+			//			}
+			//			return base.OnPopupMenu ();
+			return false;}
 
-		protected override bool OnMotionNotifyEvent (Gdk.EventMotion e)
-		{
-			int xpos = 0;
-			int ypos = 0;
-			HideTooltipWindow ();
-			var oldItem = mouseOverItem;
-			mouseOverItem = null;
-			Gdk.Rectangle newItemExtents = Gdk.Rectangle.Zero;
-			this.mouseX = (int)e.X + (int)(this.hAdjustement != null ? this.hAdjustement.Value : 0);
-			this.mouseY = (int)e.Y + (int)(this.vAdjustement != null ? this.vAdjustement.Value : 0);
-			Iterate (ref xpos, ref ypos, (category, itemDimension) => {
-				if (xpos <= mouseX && mouseX <= xpos + itemDimension.Width &&
-					ypos <= mouseY && mouseY <= ypos + itemDimension.Height) {
-					mouseOverItem = category;
-					GdkWindow.Cursor = handCursor;
-					if (!e.State.HasFlag (ModifierType.Button1Mask))
-						ShowTooltip (mouseOverItem, TipTimer, (int)e.X + 2, (int)e.Y + 16);
-					newItemExtents = new Gdk.Rectangle (xpos, ypos, itemDimension.Width, itemDimension.Height);
-					return false;
-				}
-				return true;
-			}, (curCategory, item, itemDimension) => {
-				if (xpos <= mouseX && mouseX <= xpos + itemDimension.Width &&
-					ypos <= mouseY && mouseY <= ypos + itemDimension.Height) {
-					mouseOverItem = item;
-					GdkWindow.Cursor = null;
-					if (!e.State.HasFlag (ModifierType.Button1Mask))
-						ShowTooltip (mouseOverItem, TipTimer, (int)e.X + 2, (int)e.Y + 16);
-					newItemExtents = new Gdk.Rectangle (xpos, ypos, itemDimension.Width, itemDimension.Height);
-					return false;
-				}
-				return true;
-			});
-
-			if (mouseOverItem == null)
-				GdkWindow.Cursor = null;
-
-			if (oldItem != mouseOverItem) {
-				this.QueueDraw ();
-				var oldItemExtents = GetItemExtends (oldItem);
-				QueueDrawArea (oldItemExtents.X, oldItemExtents.Y, oldItemExtents.Width, oldItemExtents.Height);
-				QueueDrawArea (newItemExtents.X, newItemExtents.Y, newItemExtents.Width, newItemExtents.Height);
-			}
-
-			return base.OnMotionNotifyEvent (e);
-		}
-
+//		protected override bool OnMotionNotifyEvent (Gdk.EventMotion e)
+//		{
+//			int xpos = 0;
+//			int ypos = 0;
+//			HideTooltipWindow ();
+//			var oldItem = mouseOverItem;
+//			mouseOverItem = null;
+//			Gdk.Rectangle newItemExtents = Gdk.Rectangle.Zero;
+//			this.mouseX = (int)e.X + (int)(this.hAdjustement != null ? this.hAdjustement.Value : 0);
+//			this.mouseY = (int)e.Y + (int)(this.vAdjustement != null ? this.vAdjustement.Value : 0);
+//			Iterate (ref xpos, ref ypos, (category, itemDimension) => {
+//				if (xpos <= mouseX && mouseX <= xpos + itemDimension.Width &&
+					//				    ypos <= mouseY && mouseY <= ypos + itemDimension.Height) {
+//					mouseOverItem = category;
+//					GdkWindow.Cursor = handCursor;
+//					if (!e.State.HasFlag (ModifierType.Button1Mask))
+//						ShowTooltip (mouseOverItem, TipTimer, (int)e.X + 2, (int)e.Y + 16);
+//					newItemExtents = new Gdk.Rectangle (xpos, ypos, itemDimension.Width, itemDimension.Height);
+//					return false;
+//				}
+//				return true;
+//			}, (curCategory, item, itemDimension) => {
+//				if (xpos <= mouseX && mouseX <= xpos + itemDimension.Width &&
+					//				    ypos <= mouseY && mouseY <= ypos + itemDimension.Height) {
+//					mouseOverItem = item;
+//					GdkWindow.Cursor = null;
+//					if (!e.State.HasFlag (ModifierType.Button1Mask))
+//						ShowTooltip (mouseOverItem, TipTimer, (int)e.X + 2, (int)e.Y + 16);
+//					newItemExtents = new Gdk.Rectangle (xpos, ypos, itemDimension.Width, itemDimension.Height);
+//					return false;
+//				}
+//				return true;
+//			});
+//
+//			if (mouseOverItem == null)
+//				GdkWindow.Cursor = null;
+//
+//			if (oldItem != mouseOverItem) {
+//				this.QueueDraw ();
+//				var oldItemExtents = GetItemExtends (oldItem);
+//				QueueDrawArea (oldItemExtents.X, oldItemExtents.Y, oldItemExtents.Width, oldItemExtents.Height);
+//				QueueDrawArea (newItemExtents.X, newItemExtents.Y, newItemExtents.Width, newItemExtents.Height);
+//			}
+//
+//			return base.OnMotionNotifyEvent (e);
+//		}
 		#region Item selection logic
 		ToolboxWidgetItem selectedItem = null;
 		ToolboxWidgetItem mouseOverItem = null;
@@ -906,16 +916,15 @@ namespace MonoDevelop.DesignerSupport.Toolbox
 //			}
 //		}
 
-		protected override void OnSizeAllocated (Gdk.Rectangle allocation)
-		{
-			base.OnSizeAllocated (allocation);
-			if (!realSizeRequest) {
-				realSizeRequest = true;
-				QueueResize ();
-			} else
-				realSizeRequest = false;
-		}
-
+//		protected override void OnSizeAllocated (Gdk.Rectangle allocation)
+//		{
+//			base.OnSizeAllocated (allocation);
+//			if (!realSizeRequest) {
+//				realSizeRequest = true;
+//				QueueResize ();
+//			} //			else
+//				realSizeRequest = false;
+//		}
 		#endregion
 
 		#region Tooltips

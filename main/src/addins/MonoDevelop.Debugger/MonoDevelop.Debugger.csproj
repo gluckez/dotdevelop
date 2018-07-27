@@ -27,9 +27,23 @@
     <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>glib-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gdk-sharp-3.0</Package>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Mono.Posix" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -38,6 +52,36 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsBase" />
+    <Reference Include="System.Reflection.Metadata">
+      <HintPath>..\..\..\build\bin\System.Reflection.Metadata.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\..\..\build\bin\System.Collections.Immutable.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis">
+      <HintPath>..\..\..\build\bin\Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces">
+      <HintPath>..\..\..\build\bin\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp">
+      <HintPath>..\..\..\build\bin\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="gio-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gio-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="cairo-sharp, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\core\MonoDevelop.Core\MonoDevelop.Core.csproj">
@@ -745,6 +789,614 @@
     <EmbeddedResource Include="icons\continue-16~dark.png" />
     <EmbeddedResource Include="icons\continue-16~dark%402x.png" />
 
+  </ItemGroup>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="MonoDevelop.Debugger.VSTextView\" />
+    <Folder Include="MonoDevelop.Debugger.VSTextView\Glyphs\" />
+    <Folder Include="MonoDevelop.Debugger.VSTextView\Tags\" />
+    <Folder Include="MonoDevelop.Debugger.VSTextView\QuickInfo\" />
+    <Folder Include="MonoDevelop.Debugger\ObjectValue\" />
+    <Folder Include="MonoDevelop.Debugger\ObjectValue\Gtk\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <InternalsVisibleTo Include="MonoDevelop.SourceEditor" />
+  </PropertyGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>glib-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gdk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata">
+      <HintPath>..\..\..\build\bin\System.Reflection.Metadata.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\..\..\build\bin\System.Collections.Immutable.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis">
+      <HintPath>..\..\..\build\bin\Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces">
+      <HintPath>..\..\..\build\bin\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp">
+      <HintPath>..\..\..\build\bin\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="gio-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gio-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="cairo-sharp, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Package>gtk-sharp-3.0</Package>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+  <ItemGroup Condition="$(OS) == 'Windows_NT'">
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+    <Compile Include="MonoDevelop.Debugger\DebugValueWindow.cs" />
+    <Compile Include="MonoDevelop.Debugger\TextViewExtensions.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ReturnStatementGlyphTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ReturnStatementGlyphTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ReturnStatementGlyphTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\IInteractiveGlyph.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\IActiveGlyphDropHandler.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\GlyphCommandType.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\CurrentStatementGlyphTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\CurrentStatementGlyphTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\CurrentStatementGlyphTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\BreakpointGlyphTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\BreakpointGlyphTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\BreakpointGlyphTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\AbstractCurrentStatementTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementMarkerDefinition.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementForegroundTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementMarkerDefinition.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementForegroundTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementForegroundTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ClassificationTypes.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointMarkerDefinition.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointForegroundTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointForegroundTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\AbstractBreakpointTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\QuickInfo\DebuggerQuickInfoSourceProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\QuickInfo\DebuggerQuickInfoSource.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\QuickInfo\IDebugInfoProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\BreakpointManagerService.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\BreakpointManager.cs" />
+    <Compile Include="MonoDevelop.Debugger\IBreakpointSpanResolver.cs" />
+    <Compile Include="MonoDevelop.Debugger\DefaultBreakpointSpanResolver.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueTreeView.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueTreeViewController.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueTreeViewFakes.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\DebuggerObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\RootObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IEvaluatingGroupObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ISupportChildObjectValueNodeReplacement.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ShowMoreValuesObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IDebuggerService.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IStackFrame.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueDebuggerService.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueStackFrame.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueNodeEventArgs.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\Gtk\GtkObjectValueTreeView.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IObjectValueTreeView.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\LoadingObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\AddNewExpressionObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\PinnedWatchLocation.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ExpressionEventArgs.cs" />
+    <Compile Include="MonoDevelop.Debugger\DebuggerAsyncCompletionSource.cs" />
+    <Compile Include="MonoDevelop.Debugger\DebuggerCompletionCommandHandler.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(OS) != 'Windows_NT'">
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ImageSourceGlyphFactory.cs" />
+
+    <EmbeddedResource Include="icons\breakpoint-16~contrast.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark~disabled.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~disabled.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~disabled%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~dark~disabled.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~dark~disabled%402x.png" />
+
+    <EmbeddedResource Include="icons\exception-48.png" />
+    <EmbeddedResource Include="icons\exception-48%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast~dark.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~dark.png" />
+    <EmbeddedResource Include="icons\exception-48~dark%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~dark~sel.png" />
+    <EmbeddedResource Include="icons\exception-48~dark~sel%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~sel.png" />
+    <EmbeddedResource Include="icons\exception-48~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\exception-caught-template-16.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16%402x.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~dark.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\exception-outline-16.png" />
+    <EmbeddedResource Include="icons\exception-outline-16%402x.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~dark.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-breakpoint-15.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-execution-15.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-stack-15.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-tracepoint-15.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\lightning-16.png" />
+    <EmbeddedResource Include="icons\lightning-16%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~disabled%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~disabled%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-locals-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-threads-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-watch-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~sel.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\stack-pointer-16.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark~disabled.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~disabled.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~disabled%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~dark.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~dark%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~dark~disabled.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~disabled.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~disabled%402x.png" />
+
+    <EmbeddedResource Include="icons\toolbar-icon.png" />
+    <EmbeddedResource Include="icons\toolbar-icon%402x.png" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' != 'DebugMac' AND '$(Configuration)' != 'ReleaseMac' ">
+    <EmbeddedResource Include="icons\continue-16.png" />
+    <EmbeddedResource Include="icons\continue-16%402x.png" />
+    <EmbeddedResource Include="icons\continue-16~dark.png" />
+    <EmbeddedResource Include="icons\continue-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\pause-16.png" />
+    <EmbeddedResource Include="icons\pause-16%402x.png" />
+    <EmbeddedResource Include="icons\pause-16~dark.png" />
+    <EmbeddedResource Include="icons\pause-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\step-in-16.png" />
+    <EmbeddedResource Include="icons\step-in-16%402x.png" />
+    <EmbeddedResource Include="icons\step-in-16~dark.png" />
+    <EmbeddedResource Include="icons\step-in-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\step-out-16.png" />
+    <EmbeddedResource Include="icons\step-out-16%402x.png" />
+    <EmbeddedResource Include="icons\step-out-16~dark.png" />
+    <EmbeddedResource Include="icons\step-out-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\step-over-16.png" />
+    <EmbeddedResource Include="icons\step-over-16%402x.png" />
+    <EmbeddedResource Include="icons\step-over-16~dark.png" />
+    <EmbeddedResource Include="icons\step-over-16~dark%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MonoDevelop.Debugger.VSTextView\" />
+    <Folder Include="MonoDevelop.Debugger.VSTextView\Glyphs\" />
+    <Folder Include="MonoDevelop.Debugger.VSTextView\Tags\" />
+    <Folder Include="MonoDevelop.Debugger.VSTextView\QuickInfo\" />
+    <Folder Include="MonoDevelop.Debugger\ObjectValue\" />
+    <Folder Include="MonoDevelop.Debugger\ObjectValue\Gtk\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="MonoDevelop.SourceEditor" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+       <DefineConstants Condition="$(OS) == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
+       <StartAction>Program</StartAction>
+    <StartProgram>..\..\..\build\bin\MonoDevelop.exe</StartProgram>
+    <StartArguments>--no-redirect</StartArguments>
+    <Reference Include="System.ComponentModel.Composition" />
+  <ItemGroup Condition="$(OS) == 'Windows_NT'">
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+    <Compile Include="MonoDevelop.Debugger\DebugValueWindow.cs" />
+    <Compile Include="MonoDevelop.Debugger\TextViewExtensions.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ReturnStatementGlyphTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ReturnStatementGlyphTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ReturnStatementGlyphTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\IInteractiveGlyph.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\IActiveGlyphDropHandler.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\GlyphCommandType.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\CurrentStatementGlyphTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\CurrentStatementGlyphTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\CurrentStatementGlyphTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\BreakpointGlyphTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\BreakpointGlyphTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\BreakpointGlyphTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\AbstractCurrentStatementTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementMarkerDefinition.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ReturnStatementForegroundTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementMarkerDefinition.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementForegroundTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\CurrentStatementForegroundTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\ClassificationTypes.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointTag.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointMarkerDefinition.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointForegroundTaggerProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\BreakpointForegroundTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Tags\AbstractBreakpointTagger.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\QuickInfo\DebuggerQuickInfoSourceProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\QuickInfo\DebuggerQuickInfoSource.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\QuickInfo\IDebugInfoProvider.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\BreakpointManagerService.cs" />
+    <Compile Include="MonoDevelop.Debugger.VSTextView\BreakpointManager.cs" />
+    <Compile Include="MonoDevelop.Debugger\IBreakpointSpanResolver.cs" />
+    <Compile Include="MonoDevelop.Debugger\DefaultBreakpointSpanResolver.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueTreeView.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueTreeViewController.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueTreeViewFakes.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\DebuggerObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\RootObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IEvaluatingGroupObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ISupportChildObjectValueNodeReplacement.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ShowMoreValuesObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IDebuggerService.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IStackFrame.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueDebuggerService.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueStackFrame.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ObjectValueNodeEventArgs.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\Gtk\GtkObjectValueTreeView.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\IObjectValueTreeView.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\LoadingObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\AddNewExpressionObjectValueNode.cs" />
+    <Compile Include="MonoDevelop.Debugger\PinnedWatchLocation.cs" />
+    <Compile Include="MonoDevelop.Debugger\ObjectValue\ExpressionEventArgs.cs" />
+    <Compile Include="MonoDevelop.Debugger\DebuggerAsyncCompletionSource.cs" />
+    <Compile Include="MonoDevelop.Debugger\DebuggerCompletionCommandHandler.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(OS) != 'Windows_NT'">
+    <Compile Include="MonoDevelop.Debugger.VSTextView\Glyphs\ImageSourceGlyphFactory.cs" />
+
+    <EmbeddedResource Include="icons\breakpoint-16~contrast.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark~disabled.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~disabled.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~contrast~disabled%402x.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~dark~disabled.png" />
+    <EmbeddedResource Include="icons\breakpoint-16~dark~disabled%402x.png" />
+
+    <EmbeddedResource Include="icons\exception-48.png" />
+    <EmbeddedResource Include="icons\exception-48%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast~dark.png" />
+    <EmbeddedResource Include="icons\exception-48~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~dark~sel.png" />
+    <EmbeddedResource Include="icons\exception-48~dark~sel%402x.png" />
+    <EmbeddedResource Include="icons\exception-48~sel.png" />
+    <EmbeddedResource Include="icons\exception-48~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\exception-caught-template-16.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16%402x.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~dark.png" />
+    <EmbeddedResource Include="icons\exception-caught-template-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\exception-outline-16.png" />
+    <EmbeddedResource Include="icons\exception-outline-16%402x.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~dark.png" />
+    <EmbeddedResource Include="icons\exception-outline-16~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-disabled-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-breakpoint-invalid-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-execution-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-stack-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-disabled-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast%402x.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast~dark.png" />
+    <EmbeddedResource Include="icons\gutter-tracepoint-invalid-15~contrast~dark%402x.png" />
+
+    <EmbeddedResource Include="icons\lightning-16.png" />
+    <EmbeddedResource Include="icons\lightning-16%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~contrast~disabled%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\lightning-16~disabled.png" />
+    <EmbeddedResource Include="icons\lightning-16~disabled%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-breakpoints-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~dark~sel.png" />
+    <EmbeddedResource Include="icons\pad-call-stack-16~dark~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-locals-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~dark~sel.png" />
+    <EmbeddedResource Include="icons\pad-locals-16~dark~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-threads-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-threads-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\pad-watch-16~contrast.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~sel.png" />
+    <EmbeddedResource Include="icons\pad-watch-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~sel.png" />
+    <EmbeddedResource Include="icons\prefs-debugger-16~sel%402x.png" />
+
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark~disabled.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~dark~disabled%402x.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~disabled.png" />
+    <EmbeddedResource Include="icons\stack-pointer-16~contrast~disabled%402x.png" />
+
+    <EmbeddedResource Include="icons\toolbar-icon.png" />
+    <EmbeddedResource Include="icons\toolbar-icon%402x.png" />
   </ItemGroup>
   </PropertyGroup>
   <ItemGroup>
