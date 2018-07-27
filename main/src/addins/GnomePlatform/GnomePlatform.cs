@@ -97,7 +97,6 @@ public override string DefaultSansFont {
 				}
 			}
 		}
-
 		public override string Name {
 			get { return "Gnome"; }
 		}
