@@ -1,21 +1,21 @@
-﻿// 
+﻿//
 // IdeServices.FontService.cs
-//  
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
-// 
+//
 // Copyright (c) 2010 Novell, Inc (http://www.novell.com)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,13 +27,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Mono.Addins;
 using MonoDevelop.Core;
 using Pango;
-#if MAC
-using AppKit;
-#endif
 
 namespace MonoDevelop.Ide.Fonts
 {
@@ -45,8 +41,10 @@ namespace MonoDevelop.Ide.Fonts
 		Properties fontProperties;
 		DesktopService desktopService;
 
-		string defaultMonospaceFontName = String.Empty;
-		FontDescription defaultMonospaceFont = new FontDescription ();
+		static string defaultMonospaceFontName = String.Empty;
+		static string defaultSansFontName = String.Empty;
+		static FontDescription defaultMonospaceFont = new FontDescription ();
+		static FontDescription defaultSansFont = new FontDescription ();
 
 		void LoadDefaults ()
 		{
@@ -54,12 +52,18 @@ namespace MonoDevelop.Ide.Fonts
 				defaultMonospaceFont.Dispose ();
 			}
 
+			if (defaultSansFont != null) {
+				defaultSansFont.Dispose ();
+			}
+
 			#pragma warning disable 618
 			defaultMonospaceFontName = desktopService.DefaultMonospaceFont;
 			defaultMonospaceFont = FontDescription.FromString (defaultMonospaceFontName);
+			defaultSansFontName = DesktopService.DefaultSansFont;
+			defaultSansFont = FontDescription.FromString (defaultSansFontName);
 			#pragma warning restore 618
 		}
-		
+
 		internal IEnumerable<FontDescriptionCodon> FontDescriptions {
 			get {
 				return fontDescriptions;
@@ -70,7 +74,7 @@ namespace MonoDevelop.Ide.Fonts
 		{
 			desktopService = await serviceProvider.GetService<DesktopService> ();
 			fontProperties = PropertyService.Get ("FontProperties", new Properties ());
-			
+
 			AddinManager.AddExtensionNodeHandler ("/MonoDevelop/Ide/Fonts", delegate(object sender, ExtensionNodeEventArgs args) {
 				var codon = (FontDescriptionCodon)args.ExtensionNode;
 				switch (args.Change) {
@@ -89,10 +93,10 @@ namespace MonoDevelop.Ide.Fonts
 		}
 
 		public FontDescription MonospaceFont { get { return defaultMonospaceFont; } }
-		public FontDescription SansFont { get { return Gui.Styles.DefaultFont; } }
+		public FontDescription SansFont { get { return defaultSansFont; } }
 
 		public string MonospaceFontName { get { return defaultMonospaceFontName; } }
-		public string SansFontName { get { return Gui.Styles.DefaultFontName; } }
+		public string SansFontName { get { return defaultSansFontName; } }
 
 		[Obsolete ("Use MonospaceFont")]
 		public FontDescription DefaultMonospaceFontDescription {
@@ -108,7 +112,7 @@ namespace MonoDevelop.Ide.Fonts
 			var fontName = FilterFontName (name);
 			return FontDescription.FromString (fontName);
 		}
-		
+
 		public string FilterFontName (string name)
 		{
 			switch (name) {
@@ -120,11 +124,11 @@ namespace MonoDevelop.Ide.Fonts
 				return name;
 			}
 		}
-		
+
 		public string GetUnderlyingFontName (string name)
 		{
 			var result = fontProperties.Get<string> (name);
-			
+
 			if (result == null) {
 				var font = GetFontDescriptionCodon (name);
 				if (font == null)
@@ -168,10 +172,10 @@ namespace MonoDevelop.Ide.Fonts
 			LoggingService.LogError ("Font " + name + " not found.");
 			return null;
 		}
-		
+
 		public void SetFont (string name, string value)
 		{
-			if (loadedFonts.ContainsKey (name)) 
+			if (loadedFonts.ContainsKey (name))
 				loadedFonts.Remove (name);
 
 			var font = GetFontDescriptionCodon (name);
@@ -190,7 +194,7 @@ namespace MonoDevelop.Ide.Fonts
 		{
 			return new FontConfigurationProperty (name);
 		}
-		
+
 		Dictionary<string, List<Action>> fontChangeCallbacks = new Dictionary<string, List<Action>> ();
 		public void RegisterFontChangedCallback (string fontName, Action callback)
 		{
@@ -198,7 +202,7 @@ namespace MonoDevelop.Ide.Fonts
 				fontChangeCallbacks [fontName] = new List<Action> ();
 			fontChangeCallbacks [fontName].Add (callback);
 		}
-		
+
 		public void RemoveCallback (Action callback)
 		{
 			foreach (var list in fontChangeCallbacks.Values.ToList ())
@@ -261,7 +265,7 @@ namespace MonoDevelop.Ide.Fonts
 			} else {
 				var size = font.Size;
 				if (size == 0)
-					size = (int)(10 * Pango.Scale.PangoScale); 
+					size = (int)(10 * Pango.Scale.PangoScale);
 				font.Size = (int)(Pango.Scale.PangoScale * (int)(scale * size / Pango.Scale.PangoScale));
 			}
 		}
