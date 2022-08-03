@@ -751,6 +751,7 @@
     <Compile Include="MonoDevelop.Core.FeatureConfiguration\FeatureSwitch.cs" />
     <Compile Include="MonoDevelop.Core.AddIns\FeatureSwitchExtensionNode.cs" />
     <Compile Include="MonoDevelop.Core.FeatureConfiguration\IFeatureSwitchController.cs" />
+    <Compile Include="MonoDevelop.Utilities\LibraryTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BuildVariables.cs.in" />
