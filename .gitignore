@@ -286,3 +286,8 @@ main/.idea/
 
 .localcache
 
+#dotnet Version
+global.json
+
+#crash logs
+*mono_crash.*.json
