@@ -491,18 +491,12 @@ namespace MonoDevelop.Components
             }
 
             try {
-				//Attempt
 				if (cairo_push_group is null) {
 					var procAddress = LibraryTools.GetProcAddress (CairoLib, cairo_push_group_call.Name);
 					cairo_push_group = LibraryTools.LoadFunction<cairo_push_group_delegate> (procAddress);
 				}
 				cairo_push_group (cr.Handle);
-				return;
-				//end attempt
 
-				if (!CallCairoMethod (cr, ref cairo_push_group_call)) {
-					cairo_push_group (cr.Handle);
-                }
             } catch {
                 native_push_pop_exists = false;
             }
@@ -520,15 +514,11 @@ namespace MonoDevelop.Components
 
 			try {
 				if (cairo_push_group is null) {
-					var procAddress = LibraryTools.GetProcAddress (CairoLib, cairo_push_group_call.Name);
+					var procAddress = LibraryTools.GetProcAddress (CairoLib, cairo_pop_group_to_source_call.Name);
 					cairo_pop_group_to_source = LibraryTools.LoadFunction<cairo_pop_group_to_source_delegate> (procAddress);
 				}
 				cairo_pop_group_to_source (cr.Handle);
-				return;
 
-				if (!CallCairoMethod (cr, ref cairo_pop_group_to_source_call)) {
-					cairo_pop_group_to_source (cr.Handle);
-				}
 			} catch (EntryPointNotFoundException) {
 				native_push_pop_exists = false;
 			}
