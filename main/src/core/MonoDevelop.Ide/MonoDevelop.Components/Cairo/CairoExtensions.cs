@@ -50,15 +50,15 @@ namespace MonoDevelop.Components
 
 	public static class CairoExtensions
 	{
-		internal const string LIBCAIRO = "libcairo-2.dll";
 		static IntPtr cairo_library;
 		static IntPtr CairoLib {
 			get {
 				if (cairo_library == IntPtr.Zero)
-					cairo_library = LibraryTools.LoadLibrary (LIBCAIRO);
+					cairo_library = LibraryTools.LoadLibrary (CairoLibraryDefinition.Library);
 				return cairo_library;
 			}
 		}
+
 		public static Cairo.Rectangle ToCairoRect (this Gdk.Rectangle rect)
 		{
 			return new Cairo.Rectangle (rect.X, rect.Y, rect.Width, rect.Height);
@@ -415,13 +415,11 @@ namespace MonoDevelop.Components
 			}
 		}
 
-		[DllImport (LIBCAIRO, CallingConvention = CallingConvention.Cdecl)]
-		static extern IntPtr cairo_pattern_set_extend (IntPtr pattern, CairoExtend extend);
-
-		[DllImport (LIBCAIRO, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern IntPtr cairo_get_source (IntPtr cr);
-
-		enum CairoExtend {
+		/// <summary>
+		/// Is used to describe how pattern color/alpha will be determined for areas "outside" the pattern's natural area, 
+		/// (for example, outside the surface bounds or outside the gradient geometry).
+		/// </summary>
+		public enum CairoExtend {
 			CAIRO_EXTEND_NONE,
 			CAIRO_EXTEND_REPEAT,
 			CAIRO_EXTEND_REFLECT,
@@ -458,33 +456,51 @@ namespace MonoDevelop.Components
 				CallNative = false;
 			}
 		}
-		private static bool CallCairoMethod (Cairo.Context cr, ref CairoInteropCall call)
+
+
+		#region LibraryCalls
+		private delegate void cairo_pattern_set_extend_delegate (IntPtr ptr, Cairo.Extend extend);
+		private static cairo_pattern_set_extend_delegate cairo_pattern_set_extend;
+
+		/// <summary>
+		/// Sets the mode to be used for drawing outside the area of a pattern.
+		/// </summary>
+		/// <param name="extend">The extend mode to be used. <see cref="CairoExtend"/></param>
+		public static void PatternSetExtend (this Cairo.Pattern pattern, CairoExtend extend = CairoExtend.CAIRO_EXTEND_NONE)
 		{
-			if (call.ManagedMethod == null && !call.CallNative) {
-				MemberInfo [] members = typeof (Cairo.Context).GetMember (call.Name, MemberTypes.Method,
-					BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public);
-
-				if (members != null && members.Length > 0 && members [0] is MethodInfo) {
-					call.ManagedMethod = (MethodInfo)members [0];
-				} else {
-					call.CallNative = true;
-				}
+			var cairoExtendAsInt = (int)extend;
+			 
+			if (cairo_pattern_set_extend is null) {
+				var procAddress = LibraryTools.GetProcAddress (CairoLib, CairoLibraryDefinition.API.PatternSetExtend);
+				cairo_pattern_set_extend = LibraryTools.LoadFunction<cairo_pattern_set_extend_delegate> (procAddress);
 			}
+			cairo_pattern_set_extend (pattern.Handle, (Cairo.Extend)cairoExtendAsInt);
+		}
 
-			if (call.ManagedMethod != null) {
-				call.ManagedMethod.Invoke (cr, null);
-				return true;
+		private delegate void cairo_get_source_delegate (IntPtr ptr);
+		private static cairo_get_source_delegate cairo_get_source;
+
+		/// <summary>
+		/// Gets the current source pattern.
+		/// </summary>
+		public static void GetSource (this Cairo.Context cr)
+		{
+			if (cairo_get_source is null) {
+				var procAddress = LibraryTools.GetProcAddress (CairoLib, CairoLibraryDefinition.API.GetSource);
+				cairo_get_source = LibraryTools.LoadFunction<cairo_get_source_delegate> (procAddress);
 			}
-
-			return false;
+			cairo_get_source (cr.Handle);
 		}
 
 		private static bool native_push_pop_exists = true;
+
 		private delegate void cairo_push_group_delegate (IntPtr ptr);
 		private static cairo_push_group_delegate cairo_push_group;
-		private static CairoInteropCall cairo_push_group_call = new CairoInteropCall ("PushGroup");
-
-		public static void PushGroup (Cairo.Context cr)
+		/// <summary>
+		/// Temporarily redirects drawing to an intermediate surface known as a group. 
+		/// The redirection lasts until the group is completed by a call to <see cref="PopGroupToSource(Context)"/>.
+		/// </summary>
+		public static void PushGroup (this Cairo.Context cr)
         {
             if (!native_push_pop_exists) {
                 return;
@@ -492,29 +508,58 @@ namespace MonoDevelop.Components
 
             try {
 				if (cairo_push_group is null) {
-					var procAddress = LibraryTools.GetProcAddress (CairoLib, cairo_push_group_call.Name);
+					var procAddress = LibraryTools.GetProcAddress (CairoLib, CairoLibraryDefinition.API.PushGroup);
 					cairo_push_group = LibraryTools.LoadFunction<cairo_push_group_delegate> (procAddress);
 				}
 				cairo_push_group (cr.Handle);
 
-            } catch {
+            } catch (EntryPointNotFoundException){
                 native_push_pop_exists = false;
             }
         }
 
-		private delegate void cairo_pop_group_to_source_delegate (IntPtr ptr);
-		private static cairo_pop_group_to_source_delegate cairo_pop_group_to_source;
-        private static CairoInteropCall cairo_pop_group_to_source_call = new CairoInteropCall ("PopGroupToSource");
+		private delegate void cairo_push_group_with_content_delegate (IntPtr ptr, Cairo.Content content);
+		private static cairo_push_group_with_content_delegate cairo_push_group_with_content;
 
-        public static void PopGroupToSource (Cairo.Context cr)
+		/// <summary>
+		/// Temporarily redirects drawing to an intermediate surface known as a group. 
+		/// The redirection lasts until the group is completed by a call to <see cref="PopGroupToSource(Context)"/>.
+		/// </summary>
+		/// <param name="content">a content indicating the type of group that will be created.</param>
+		public static void PushGroupWithContent (this Cairo.Context cr, Content content)
 		{
 			if (!native_push_pop_exists) {
 				return;
 			}
 
 			try {
-				if (cairo_push_group is null) {
-					var procAddress = LibraryTools.GetProcAddress (CairoLib, cairo_pop_group_to_source_call.Name);
+				if (cairo_push_group_with_content is null) {
+					var procAddress = LibraryTools.GetProcAddress (CairoLib, CairoLibraryDefinition.API.PushGroup);
+					cairo_push_group_with_content = LibraryTools.LoadFunction<cairo_push_group_with_content_delegate> (procAddress);
+				}
+				cairo_push_group_with_content (cr.Handle, content);
+
+			} catch (EntryPointNotFoundException) {
+				native_push_pop_exists = false;
+			}
+		}
+
+		private delegate void cairo_pop_group_to_source_delegate (IntPtr ptr);
+		private static cairo_pop_group_to_source_delegate cairo_pop_group_to_source;
+
+		/// <summary>
+		/// Terminates the redirection begun by a call to <see cref="PushGroup(Context)"/> 
+		/// and installs the resulting pattern as the source pattern in the given cairo context.
+		/// </summary>
+		public static void PopGroupToSource (this Cairo.Context cr)
+		{
+			if (!native_push_pop_exists) {
+				return;
+			}
+
+			try {
+				if (cairo_pop_group_to_source is null) {
+					var procAddress = LibraryTools.GetProcAddress (CairoLib, CairoLibraryDefinition.API.PopGroupToSource);
 					cairo_pop_group_to_source = LibraryTools.LoadFunction<cairo_pop_group_to_source_delegate> (procAddress);
 				}
 				cairo_pop_group_to_source (cr.Handle);
@@ -523,6 +568,32 @@ namespace MonoDevelop.Components
 				native_push_pop_exists = false;
 			}
 		}
+
+		private delegate void cairo_pop_group_delegate (IntPtr ptr);
+		private static cairo_pop_group_delegate cairo_pop_group;
+
+		/// <summary>
+		/// Terminates the redirection begun by a call to <see cref="PushGroup(Context)"/> 
+		/// and installs the resulting pattern as the source pattern in the given cairo context.
+		/// </summary>
+		public static void PopGroup (this Cairo.Context cr)
+		{
+			if (!native_push_pop_exists) {
+				return;
+			}
+
+			try {
+				if (cairo_pop_group is null) {
+					var procAddress = LibraryTools.GetProcAddress (CairoLib, CairoLibraryDefinition.API.PopGroup);
+					cairo_pop_group = LibraryTools.LoadFunction<cairo_pop_group_delegate> (procAddress);
+				}
+				cairo_pop_group (cr.Handle);
+
+			} catch (EntryPointNotFoundException) {
+				native_push_pop_exists = false;
+			}
+		}
+		#endregion
 
 		public static Cairo.Color ParseColor (string s, double alpha = 1)
 		{
@@ -675,18 +746,63 @@ namespace MonoDevelop.Components
 		}
 	}
 
+#warning gluckez: Is there still any intent to support macOS quartz rendering system?
 	public class QuartzSurface : Cairo.Surface
 	{
+		static IntPtr cairo_library;
+		static IntPtr get_cairo_lib ()
+		{
+			if(cairo_library == IntPtr.Zero)
+				cairo_library = LibraryTools.LoadLibrary (CairoLibraryDefinition.Library);
+
+			return cairo_library;
+		}
 		const string CoreGraphics = "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework/CoreGraphics";
 
-		[DllImport (CairoExtensions.LIBCAIRO, CallingConvention = CallingConvention.Cdecl)]
-		static extern IntPtr cairo_quartz_surface_create (Cairo.Format format, uint width, uint height);
+		private delegate IntPtr cairo_quartz_surface_create_delegate (Cairo.Format format, uint width, uint height);
+		private static cairo_quartz_surface_create_delegate cairo_quartz_surface_create;
 
-		[DllImport (CairoExtensions.LIBCAIRO, CallingConvention = CallingConvention.Cdecl)]
-		static extern IntPtr cairo_quartz_surface_get_cg_context (IntPtr surface);
+		/// <summary>
+		/// Creates a Quartz surface backed by a CGBitmap. The surface is created using the Device RGB (or Device Gray, for A8) color space. 
+		/// All Cairo operations, including those that require software rendering, will succeed on this surface.
+		/// </summary>
+		public static IntPtr QuartzSurfaceCreate (Cairo.Format format, uint width, uint height)
+		{
+			if (cairo_quartz_surface_create is null) {
+				var procAddress = LibraryTools.GetProcAddress (get_cairo_lib(), CairoLibraryDefinition.API.QuartzSurfaceCreate);
+				cairo_quartz_surface_create = LibraryTools.LoadFunction<cairo_quartz_surface_create_delegate> (procAddress);
+			}
+			return cairo_quartz_surface_create (format, width, height);
+		}
 
-		[DllImport (CairoExtensions.LIBCAIRO, CallingConvention = CallingConvention.Cdecl)]
-		static extern IntPtr cairo_get_target (IntPtr context);
+		private delegate IntPtr cairo_quartz_surface_get_cg_context_delegate (IntPtr ptr);
+		private static cairo_quartz_surface_get_cg_context_delegate cairo_quartz_surface_get_cg_context;
+
+		/// <summary>
+		/// Returns the CGContextRef that the given Quartz surface is backed by.
+		/// </summary>
+		public static IntPtr QuartzGetCGContext (Cairo.Surface surface)
+		{
+			if (cairo_quartz_surface_get_cg_context is null) {
+				var procAddress = LibraryTools.GetProcAddress (get_cairo_lib (), CairoLibraryDefinition.API.QuartzSurfaceGetCGContext);
+				cairo_quartz_surface_get_cg_context = LibraryTools.LoadFunction<cairo_quartz_surface_get_cg_context_delegate> (procAddress);
+			}
+			return cairo_quartz_surface_get_cg_context (surface.Handle);
+		}
+
+		private delegate IntPtr cairo_get_target_delegate (IntPtr ptr);
+		private static cairo_get_target_delegate cairo_get_target;
+		/// <summary>
+		/// Gets the target surface for the cairo context.
+		/// </summary>
+		public static IntPtr GetTarget (Cairo.Context ctx)
+		{
+			if (cairo_get_target is null) {
+				var procAddress = LibraryTools.GetProcAddress (get_cairo_lib (), CairoLibraryDefinition.API.GetTarget);
+				cairo_get_target = LibraryTools.LoadFunction<cairo_get_target_delegate> (procAddress);
+			}
+			return cairo_get_target (ctx.Handle);
+		}
 
 		[DllImport (CoreGraphics, EntryPoint="CGContextConvertRectToDeviceSpace", CallingConvention = CallingConvention.Cdecl)]
 		static extern CGRect32 CGContextConvertRectToDeviceSpace32 (IntPtr contextRef, CGRect32 cgrect);
@@ -746,7 +862,7 @@ namespace MonoDevelop.Components
 		}
 
 		public QuartzSurface (Cairo.Format format, int width, int height)
-			: base (cairo_quartz_surface_create (format, (uint)width, (uint)height), true)
+			: base (QuartzSurfaceCreate (format, (uint)width, (uint)height), true)
 		{
 		}
 	}

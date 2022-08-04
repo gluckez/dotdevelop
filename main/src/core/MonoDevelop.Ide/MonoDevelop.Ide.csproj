@@ -129,9 +129,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup Condition="$(HaveGtkSharp)">
-    <ProjectReference Include="..\MonoDevelop.GtkExtensions\MonoDevelop.GtkExtensions.csproj" />
+    <ProjectReference Include="..\MonoDevelop.GtkExtensions\MonoDevelop.GtkExtensions.csproj">
+      <Project>{288994D1-C7E1-4740-99AB-A52B572EBA8A}</Project>
+      <Name>MonoDevelop.GtkExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\external\xwt\Xwt.GtkSharp\Xwt.GtkSharp.csproj">
-      <Project>{C3887A93-B2BD-4097-8E2F-3A063EFF32FD}</Project>
+      <Project>{8F0B736F-8353-4A6C-B471-192D826BDD81}</Project>
       <Name>Xwt.GtkSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.GuiGtk3\Mono.Addins.GuiGtk3.csproj">
@@ -141,7 +144,7 @@
   </ItemGroup>
   <ItemGroup Condition="!$(HaveGtkSharp)">
     <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk2\Xwt.Gtk2.csproj">
-      <Project>{C3887A93-B2BD-4097-8E2F-3A063EFF32FD}</Project>
+      <Project>{FED3E127-B64A-4E57-8D2A-C8817C5D593A}</Project>
       <Name>Xwt.Gtk2</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.Gui\Mono.Addins.Gui.csproj">
@@ -495,7 +498,6 @@
     <Compile Include="MonoDevelop.Components\SelectFileDialog.cs" />
     <Compile Include="MonoDevelop.Components\SelectFolderDialog.cs" />
     <Compile Include="MonoDevelop.Components\RoundedFrame.cs" />
-    <Compile Include="MonoDevelop.Components\CairoExtensions.cs" />
     <Compile Include="MonoDevelop.Components.Chart\Axis.cs" />
     <Compile Include="MonoDevelop.Components.Chart\AxisDimension.cs" />
     <Compile Include="MonoDevelop.Components.Chart\AxisPosition.cs" />
@@ -1476,6 +1478,8 @@
     <Compile Include="MonoDevelop.Ide.TypeSystem\TypeSystemService_WorkspaceRequestRegistration.cs" />
     <Compile Include="MonoDevelop.Ide.Gui.Dialogs\NewConfigurationDialog.cs" />
     <Compile Include="MonoDevelop.Components.AutoTest\AutoTestToolbar.cs" />
+    <Compile Include="MonoDevelop.Components\Cairo\CairoLibraryDefinition.cs" />
+    <Compile Include="MonoDevelop.Components\Cairo\CairoExtensions.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'DebugMac' OR '$(Configuration)' == 'ReleaseMac'">
     <Compile Include="MonoDevelop.Components.Docking\MacSplitterWidget.cs" />
@@ -1601,6 +1605,7 @@
   <ItemGroup>
     <Folder Include="MonoDevelop.Components\Shared\" />
     <Folder Include="MonoDevelop.Ide.Projects.FileNesting\" />
+    <Folder Include="MonoDevelop.Components\Cairo\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
