@@ -163,7 +163,7 @@ namespace MonoDevelop.Ide.Editor.Highlighting
 
 				if ( curSpan.TextSpan.Start == prevStart && curSpan.TextSpan.Length == prevLength )
 				{
-	Console.WriteLine( "RCH.GetHighlightedLineAsync : SKIP overlapping SPAN start=" + curSpan.TextSpan.Start + " length=" + curSpan.TextSpan.Length + " ClassificationType='" + curSpan.ClassificationType + "'" );
+//	Console.WriteLine( "RCH.GetHighlightedLineAsync : SKIP overlapping SPAN start=" + curSpan.TextSpan.Start + " length=" + curSpan.TextSpan.Length + " ClassificationType='" + curSpan.ClassificationType + "'" );
 //	Console.WriteLine( "RCH.GetHighlightedLineAsync : SKIP overlapping SPAN start=" + curSpan.TextSpan.Start + " length=" + curSpan.TextSpan.Length + " ClassificationType='" + curSpan.ClassificationType + "' lastClassifiedOffsetEnd=" + lastClassifiedOffsetEnd );
 				}
 				else
