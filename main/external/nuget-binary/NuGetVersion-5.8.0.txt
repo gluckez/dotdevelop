@@ -1,0 +1,2 @@
+These dlls have been downloaded fron NuGet Gallery and are all from release-5.8.x
+Framework NET Framework 4.7.2 is currently selected for DotDevelop

@@ -21,10 +21,6 @@
 [submodule "main/external/nrefactory"]
 	path = main/external/nrefactory
 	url = https://github.com/dotdevelop/NRefactory.git
-[submodule "main/external/nuget-binary"]
-	path = main/external/nuget-binary
-	url = https://github.com/dotdevelop/nuget-binary.git
-	branch = master
 [submodule "main/external/sharpsvn-binary"]
 	path = main/external/sharpsvn-binary
 	url = https://github.com/dotdevelop/sharpsvn-binary.git
