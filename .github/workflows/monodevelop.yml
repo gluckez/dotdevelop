@@ -56,7 +56,8 @@ jobs:
         mono -V
         msbuild -version
         dotnet --info
-        git config --global --add safe.directory "$GITHUB_WORKSPACE"
+        git config --global --add safe.directory /__w/dotdevelop/dotdevelop
+
     # Checkout, configure and build
     - uses: actions/checkout@v3
       with:
