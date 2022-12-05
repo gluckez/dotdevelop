@@ -32,10 +32,10 @@ using System.Xml;
 using System.Text;
 using MonoDevelop.Core;
 using System.Reflection;
+using Microsoft.Build.Evaluation;
 using Microsoft.Build.Utilities;
 using MonoDevelop.Projects.MSBuild.Conditions;
 using System.Globalization;
-using Microsoft.Build.Evaluation;
 using Microsoft.Build.Exceptions;
 using MonoDevelop.Projects.Extensions;
 using System.Collections;
@@ -128,6 +128,12 @@ namespace MonoDevelop.Projects.MSBuild
 		{
 			string toolsVersion = "Current";
 			string visualStudioVersion = "16.0";
+
+			// From net6.0 onwards, a Reserved Property "MSBuilVersion" is evaluated to compare with "16.0" or "17.0"
+			// This property is currently not in the project properties, and as a result throws an exception.
+			// Adding this property, and setting it to the final Mono "MSBuildVersion", fixes this for now (Dec 2022)
+			string monoMSBuildVersion = "16.0";
+			properties.Add ("MSBuildVersion", monoMSBuildVersion);
 
 			var toolsPath = runtime.GetMSBuildToolsPath (toolsVersion);
 			if (toolsPath == null) {
@@ -302,12 +308,19 @@ namespace MonoDevelop.Projects.MSBuild
 		string GetPropertyValue (string name)
 		{
 			string val;
+			// Try properties and parentContext properties
 			if (properties.TryGetValue (name, out val))
 				return val;
 			if (parentContext != null)
 				return parentContext.GetPropertyValue (name);
 
-			return (string)envVars [name];
+			// if not found, try environment variables
+			if (envVars [name] != null) {
+				return (string)envVars [name];
+			}
+
+			// PropertyValue [name] not found
+			return "";
 		}
 
 		public string GetMetadataValue (string name)
@@ -718,6 +731,7 @@ namespace MonoDevelop.Projects.MSBuild
 
 			// Find a method with a matching number of parameters
 			var (method, methodParams) = FindBestOverload (member, parameterValues, out var paramsArgType);
+
 			if (method == null)
 				return false;
 
