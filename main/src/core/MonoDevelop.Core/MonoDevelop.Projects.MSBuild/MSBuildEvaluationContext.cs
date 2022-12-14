@@ -128,12 +128,7 @@ namespace MonoDevelop.Projects.MSBuild
 		{
 			string toolsVersion = "Current";
 			string visualStudioVersion = "16.0";
-
-			// From net6.0 onwards, a Reserved Property "MSBuilVersion" is evaluated to compare with "16.0" or "17.0"
-			// This property is currently not in the project properties, and as a result throws an exception.
-			// Adding this property, and setting it to the final Mono "MSBuildVersion", fixes this for now (Dec 2022)
-			string monoMSBuildVersion = "16.0";
-			properties.Add ("MSBuildVersion", monoMSBuildVersion);
+			string monoMSBuildVersion = "16.0";		// This is the last 'Mono' MSBuild version.  Version 17.0+ is 'dotnet' MSBuild
 
 			var toolsPath = runtime.GetMSBuildToolsPath (toolsVersion);
 			if (toolsPath == null) {
@@ -142,6 +137,12 @@ namespace MonoDevelop.Projects.MSBuild
 				toolsPath = runtime.GetMSBuildToolsPath (toolsVersion);
 			}
 
+			// From net6.0 onwards, a Reserved Property "MSBuilVersion" is evaluated to compare with "16.0" or "17.0"
+			// This property is currently not in the project properties, and as a result throws an exception.
+			// Adding this property, and setting it to the final Mono "MSBuildVersion", fixes this for now (Dec 2022)
+			// However, this value is not 'dynamic', as it doesn't read the *actual* version of the current MSBuild
+			properties.Add ("MSBuildVersion", monoMSBuildVersion);
+			
 			properties.Add ("MSBuildAssemblyVersion", toolsVersion);
 			//VisualStudioVersion is a property set by MSBuild itself
 			properties.Add ("VisualStudioVersion", visualStudioVersion);
