@@ -32,10 +32,10 @@ using System.Xml;
 using System.Text;
 using MonoDevelop.Core;
 using System.Reflection;
+using Microsoft.Build.Evaluation;
 using Microsoft.Build.Utilities;
 using MonoDevelop.Projects.MSBuild.Conditions;
 using System.Globalization;
-using Microsoft.Build.Evaluation;
 using Microsoft.Build.Exceptions;
 using MonoDevelop.Projects.Extensions;
 using System.Collections;
@@ -120,10 +120,15 @@ namespace MonoDevelop.Projects.MSBuild
 			}
 		}
 
+		// These are initialised in 'InitEngineProperties' below
+		static Type typeofIntrinsicFunctions; 			// = typeof ("Microsoft.Build.Evaluation.IntrinsicFunctions")
+		static Dictionary<string, MethodInfo []> cachedIntrinsicFunctions;
+
 		static void InitEngineProperties (Core.Assemblies.TargetRuntime runtime, Dictionary<string, string> properties, out List<ImportSearchPathExtensionNode> searchPaths)
 		{
 			string toolsVersion = "Current";
 			string visualStudioVersion = "16.0";
+			string monoMSBuildVersion = "16.0";		// This is the last 'Mono' MSBuild version.  Version 17.0+ is 'dotnet' MSBuild
 
 			var toolsPath = runtime.GetMSBuildToolsPath (toolsVersion);
 			if (toolsPath == null) {
@@ -132,6 +137,12 @@ namespace MonoDevelop.Projects.MSBuild
 				toolsPath = runtime.GetMSBuildToolsPath (toolsVersion);
 			}
 
+			// From net6.0 onwards, a Reserved Property "MSBuilVersion" is evaluated to compare with "16.0" or "17.0"
+			// This property is currently not in the project properties, and as a result throws an exception.
+			// Adding this property, and setting it to the final Mono "MSBuildVersion", fixes this for now (Dec 2022)
+			// However, this value is not 'dynamic', as it doesn't read the *actual* version of the current MSBuild
+			properties.Add ("MSBuildVersion", monoMSBuildVersion);
+			
 			properties.Add ("MSBuildAssemblyVersion", toolsVersion);
 			//VisualStudioVersion is a property set by MSBuild itself
 			properties.Add ("VisualStudioVersion", visualStudioVersion);
@@ -153,6 +164,17 @@ namespace MonoDevelop.Projects.MSBuild
 			properties.Add ("MSBuildFrameworkToolsPath32", frameworkToolsPathEscaped);
 
 			searchPaths = MSBuildProjectService.GetProjectImportSearchPaths (runtime, true).ToList ();
+
+			// initialise the static Dictionary 'cachedIntrinsicFunctions' from Microsoft.Build.dll IntrinsicFunctions
+			// this avoids re-importing all msBuild IntrinsicFunctions into MonoDevelop code whenever they change (ie often)
+
+			Assembly microsoftBuild = Assembly.LoadFrom (msBuildBinPath + "/Microsoft.Build.dll");
+			typeofIntrinsicFunctions = microsoftBuild.GetType ("Microsoft.Build.Evaluation.IntrinsicFunctions");
+
+			cachedIntrinsicFunctions = typeofIntrinsicFunctions
+					.GetMethods (BindingFlags.NonPublic | BindingFlags.IgnoreCase | BindingFlags.Static)
+					.ToLookup (x => x.Name)
+					.ToDictionary (x => x.Key, x => x.ToArray (), StringComparer.OrdinalIgnoreCase);
 
 			if (Platform.IsWindows) {
 				//first use extensions path relative to bindir (MSBuild/15.0/Bin). this works for dev15 isolated install.
@@ -287,12 +309,19 @@ namespace MonoDevelop.Projects.MSBuild
 		string GetPropertyValue (string name)
 		{
 			string val;
+			// Try properties and parentContext properties
 			if (properties.TryGetValue (name, out val))
 				return val;
 			if (parentContext != null)
 				return parentContext.GetPropertyValue (name);
 
-			return (string)envVars [name];
+			// if not found, try environment variables
+			if (envVars [name] != null) {
+				return (string)envVars [name];
+			}
+
+			// PropertyValue [name] not found
+			return "";
 		}
 
 		public string GetMetadataValue (string name)
@@ -457,8 +486,10 @@ namespace MonoDevelop.Projects.MSBuild
 					int j = i;
 					object val;
 					bool nie;
+
 					if (!EvaluateReference (str.AsSpan (), evaluatedItemsCollection, ref j, out val, out nie))
 						allResolved = false;
+
 					needsItemEvaluation |= nie;
 					sb.Append (ValueToString (val));
 					last = j;
@@ -557,6 +588,7 @@ namespace MonoDevelop.Projects.MSBuild
 		{
 			needsItemEvaluation = false;
 			val = null;
+
 			if (prop [0] == '[') {
 				int i = prop.IndexOf (']');
 				if (i == -1 || (prop.Length - i) < 3 || prop [i + 1] != ':' || prop [i + 2] != ':')
@@ -604,7 +636,6 @@ namespace MonoDevelop.Projects.MSBuild
 		internal bool EvaluateMember (Type type, object instance, ReadOnlySpan<char> str, int i, out object val)
 		{
 			val = null;
-
 			// Find the delimiter of the member
 			int j = str.IndexOfAny (MemberDelimiter, i);
 			if (j == -1)
@@ -618,6 +649,7 @@ namespace MonoDevelop.Projects.MSBuild
 				// It is a method invocation
 				object [] parameterValues;
 				j++;
+			
 				if (!EvaluateParameters (str, ref j, out parameterValues))
 					return false;
 
@@ -690,6 +722,7 @@ namespace MonoDevelop.Projects.MSBuild
 			var member = ResolveMember (type, memberName, instance == null, MemberTypes.Method);
 			if (member == null || member.Length == 0)
 				return false;
+
 			return EvaluateMethod (str, member, instance, parameterValues, out val);
 		}
 
@@ -699,18 +732,19 @@ namespace MonoDevelop.Projects.MSBuild
 
 			// Find a method with a matching number of parameters
 			var (method, methodParams) = FindBestOverload (member, parameterValues, out var paramsArgType);
+
 			if (method == null)
 				return false;
 
 			try {
 				// Convert the given parameters to the types specified in the method signature
-				var convertedArgs = (methodParams.Length == parameterValues.Length) ? parameterValues : new object [methodParams.Length];
+				var convertedArgs  = (methodParams.Length == parameterValues.Length) ? parameterValues : new object [methodParams.Length];
 
 				int numArgs = methodParams.Length;
 				if (paramsArgType != null)
 					numArgs--;
 
-				if (method.DeclaringType == typeof (IntrinsicFunctions) && method.Name == nameof (IntrinsicFunctions.GetPathOfFileAbove) && parameterValues.Length == methodParams.Length - 1) {
+				if (method.DeclaringType == typeofIntrinsicFunctions && method.Name == "GetPathOfFileAbove" && parameterValues.Length == methodParams.Length - 1) {
 					string startingDirectory = String.IsNullOrWhiteSpace (FullFileName) ? String.Empty : Path.GetDirectoryName (FullFileName);
 					var last = convertedArgs.Length - 1;
 					convertedArgs [last] = ConvertArg (method, last, startingDirectory, methodParams [last].ParameterType);
@@ -758,6 +792,7 @@ namespace MonoDevelop.Projects.MSBuild
 					}
 				}
 				val = method.Invoke (instance, convertedArgs);
+					
 			} catch (Exception ex) {
 				LoggingService.LogError ("MSBuild property evaluation failed: " + str.ToString (), ex);
 				return false;
@@ -817,7 +852,7 @@ namespace MonoDevelop.Projects.MSBuild
 				var argInfo = m.GetParameters ();
 
 				if (args.Length == argInfo.Length - 1) {
-					if (m.DeclaringType == typeof (IntrinsicFunctions) && m.Name == nameof (IntrinsicFunctions.GetPathOfFileAbove)) {
+					if (m.DeclaringType == typeofIntrinsicFunctions && m.Name == "GetPathOfFileAbove") {
 						validMatch = (m, argInfo);
 						continue;
 					}
@@ -986,7 +1021,7 @@ namespace MonoDevelop.Projects.MSBuild
 			else if (method.DeclaringType == typeof (System.IO.Path))
 				// The windows path is already converted to a native path, but it may contain escape sequences
 				res = MSBuildProjectService.UnescapePath ((string)res);
-			else if (method.DeclaringType == typeof (IntrinsicFunctions)) {
+			else if (method.DeclaringType == typeofIntrinsicFunctions) {
 				if (method.Name == "MakeRelative")
 					convertPath = true;
 				else if (method.Name == "GetDirectoryNameOfFileAbove" && argNum == 0)
@@ -1017,7 +1052,7 @@ namespace MonoDevelop.Projects.MSBuild
 		Type ResolveType (string typeName)
 		{
 			if (typeName == "MSBuild")
-				return typeof (Microsoft.Build.Evaluation.IntrinsicFunctions);
+				return typeofIntrinsicFunctions;
 
 			foreach (var kvp in supportedTypeMembers) {
 				if (kvp.Key.FullName == typeName)
@@ -1026,24 +1061,15 @@ namespace MonoDevelop.Projects.MSBuild
 			return null;
 		}
 
-		static readonly Dictionary<string, MethodInfo[]> cachedIntrinsicFunctions = typeof (IntrinsicFunctions)
-			.GetMethods (BindingFlags.NonPublic | BindingFlags.IgnoreCase | BindingFlags.Static)
-			.ToLookup (x => x.Name)
-			.ToDictionary(x => x.Key, x => x.ToArray (), StringComparer.OrdinalIgnoreCase);
-
-		MemberInfo[] ResolveMember (Type type, string memberName, bool isStatic, MemberTypes memberTypes)
+		MemberInfo [] ResolveMember (Type type, string memberName, bool isStatic, MemberTypes memberTypes)
 		{
-			if (type == typeof (string)) {
-				if (memberName == "new" || memberName == "Copy") {
-					type = typeof (IntrinsicFunctions);
-					memberName = "Copy";
-				}
-			} else {
-				if (type.IsArray)
-					type = typeof (Array);
-			}
+			if (type == typeof (string) && memberName == "new")
+				memberName = "Copy";
 
-			if (type == typeof(IntrinsicFunctions)) {
+			if (type.IsArray)
+				type = typeof (Array);
+
+			if (type == typeofIntrinsicFunctions) {
 				return cachedIntrinsicFunctions.TryGetValue (memberName, out var result) ? result : null;
 			}
 

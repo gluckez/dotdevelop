@@ -100,9 +100,9 @@ namespace MonoDevelop.DotNetCore
 			if (framework.IsNetCoreApp ()) {
 				// Display shortened framework names for .net5.0 and above in NewProject dialog 
 				if (version.Major >= 5) {
-					return string.Format (".net {0}", framework.Id.Version);
+					return string.Format (".net{0}", framework.Id.Version);
 				} else { 
-				    return string.Format (".NET Core {0}", framework.Id.Version);
+				    return string.Format (".netcoreapp{0}", framework.Id.Version);
 				}
 			}
 

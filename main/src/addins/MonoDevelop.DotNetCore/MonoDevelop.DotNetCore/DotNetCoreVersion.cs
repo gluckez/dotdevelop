@@ -34,12 +34,14 @@ namespace MonoDevelop.DotNetCore
 {
 	class DotNetCoreVersion : IEquatable<DotNetCoreVersion>, IComparable, IComparable<DotNetCoreVersion>
 	{
-		internal static readonly DotNetCoreVersion MinimumSupportedSdkVersion = new DotNetCoreVersion (2, 1, 602);
+		internal static readonly DotNetCoreVersion MinimumSupportedSdkVersion = new DotNetCoreVersion (2, 1, 30);
 		internal static readonly DotNetCoreVersion MinimumSupportedSdkVersion22 = new DotNetCoreVersion (2, 2, 202);
 		internal static readonly DotNetCoreVersion MinimumSupportedSdkVersion30 = new DotNetCoreVersion (3, 0, 100) {
 			ReleaseLabel = "preview3-010431",
 			IsPrerelease = true
 		};
+		internal static readonly DotNetCoreVersion MinimumSupportedSdkVersion50 = new DotNetCoreVersion (5, 0, 400);
+		internal static readonly DotNetCoreVersion MinimumSupportedSdkVersion60 = new DotNetCoreVersion (6, 0, 6);
 
 		internal DotNetCoreVersion (int major, int minor, int patch)
 			: this (new Version (major, minor, patch))
@@ -243,6 +245,16 @@ namespace MonoDevelop.DotNetCore
 			if (version.Major == 3) {
 				return version >= MinimumSupportedSdkVersion30;
 			}
+
+			if (version.Major == 5) {
+				return version >= MinimumSupportedSdkVersion50;
+			}
+		
+			if (version.Major == 6) {
+				return version >= MinimumSupportedSdkVersion60;
+			}
+
+
 
 			return false;
 		}
