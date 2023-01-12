@@ -58,6 +58,8 @@ namespace MonoDevelop.PackageManagement.Tests.Helpers
 
 		public Uri ProjectUrl { get; set; }
 
+		public Uri ReadmeUrl { get; }       // Added for release 5.8.0
+
 		public DateTimeOffset? Published { get; set; }
 
 		public Uri ReportAbuseUrl { get; set; }
@@ -87,6 +89,10 @@ namespace MonoDevelop.PackageManagement.Tests.Helpers
 		{
 			throw new NotImplementedException ();
 		}
+	
+		public IEnumerable<PackageVulnerabilityMetadata> Vulnerabilities { get; }	// Added for release 5.8.0
+
+
 	}
 }
 

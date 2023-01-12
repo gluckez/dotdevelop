@@ -629,7 +629,6 @@
     <Compile Include="MonoDevelop.Projects.MSBuild\MSBuildFileFormatException.cs" />
     <Compile Include="MonoDevelop.Projects.MSBuild\MSBuildXmlElement.cs" />
     <Compile Include="MonoDevelop.Projects.MSBuild\IMSBuildProjectObject.cs" />
-    <Compile Include="MonoDevelop.Projects.MSBuild\IntrinsicFunctions.cs" />
     <Compile Include="MonoDevelop.Projects.MSBuild\EscapingUtilities.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="MonoDevelop.Core\FileWriteableState.cs" />
@@ -747,7 +746,6 @@
     <Compile Include="MonoDevelop.Core.Execution\TargetFrameworkExecutionTarget.cs" />
     <Compile Include="MonoDevelop.Projects\FrameworkReference.cs" />
     <Compile Include="MonoDevelop.Core\DedicatedThreadScheduler.cs" />
-    <Compile Include="MonoDevelop.Projects.MSBuild\IntrinsicFunctions.Extensions.cs" />
     <Compile Include="MonoDevelop.Core.FeatureConfiguration\FeatureSwitch.cs" />
     <Compile Include="MonoDevelop.Core.AddIns\FeatureSwitchExtensionNode.cs" />
     <Compile Include="MonoDevelop.Core.FeatureConfiguration\IFeatureSwitchController.cs" />

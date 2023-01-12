@@ -271,6 +271,20 @@ namespace MonoDevelop.PackageManagement
 			return await CreateProjectPackageSpecs (context);
 		}
 
+		//
+		// This method was an addition to the abstract class as NuGet.Client changed from release-5.4 to release-5.6/5.8
+		// It is called via MonoDevelopment.PackageManagement/MonoDevelopBuildIntegratedRestorer.cs (RestorePackages)
+		// This stop-gap implementation serves to use the old 'GetPackageSpecsAsync' code from release-5.4 and return
+		// 'null' for the messages, so that the 'GetPackageSpecsAsync' functionality still works in release-5.8
+		//
+		public override async Task<(IReadOnlyList<PackageSpec> dgSpecs, IReadOnlyList<IAssetsLogMessage> additionalMessages)> GetPackageSpecsAndAdditionalMessagesAsync (DependencyGraphCacheContext context)
+		{
+			IReadOnlyList<IAssetsLogMessage> messages = null;		// HACK - ignore messages for now
+			IReadOnlyList<PackageSpec> specs = await GetPackageSpecsAsync (context);
+			
+			return (specs, messages);	
+		}
+
 		async Task<IReadOnlyList<PackageSpec>> CreateProjectPackageSpecs (DependencyGraphCacheContext context)
 		{
 			DependencyGraphSpec dependencySpec = await MSBuildPackageSpecCreator.GetDependencyGraphSpec (project, configuration, context?.Logger);

@@ -182,17 +182,19 @@ namespace MonoDevelop.Core.Assemblies
 		{
 			TargetFramework fx;
 			if (frameworks.TryGetValue (id, out fx))
-				return fx;
+				return fx;		// found on first check against known .NETFrameworks
 
-			LoggingService.LogDebug ("Unknown TargetFramework '{0}' is being requested from SystemAssemblyService, ensuring runtimes initialized and trying again", id);
+			// otherwise, ensure runtimes have been initialised, then try again
 			foreach (var r in runtimes)
 				r.EnsureInitialized ();
 			if (frameworks.TryGetValue (id, out fx))
 				return fx;
 
-			
-			LoggingService.LogWarning ("Unknown TargetFramework '{0}' is being requested from SystemAssemblyService, returning empty TargetFramework", id);
-			UpdateFrameworks (new [] { new TargetFramework (id) });
+			// still not found - don't warn, but add .NETCoreApp and .NETStandard frameworks via 'UpdateFrameworks'
+			// LoggingService.LogWarning ("Unknown TargetFramework '{0}' is being requested from SystemAssemblyService, returning empty TargetFramework", id);
+
+			var tf = new TargetFramework (id);
+			UpdateFrameworks (new [] {tf});
 			return frameworks [id];
 		}
 

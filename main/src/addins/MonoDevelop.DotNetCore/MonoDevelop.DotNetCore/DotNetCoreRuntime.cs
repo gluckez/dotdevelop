@@ -124,6 +124,10 @@ namespace MonoDevelop.DotNetCore
 			return Versions.Any (version => version.Major == 3 && version.Minor == 0);
 		}
 
+		internal static bool IsNetCore3xOrHigherInstalled ()
+		{
+			return Versions.Any (version => version.Major >= 3);
+		}
 
 		/// <summary>
 		/// Used by unit tests to fake having different .NET Core sdks installed.
