@@ -94,7 +94,23 @@ mono main/build/bin/MonoDevelop.exe
 1. Launch, MonoDevelop
 2. Edit > Preferences > Projects > .NET Core Debuggers
 3. Click `...` and navigate to, `main/build/AddIns/Samsung.Netcoredbg/netcoredbg`
-4. Click, OK and start debugging
+4. Click, OK and start debugging  
+
+
+### Running DotDevelop with .NET6.0+ installed
+
+With dotnet-sdk-6.0+ installed, the following error occurs:-  
+
+"MSB4236 WorkloadAutoImportPropsLocator could not be found".  
+
+This is described by  [this issue](https://github.com/dotnet/sdk/issues/17461) with the following workaround:-   
+
+Set the environment variable `MSBuildEnableWorkloadResolver=false` prior to starting monodevelop  
+
+eg, in a terminal, before starting dotdevelop as above...   
+  
+    export MSBuildEnableWorkloadResolver=false
+    mono ./main/build/bin/MonoDevelop.exe --no-redirect 
 
 ## References
 
