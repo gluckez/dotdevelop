@@ -61,15 +61,34 @@ namespace MonoDevelop.Core.Assemblies
 			this.name = id.Profile == null
 				? string.Format ("{0} {1}", id.Identifier, id.Version)
 				: string.Format ("{0} {1} {2} Profile", id.Identifier, id.Version, id.Profile);
+
+			if (id.Identifier == ".NETCoreApp") {
+				int i = id.Version.IndexOf ('.');
+				int majorVersion = int.Parse (id.Version.Substring (0, i));
+				if (majorVersion >= 5) {
+					this.name = id.Profile == null
+						? string.Format (".net{0}", id.Version)
+						: string.Format (".net{0} {1}", id.Version, id.Profile);
+				}
+			}
 			Assemblies = new AssemblyInfo [0];
 		}
 
 		public string Name {
 			get {
 				if (string.IsNullOrEmpty (name)) {
-					return string.IsNullOrEmpty (id.Profile)
+					name = id.Profile == null
 						? string.Format ("{0} {1}", id.Identifier, id.Version)
-						: string.Format ("{0} {1} ({2})", id.Identifier, id.Version, id.Profile);
+						: string.Format ("{0} {1} {2} Profile", id.Identifier, id.Version, id.Profile);
+				}
+				if (id.Identifier == ".NETCoreApp") {
+					int i = id.Version.IndexOf ('.');
+					int majorVersion = int.Parse (id.Version.Substring (0, i));
+					if (majorVersion >= 5) {
+						name = id.Profile == null
+							? string.Format (".net{0}", id.Version)
+							: string.Format (".net{0} {1}", id.Version, id.Profile);
+					}
 				}
 				return name;
 			}
