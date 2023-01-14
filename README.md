@@ -158,4 +158,5 @@ Discussion, Bugs, Patches
 -------------------------
 
 https://github.com/dotdevelop/dotdevelop/issues/new *(submit bugs and patches here)*
+https://github.com/dotdevelop/community/issues/9 *(temporary link to the roadmap thread, should be replaced in the future with a proper roadmap)
 
