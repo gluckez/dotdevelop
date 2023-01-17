@@ -109,8 +109,10 @@ Set the environment variable `MSBuildEnableWorkloadResolver=false` prior to star
 
 eg, in a terminal, before starting dotdevelop as above...   
   
-    export MSBuildEnableWorkloadResolver=false
-    mono ./main/build/bin/MonoDevelop.exe --no-redirect 
+```bash
+export MSBuildEnableWorkloadResolver=false
+mono ./main/build/bin/MonoDevelop.exe --no-redirect 
+```
 
 ## References
 
