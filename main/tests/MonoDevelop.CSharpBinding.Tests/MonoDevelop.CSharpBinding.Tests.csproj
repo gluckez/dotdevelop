@@ -169,11 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MonoDevelop.CSharpBinding.Debugging\" />
-    <RARResolveFromOutputDirectory>true</RARResolveFromOutputDirectory>
-    <!--
-    This contains many tests for the deprecated old editor APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
     <Reference Include="Microsoft.CodeAnalysis.Workspaces.Desktop">
       <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.Workspaces.Desktop.dll</HintPath>
     </Reference>
@@ -205,7 +200,6 @@
     <Compile Include="MonoDevelop.CSharpBinding\CSharpDocumentOptionsProviderTests.cs" />
     <Compile Include="MonoDevelop.CSharpBinding.Debugging\DebuggerCompletionControllerTests.cs" />
     <Compile Include="MonoDevelop.CSharpBinding\CustomProjectRuleSetTests.cs" />
-      <Private>False</Private>
     <None Include="MonoDevelop.CSharpBinding\AutomaticBracketInsertionTests.cs" />
     <Folder Include="MonoDevelop.CSharpBinding.Debugging\" />
   </ItemGroup>

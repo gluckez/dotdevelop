@@ -51,10 +51,6 @@
       <HintPath>..\..\..\build\bin\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <!--
-    This needs to be ported to the new editor, and currently makes use of many, many deprecated APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
     <Reference Include="System.Reflection.Metadata">
       <HintPath>..\..\..\build\bin\System.Reflection.Metadata.dll</HintPath>
       <Private>False</Private>

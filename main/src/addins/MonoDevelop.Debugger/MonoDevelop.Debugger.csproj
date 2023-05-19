@@ -512,22 +512,14 @@
     <InternalsVisibleTo Include="MonoDevelop.SourceEditor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
      <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
        <DefineConstants Condition="$(OS) == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
        <StartAction>Program</StartAction>
-    <StartProgram>..\..\..\build\bin\MonoDevelop.exe</StartProgram>
-    <StartArguments>--no-redirect</StartArguments>
-    <Reference Include="System.ComponentModel.Composition" />
+       <StartProgram>..\..\..\build\bin\MonoDevelop.exe</StartProgram>
+       <StartArguments>--no-redirect</StartArguments>
+     </PropertyGroup>
   <ItemGroup Condition="$(OS) == 'Windows_NT'">
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsBase" />
@@ -790,7 +782,6 @@
     <EmbeddedResource Include="icons\continue-16~dark%402x.png" />
 
   </ItemGroup>
-  </PropertyGroup>
   <ItemGroup>
     <Folder Include="MonoDevelop.Debugger.VSTextView\" />
     <Folder Include="MonoDevelop.Debugger.VSTextView\Glyphs\" />
@@ -799,9 +790,6 @@
     <Folder Include="MonoDevelop.Debugger\ObjectValue\" />
     <Folder Include="MonoDevelop.Debugger\ObjectValue\Gtk\" />
   </ItemGroup>
-  <PropertyGroup>
-    <InternalsVisibleTo Include="MonoDevelop.SourceEditor" />
-  </PropertyGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
@@ -1161,22 +1149,14 @@
     <InternalsVisibleTo Include="MonoDevelop.SourceEditor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
      <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
        <DefineConstants Condition="$(OS) == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
        <StartAction>Program</StartAction>
-    <StartProgram>..\..\..\build\bin\MonoDevelop.exe</StartProgram>
-    <StartArguments>--no-redirect</StartArguments>
-    <Reference Include="System.ComponentModel.Composition" />
+      <StartProgram>..\..\..\build\bin\MonoDevelop.exe</StartProgram>
+      <StartArguments>--no-redirect</StartArguments>
+     </PropertyGroup>
   <ItemGroup Condition="$(OS) == 'Windows_NT'">
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsBase" />
@@ -1398,7 +1378,6 @@
     <EmbeddedResource Include="icons\toolbar-icon.png" />
     <EmbeddedResource Include="icons\toolbar-icon%402x.png" />
   </ItemGroup>
-  </PropertyGroup>
   <ItemGroup>
     <Folder Include="MonoDevelop.Debugger.VSTextView\" />
     <Folder Include="MonoDevelop.Debugger.VSTextView\Glyphs\" />
@@ -1407,16 +1386,9 @@
     <Folder Include="MonoDevelop.Debugger\ObjectValue\" />
     <Folder Include="MonoDevelop.Debugger\ObjectValue\Gtk\" />
   </ItemGroup>
-  <PropertyGroup>
-    <InternalsVisibleTo Include="MonoDevelop.SourceEditor" />
-  </PropertyGroup>
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>MonoDevelop.SourceEditor</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>

@@ -111,10 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonoDevelop.AssemblyBrowser.addin.xml" />
-    <!--
-    This needs to be ported to the new editor, and currently makes use of many deprecated APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
     <Reference Include="ICSharpCode.Decompiler">
       <HintPath>..\..\..\packages\ICSharpCode.Decompiler.3.0.0.3403-beta4\lib\net46\ICSharpCode.Decompiler.dll</HintPath>
       <Private>false</Private>

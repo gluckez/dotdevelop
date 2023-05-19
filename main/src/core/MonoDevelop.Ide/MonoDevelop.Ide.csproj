@@ -133,11 +133,6 @@
       <Project>{92494904-35FA-4DC9-BDE9-3A3E87AC49D3}</Project>
       <Name>Xwt</Name>
     </ProjectReference>
-<!--
-    <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk\Xwt.Gtk.csproj">
-      <Project>{C3887A93-B2BD-4097-8E2F-3A063EFF32FD}</Project>
-      <Name>Xwt.Gtk</Name>
-    </ProjectReference>-->
     <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk\Xwt.Gtk3.csproj">
       <Project>{3B25FD1F-CEBA-4450-8893-DC330FDB56A7}</Project>
       <Name>Xwt.Gtk3</Name>
@@ -152,10 +147,6 @@
       <Name>Mono.Addins.Setup</Name>
       <Private>False</Private>
     </ProjectReference>
-<!--    <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.Gui\Mono.Addins.Gui.csproj">
-      <Project>{FEC19BDA-4904-4005-8C09-68E82E8BEF6A}</Project>
-      <Name>Mono.Addins.Gui</Name>
-    </ProjectReference>-->
     <ProjectReference Include="..\..\..\external\mono-addins\Mono.Addins.GuiGtk3\Mono.Addins.GuiGtk3.csproj">
       <Project>{410A7DC9-E7DA-43E6-B592-93E2A344B660}</Project>
       <Name>Mono.Addins.GuiGtk3</Name>
@@ -1623,9 +1614,11 @@
     <Folder Include="MonoDevelop.Components\Shared\" />
     <Folder Include="MonoDevelop.Ide.Projects.FileNesting\" />
     <Folder Include="MonoDevelop.Components\Cairo\" />
+  </ItemGroup>
   <Import Project="$(ReferencesGtk)" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugGnome|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGnome|AnyCPU' " />
+  <ItemGroup>
     <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -1706,6 +1699,7 @@
     </Reference>
     <IncludeCopyLocal Include="Xamarin.Mac.dll" />
     <IncludeCopyLocal Include="Xwt.XamMac.dll" />
+  </ItemGroup>
   <ItemGroup Condition="$(HaveGtkSharp)">
     <ProjectReference Include="..\MonoDevelop.GtkExtensions\MonoDevelop.GtkExtensions.csproj">
       <Project>{288994D1-C7E1-4740-99AB-A52B572EBA8A}</Project>
@@ -1730,6 +1724,7 @@
       <Name>Mono.Addins.Gui</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="branding\**\*.png" LinkBase="branding" />
     <EmbeddedResource Include="icons\**\*.png" LinkBase="icons" />
     <EmbeddedResource Include="MonoDevelop.Components.Docking\icons\**\*.png" LinkBase="MonoDevelop.Components.Docking\icons" />
@@ -1990,12 +1985,12 @@
     <Folder Include="MonoDevelop.Components\Shared\" />
     <Folder Include="MonoDevelop.Ide.Projects.FileNesting\" />
     <Folder Include="MonoDevelop.Components\Cairo\" />
+  </ItemGroup>
   <Import Project="$(ReferencesGtk)" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugGnome|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGnome|AnyCPU' " />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.TemplateEngine.Edge" Version="$(NuGetVersionMicrosoftTemplateEngine)" PrivateAssets="runtime" />
@@ -2331,9 +2326,11 @@
     <Folder Include="MonoDevelop.Components\Shared\" />
     <Folder Include="MonoDevelop.Ide.Projects.FileNesting\" />
     <Folder Include="MonoDevelop.Components\Cairo\" />
+  </ItemGroup>
   <Import Project="$(ReferencesGtk)" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugGnome|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGnome|AnyCPU' " />
+  <ItemGroup>
     <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

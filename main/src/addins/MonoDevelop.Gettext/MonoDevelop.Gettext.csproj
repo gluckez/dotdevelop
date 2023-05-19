@@ -217,10 +217,6 @@
     <EmbeddedResource Include="templates\images\locale-sidebar%402x.png" />
     <EmbeddedResource Include="templates\images\locale-sidebar~dark.png" />
     <EmbeddedResource Include="templates\images\locale-sidebar~dark%402x.png" />
-    <!--
-    This needs to be ported to the new editor, and currently makes use of many deprecated APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
     <EmbeddedResource Include="templates\Makefile_am.template" />
     <EmbeddedResource Include="templates\Makefile.template" />
     <EmbeddedResource Include="templates\TranslationProject.xpt.xml" />
@@ -383,10 +379,6 @@
     <EmbeddedResource Include="templates\images\locale-sidebar%402x.png" />
     <EmbeddedResource Include="templates\images\locale-sidebar~dark.png" />
     <EmbeddedResource Include="templates\images\locale-sidebar~dark%402x.png" />
-    <!--
-    This needs to be ported to the new editor, and currently makes use of many deprecated APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
     <EmbeddedResource Include="templates\Makefile_am.template" />
     <EmbeddedResource Include="templates\Makefile.template" />
     <EmbeddedResource Include="templates\TranslationProject.xpt.xml" />

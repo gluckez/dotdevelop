@@ -10,11 +10,6 @@
     <OutputPath>..\..\..\build\AddIns\DisplayBindings\SourceEditor</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants Condition="$(OS) == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
-    <!--
-    This entire assembly is obsolete, and uses many obsoleted APIs from Core/Ide
-    so disable deprecation warnings.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "/>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMac|AnyCPU' "/>
@@ -63,19 +58,13 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup Condition="$(HaveGtkSharp)">
-    <ProjectReference Include="..\..\..\external\xwt\Xwt.GtkSharp\Xwt.GtkSharp.csproj">
-      <Project>{C3887A93-B2BD-4097-8E2F-3A063EFF32FD}</Project>
-      <Name>Xwt.GtkSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    <Reference Include="System.Xml"/>
-    <Reference Include="System.ComponentModel.Composition"/>
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Runtime.Serialization"/>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.ComponentModel.Composition" />
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">
     <Reference Include="PresentationCore"/>
@@ -122,7 +111,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple">
       <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
->>>>>>> 61552748da (Port to Gtk#3)
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -338,23 +326,17 @@
     <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.Ide.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.VBNetBinding"/>
+  </ItemGroup>
 
   <Import Project="..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems" Label="Shared" Condition="Exists('..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems')"/>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets"/>
   <Import Project="..\..\..\MonoDevelop.props"/>
   <Import Project="$(ReferencesVSEditor)"/>
   <Import Project="$(ReferencesGtk)"/>
-    <DefineConstants Condition="$(OS) == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
-    <!--
-    This entire assembly is obsolete, and uses many obsoleted APIs from Core/Ide
-    so disable deprecation warnings.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "/>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMac|AnyCPU' "/>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' "/>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMac|AnyCPU' "/>
-  </ItemGroup>
   <ItemGroup Condition="$(HaveGtkSharp)">
     <ProjectReference Include="..\..\..\external\xwt\Xwt.GtkSharp\Xwt.GtkSharp.csproj">
       <Name>Xwt.GtkSharp</Name>
@@ -622,6 +604,8 @@
     <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.Ide.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.VBNetBinding"/>
+  </ItemGroup>
+
   <Import Project="..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems" Label="Shared" Condition="Exists('..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems')"/>
   <Import Project="..\..\..\MonoDevelop.props"/>
   <Import Project="$(ReferencesVSEditor)"/>
@@ -638,17 +622,18 @@
       <Name>Xwt.Gtk</Name>
       <Private>False</Private>
     </ProjectReference>-->
+  <ItemGroup>
     <ProjectReference Include="..\..\..\external\xwt\Xwt.Gtk\Xwt.Gtk3.csproj">
       <Project>{3B25FD1F-CEBA-4450-8893-DC330FDB56A7}</Project>
       <Name>Xwt.Gtk3</Name>
       <Private>False</Private>
-      <Reference Include="System"/>
-      <Reference Include="System.Xml"/>
-      <Reference Include="System.ComponentModel.Composition"/>
-      <Reference Include="System.Core"/>
-      <Reference Include="System.Xml.Linq"/>
-      <Reference Include="System.Runtime.Serialization"/>
     </ProjectReference>
+    <Reference Include="System"/>
+    <Reference Include="System.Xml"/>
+    <Reference Include="System.ComponentModel.Composition"/>
+    <Reference Include="System.Core"/>
+    <Reference Include="System.Xml.Linq"/>
+    <Reference Include="System.Runtime.Serialization"/>
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">
     <Reference Include="PresentationCore"/>
@@ -863,23 +848,16 @@
     <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.Ide.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.VBNetBinding"/>
-
+  </ItemGroup>
   <Import Project="..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems" Label="Shared" Condition="Exists('..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems')"/>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets"/>
   <Import Project="..\..\..\MonoDevelop.props"/>
   <Import Project="$(ReferencesVSEditor)"/>
   <Import Project="$(ReferencesGtk)"/>
-    <DefineConstants Condition="$(OS) == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
-    <!--
-    This entire assembly is obsolete, and uses many obsoleted APIs from Core/Ide
-    so disable deprecation warnings.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "/>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMac|AnyCPU' "/>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' "/>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMac|AnyCPU' "/>
-  </ItemGroup>
   <ItemGroup Condition="$(HaveGtkSharp)">
     <ProjectReference Include="..\..\..\external\xwt\Xwt.GtkSharp\Xwt.GtkSharp.csproj">
       <Name>Xwt.GtkSharp</Name>
@@ -1147,7 +1125,8 @@
     <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.Ide.Tests"/>
     <InternalsVisibleTo Include="MonoDevelop.VBNetBinding"/>
+  </ItemGroup>
   <Import Project="..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems" Label="Shared" Condition="Exists('..\..\core\Mono.TextEditor.Shared\Mono.TextEditor.Shared.projitems')"/>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets"/>
-  </ItemGroup>
+
 </Project>

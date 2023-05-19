@@ -188,8 +188,10 @@
     <EmbeddedResource Include="templates\PackagingProject.xpt.xml" />
 
     <EmbeddedResource Include="MonoDevelop.Deployment.addin.xml" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugWin32|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseWin32|AnyCPU' " />
+  <ItemGroup>
     <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

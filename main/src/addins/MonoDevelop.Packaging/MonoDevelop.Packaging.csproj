@@ -145,6 +145,7 @@
     <EmbeddedResource Include="Templates\Images\preview-nuget~dark.png" />
     <EmbeddedResource Include="Templates\Images\preview-nuget~dark%402x.png" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
     <ExtensionContent Include="Targets\NuGet.Packaging.Authoring.props" />
@@ -153,8 +154,6 @@
     <ExtensionContent Include="Templates\PackagingProject.xpt.xml" />
     <DownloadNupkg Include="NuGet.Build.Packaging" Version="$(_BuildPackagingVersion)" ExtensionDir="packages" />
 
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-    <_BuildPackagingVersion>0.2.5-dev.8</_BuildPackagingVersion>
     <Reference Include="NuGet.Packaging">
       <HintPath>..\..\..\external\nuget-binary\NuGet.Packaging.dll</HintPath>
       <Private>False</Private>

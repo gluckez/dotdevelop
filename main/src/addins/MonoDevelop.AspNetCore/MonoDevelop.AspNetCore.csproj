@@ -225,8 +225,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-
-    <TemplatesVersion1x>1.0.0-beta2-20170629-269</TemplatesVersion1x>
     <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -318,6 +316,6 @@
     <Folder Include="MonoDevelop.AspNetCore.Scaffolding\Scaffolders\" />
     <Folder Include="MonoDevelop.AspNetCore.Scaffolding\Fields\" />
     <Folder Include="MonoDevelop.AspNetCore.Scaffolding\Configuration\" />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

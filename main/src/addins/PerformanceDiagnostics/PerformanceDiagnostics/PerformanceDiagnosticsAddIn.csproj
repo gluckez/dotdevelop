@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <IncludeCopyLocal Include="UIThreadMonitorDaemon.exe" />
-      <Private>true</Private>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

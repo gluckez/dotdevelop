@@ -79,7 +79,6 @@
 <!--      </ItemGroup>-->
 <!--    </When>-->
 <!--  </Choose>-->
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 <!--  <Target Name="AfterBuild">-->
 <!--    <Copy SourceFiles="@(NativeBinaries)" DestinationFolder="$(OutputPath)\" SkipUnchangedFiles="true" />-->
 <!--  </Target>-->
@@ -106,4 +105,5 @@
 <!--    <Copy SourceFiles="@(NativeBinaries)" DestinationFolder="$(OutputPath)\" SkipUnchangedFiles="true" />-->
 <!--  </Target>-->
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

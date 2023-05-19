@@ -258,12 +258,9 @@
     <ExtensionContent Include="CodeTemplates\**\*.*" />
     <ExtensionContent Include="Templates\**\*.*" Exclude="**\*.png" />
     <ExtensionContent Include="Html\Schemas\**\*.*" />
-    <RARResolveFromCandidateAssemblyFiles>true</RARResolveFromCandidateAssemblyFiles>
-    <!--
-    This needs to be ported to the new editor, and currently makes use of many, many deprecated APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Mvc" version="5.2.7" PrivateAssets="runtime" />
     <IncludeCopyLocal Include="System.Web.Mvc.dll" />
     <IncludeCopyLocal Include="System.Web.Razor.dll" />

@@ -266,7 +266,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-  <TemplatesVersion1x>1.0.0-beta2-20170629-269</TemplatesVersion1x>
     <Reference Include="NuGet.Versioning">
       <HintPath>..\..\..\external\nuget-binary\NuGet.Versioning.dll</HintPath>
       <Private>False</Private>
@@ -392,7 +391,5 @@
     <DownloadNupkg Include="Microsoft.DotNet.Test.ProjectTemplates.2.0" Version="$(TemplatesVersion20)" ExtensionDir="Templates" />
 
     <Folder Include="MonoDevelop.DotNetCore.GlobalTools\" />
-
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     </ItemGroup>
 </Project>

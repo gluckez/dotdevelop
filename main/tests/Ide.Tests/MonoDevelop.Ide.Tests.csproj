@@ -233,10 +233,6 @@
     <Folder Include="MonoDevelop.Ide.Gui.Documents\" />
     <Folder Include="MonoDevelop.Ide.Projects.OptionPanels\" />
     <Folder Include="MonoDevelop.Components.AutoTest\" />
-    <!--
-    This contains tests for many deprecated editor APIs, disable deprecation warnings for now.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
     <Reference Include="Microsoft.CodeAnalysis">
       <HintPath>..\..\build\bin\Microsoft.CodeAnalysis.dll</HintPath>
       <Private>False</Private>
@@ -303,9 +299,6 @@
     <Compile Include="MonoDevelop.Ide.Gui\GLibLoggingTests.cs" />
     <Compile Include="MonoDevelop.Ide.Projects.OptionPanels\OutputOptionsPanelTests.cs" />
     <Compile Include="MonoDevelop.Components.AutoTest\AppResultTests.cs" />
-      <Private>False</Private>
-      <Private>False</Private>
-      <Private>False</Private>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MonoDevelop.Ide.Gui.DocumentModels\" />

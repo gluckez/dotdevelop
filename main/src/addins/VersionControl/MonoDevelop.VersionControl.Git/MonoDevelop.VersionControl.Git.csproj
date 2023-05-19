@@ -9,6 +9,7 @@
     <TargetFrameworkVersion>$(MDFrameworkVersion)</TargetFrameworkVersion>
     <OutputPath>..\..\..\..\build\AddIns\VersionControl</OutputPath>
   </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMac|AnyCPU' " />
@@ -130,8 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="MonoDevelop.VersionControl.Git.Tests" />
-
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 <!--  <Choose>-->
 <!--    <When Condition=" '$(Configuration)' == 'DebugMac' OR '$(Configuration)' == 'ReleaseMac' ">-->
 <!--      <ItemGroup>-->

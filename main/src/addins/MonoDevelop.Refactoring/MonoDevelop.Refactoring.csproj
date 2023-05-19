@@ -244,9 +244,6 @@
     <None Include="MonoDevelop.CodeIssues\Pad\AnalysisState.cs" />
     <None Include="MonoDevelop.CodeIssues\Pad\AnalysisStateChangeEventArgs.cs" />
     <None Include="MonoDevelop.CodeIssues\Pad\CategoryGroupingProvider.cs" />
-  <PropertyGroup Condition=" $(OS) == 'Windows_NT'">
-    <DefineConstants>WIN32</DefineConstants>
-  </PropertyGroup>
     <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Mono.Posix" />

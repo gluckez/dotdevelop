@@ -65,10 +65,10 @@
       <Name>UnitTests</Name>
       <Private>False</Private>
     </ProjectReference>
-
-    <TargetFrameworkVersion>$(MDFrameworkVersion)</TargetFrameworkVersion>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <ItemGroup>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -76,7 +76,6 @@
       <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <PackageReference Include="NUnit" Version="$(NuGetVersionNUnit2)" />
-      <Private>False</Private>
     <!-- FIXME we need a canonical owner for copying nunit into build\tests  -->
     <IncludeCopyLocal Include="nunit.framework.dll" />
     <ProjectReference Include="..\..\UnitTests\UnitTests.csproj">

@@ -10,10 +10,6 @@
     <TestRunnerCommand>..\..\..\..\build\bin\mdtool.exe</TestRunnerCommand>
     <TestRunnerArgs>run-md-tests</TestRunnerArgs>
     <OutputPath>..\..\..\..\build\tests</OutputPath>
-    <!--
-    This needs to be ported to the new editor, and currently makes use of many, many deprecated APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
@@ -43,7 +39,6 @@
       <HintPath>..\..\..\..\build\bin\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
->>>>>>> 61552748da (Port to Gtk#3)
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Razor\Dom\RazorCodeBlockParsingTests.cs" />
@@ -103,10 +98,7 @@
       <Project>{D12F0F7B-8DE3-43EC-BA49-41052D065A9B}</Project>
       <Name>GuiUnit_NET_4_5</Name>
       <Private>False</Private>
-    <!--
-    This needs to be ported to the new editor, and currently makes use of many, many deprecated APIs.
-    -->
-    <NoWarn>$(NoWarn);618;612</NoWarn>
+    </ProjectReference>
     <Reference Include="System.Reflection.Metadata">
     </Reference>
     <Reference Include="System.Collections.Immutable">
@@ -117,8 +109,6 @@
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
     </Reference>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\MonoDevelop.SourceEditor2\MonoDevelop.SourceEditor.csproj">
       <Project>{F8F92AA4-A376-4679-A9D4-60E7B7FBF477}</Project>
       <Name>MonoDevelop.SourceEditor</Name>
