@@ -155,15 +155,6 @@
 
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <_BuildPackagingVersion>0.2.5-dev.8</_BuildPackagingVersion>
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Posix" />
-    <Reference Include="NuGet.Protocol">
-      <HintPath>..\..\..\external\nuget-binary\NuGet.Protocol.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="NuGet.Packaging">
       <HintPath>..\..\..\external\nuget-binary\NuGet.Packaging.dll</HintPath>
       <Private>False</Private>

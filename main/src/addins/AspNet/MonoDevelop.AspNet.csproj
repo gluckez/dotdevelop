@@ -264,11 +264,6 @@
     -->
     <NoWarn>$(NoWarn);618;612</NoWarn>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <PackageReference Include="Microsoft.AspNet.Mvc" version="5.2.7" PrivateAssets="runtime" />
     <IncludeCopyLocal Include="System.Web.Mvc.dll" />
     <IncludeCopyLocal Include="System.Web.Razor.dll" />

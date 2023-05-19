@@ -482,12 +482,6 @@
        <StartAction>Program</StartAction>
     <StartProgram>..\..\..\build\bin\MonoDevelop.exe</StartProgram>
     <StartArguments>--no-redirect</StartArguments>
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Posix" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.ComponentModel.Composition" />
   <ItemGroup Condition="$(OS) == 'Windows_NT'">
     <Reference Include="PresentationCore" />

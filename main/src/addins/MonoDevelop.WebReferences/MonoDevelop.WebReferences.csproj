@@ -116,12 +116,6 @@
     <EmbeddedResource Include="icons\web-reference-16~contrast%402x.png" />
     <EmbeddedResource Include="icons\web-reference-16~contrast~dark.png" />
     <EmbeddedResource Include="icons\web-reference-16~contrast~dark%402x.png" />
-    <Reference Include="Mono.Posix" />
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Compile Include="MonoDevelop.WebReferences\MonoDevelopDiscoveryClientProtocol.cs" />
   </ItemGroup>
   <ItemGroup>

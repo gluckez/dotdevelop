@@ -196,11 +196,6 @@
     This needs to be ported to the new editor, and currently makes use of many deprecated APIs.
     -->
     <NoWarn>$(NoWarn);618;612</NoWarn>
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <EmbeddedResource Include="templates\Makefile_am.template" />
     <EmbeddedResource Include="templates\Makefile.template" />
     <EmbeddedResource Include="templates\TranslationProject.xpt.xml" />

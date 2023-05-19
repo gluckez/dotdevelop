@@ -75,7 +75,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <PackageReference Include="NUnit" Version="$(NuGetVersionNUnit2)" />
       <Private>False</Private>
     <!-- FIXME we need a canonical owner for copying nunit into build\tests  -->

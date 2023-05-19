@@ -1724,6 +1724,7 @@
     </ProjectReference>
     <Reference Include="Xamarin.Mac">
       <HintPath>..\..\..\external\Xamarin.Mac.dll</HintPath>
+    </Reference>
     <IncludeCopyLocal Include="Xamarin.Mac.dll" />
     <IncludeCopyLocal Include="Xwt.XamMac.dll" />
   <ItemGroup Condition="$(HaveGtkSharp)">

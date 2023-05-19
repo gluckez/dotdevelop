@@ -144,6 +144,7 @@
     <ProjectReference Include="..\..\..\src\addins\MonoDevelop.Refactoring\MonoDevelop.Refactoring.csproj">
       <Project>{100568FC-F4E8-439B-94AD-41D11724E45B}</Project>
       <Name>MonoDevelop.Refactoring</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

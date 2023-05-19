@@ -523,13 +523,6 @@
       <Link>NuGet-LICENSE.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Posix" />
-    <Reference Include="Mono.Cairo" />
     <PackageReference Include="NuGet.PackageManagement" Version="$(NuGetVersionNuGet)" PrivateAssets="runtime" />
     <PackageReference Include="NuGet.Frameworks" Version="$(NuGetVersionNuGet)" PrivateAssets="runtime" />
     <PackageReference Include="NuGet.Indexing" Version="$(NuGetVersionNuGet)" PrivateAssets="runtime" />

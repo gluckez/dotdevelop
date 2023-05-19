@@ -64,7 +64,6 @@
       <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
->>>>>>> 61552748da (Port to Gtk#3)
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\core\MonoDevelop.Core\MonoDevelop.Core.csproj">
@@ -149,12 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.md" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Cairo" />
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.Collections.Immutable">
       <HintPath>..\..\..\build\bin\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>

@@ -825,11 +825,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.2.0" />
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Humanizer">
       <HintPath>..\..\..\..\packages\Humanizer.Core.2.2.0\lib\netstandard1.0\Humanizer.dll</HintPath>
     </Reference>

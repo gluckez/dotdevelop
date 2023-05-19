@@ -164,12 +164,6 @@
     This needs to be ported to the new editor, and currently makes use of many deprecated APIs.
     -->
     <NoWarn>$(NoWarn);618;612</NoWarn>
-    <Reference Include="Mono.Posix" />
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference Include="..\MonoDevelop.TextEditor\MonoDevelop.TextEditor\MonoDevelop.TextEditor.csproj">
       <Project>{3F5B5BDA-69D5-441A-8142-AA25C998A997}</Project>
       <Name>MonoDevelop.TextEditor</Name>
