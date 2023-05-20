@@ -1,4 +1,4 @@
-name: CI
+name: CI_Ubuntu2204
 
 on:
   push:
