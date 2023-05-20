@@ -1004,7 +1004,9 @@ clean-local: sln_clean
 #FIXME: move the restore logic into MSBuild (Before.sln.targets),
 #       see: https://github.com/kzu/NuGet.Restore
 restore-packages:
-# 	@$(NUGET_RESTORE)
+	echo "NUGET FOUND:"
+	@$(NUGET_FOUND)
+ 	@$(NUGET_RESTORE)
 	mono external/fsharpbinding/.paket/paket.bootstrapper.exe -v 5.201.1
 	pushd . && cd external/fsharpbinding && mono .paket/paket.exe restore && popd
 
