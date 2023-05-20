@@ -357,7 +357,8 @@ ACLOCAL_AMFLAGS = $(ACLOCAL_FLAGS)
 bin_SCRIPTS = monodevelop mdtool
 buildinfo = $(top_builddir)/build/bin/buildinfo
 NUGET_FOUND = $$(echo $$(which nuget))
-NUGET_RESTORE = mono external/nuget-binary/nuget.exe restore -DisableParallelProcessing;
+#NUGET_RESTORE = mono external/nuget-binary/nuget.exe restore -DisableParallelProcessing;
+NUGET_RESTORE = dotnet restore;
 buildinfodir = $(MD_ASSEMBLY_DIR)
 buildinfo_DATA = $(buildinfo)
 desktopdir = $(datadir)/applications
@@ -1003,14 +1004,10 @@ clean-local: sln_clean
 
 #FIXME: move the restore logic into MSBuild (Before.sln.targets),
 #       see: https://github.com/kzu/NuGet.Restore
-#restore-packages:
-#	@$(NUGET_RESTORE)
-#	mono external/fsharpbinding/.paket/paket.bootstrapper.exe -v 5.201.1
-#	pushd . && cd external/fsharpbinding && mono .paket/paket.exe restore && popd
-
 restore-packages:
-	curl -f -k -L -o NuGet.Restore.targets http://bit.ly/nugetore
-	msbuild Nuget.Restore.targets /t:Init
+# 	@$(NUGET_RESTORE)
+	mono external/fsharpbinding/.paket/paket.bootstrapper.exe -v 5.201.1
+	pushd . && cd external/fsharpbinding && mono .paket/paket.exe restore && popd
 
 vcrevision:
 	touch vcrevision
