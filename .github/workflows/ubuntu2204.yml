@@ -35,7 +35,9 @@ jobs:
         wget dot.net/v1/dotnet-install.sh -O dotnet.sh
         chmod +x dotnet.sh
         ./dotnet.sh -c 5.0
+        ls /github/home/.dotnet
         export PATH="$PATH:/github/home/.dotnet"
+        echo $PATH
         dotnet --list-runtimes
         # Install mono and msbuild
         sudo apt-get install -y gnupg ca-certificates
