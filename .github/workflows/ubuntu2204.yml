@@ -34,9 +34,7 @@ jobs:
         # sudo apt-get install -y dotnet-sdk-5.0 
         wget dot.net/v1/dotnet-install.sh -O dotnet.sh
         chmod +x dotnet.sh
-        sudo ./dotnet.sh -c 5.0
-        ls /usr/share/dotnet
-        ls /usr/bin/dotnet
+        ./dotnet.sh -c 5.0
         # Install mono and msbuild
         sudo apt-get install -y gnupg ca-certificates
         sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
