@@ -31,10 +31,10 @@ jobs:
         sudo dpkg -i packages-microsoft-prod.deb
         sudo apt-get install -y apt-transport-https
         sudo apt-get update
-        # sudo apt-get install -y dotnet-sdk-5.0 
+        # sudo apt-get install -y dotnet-sdk-6.0 
         wget dot.net/v1/dotnet-install.sh -O dotnet.sh
         chmod +x dotnet.sh
-        ./dotnet.sh -c 5.0
+        ./dotnet.sh -c 6.0
         ls /github/home/.dotnet
         export PATH="$PATH:/github/home/.dotnet"
         echo $PATH
