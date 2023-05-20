@@ -35,7 +35,7 @@ jobs:
         wget dot.net/v1/dotnet-install.sh -O dotnet.sh
         chmod +x dotnet.sh
         sudo ./dotnet.sh -c 5.0
-        #Testing .Net
+        # Testing .Net
         which dotnet
         ls /usr/share/dotnet
         ls /usr/bin/dotnet
