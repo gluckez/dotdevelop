@@ -49,7 +49,7 @@ jobs:
         # echo "deb https://download.mono-project.com/repo/ubuntu preview-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-preview.list
         sudo apt-get update
         # Install mono-complete and ca-certificates-mono
-        sudo apt-get install -y mono-complete ca-certificates-mono
+        sudo apt-get install -y mono-complete mono-devel ca-certificates-mono
         # Synchronise Mono SSL certs
         cert-sync /etc/ssl/certs/ca-certificates.crt
         # Install extra packages required for dotdevelop build
