@@ -72,5 +72,6 @@ jobs:
         submodules: true
     - name: Checkout configure and build
       run: |
+        export PATH="$PATH:/github/home/.dotnet"
         ./configure --profile=gnome
         make
