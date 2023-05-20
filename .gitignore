@@ -98,7 +98,7 @@ Thumbs.db
 
 # Autotool-generated Makefiles.
 # We have some manually-written makefiles too so can't use a glob
-/main/Makefile
+#/main/Makefile
 /main/man/Makefile
 /main/build/MacOSX/Makefile
 /main/build/Makefile
