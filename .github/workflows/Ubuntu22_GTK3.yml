@@ -40,9 +40,9 @@ name: Linux Build Pipeline with GTK3
 
 on:
   push:
-    branches: [ "newCICDPipeline" ]
+    branches: [ "refactor/GTK2ToGTK3" ]
   pull_request:
-    branches: [ "develop", "main" ]
+    branches: [ "refactor/GTK2ToGTK3", "develop", "main" ]
 
 jobs:
 
