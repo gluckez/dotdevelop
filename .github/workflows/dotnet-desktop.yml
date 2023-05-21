@@ -84,9 +84,9 @@ jobs:
         sudo apt-get install -y sed git build-essential intltool nuget fsharp gtk-sharp2
         sudo apt-get install -y software-properties-common
         sudo apt-get update
-        env:
-          - name: SSL_CERT_DIR
-            value: "/etc/ssl/certs"
+      env:
+          name: SSL_CERT_DIR
+          value: "/etc/ssl/certs"
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     #- name: Setup MSBuild.exe
