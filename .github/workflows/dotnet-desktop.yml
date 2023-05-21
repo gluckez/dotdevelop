@@ -52,7 +52,7 @@ jobs:
       matrix:
         configuration: [DebugGnome, ReleaseGnome]
 
-    runs-on: ubuntu-latest  # For a list of available runner types, refer to
+    runs-on: ubuntu-latest # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
     steps:
     - name: Checkout
@@ -84,6 +84,9 @@ jobs:
         sudo apt-get install -y sed git build-essential intltool nuget fsharp gtk-sharp2
         sudo apt-get install -y software-properties-common
         sudo apt-get update
+        env:
+          - name: SSL_CERT_DIR
+            value: "/etc/ssl/certs"
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     #- name: Setup MSBuild.exe
@@ -106,13 +109,14 @@ jobs:
         git config --global --add safe.directory /__w/dotdevelop/dotdevelop
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild main/Main.sln /t:Restore /p:Configuration=${{ matrix.configuration }}
-      env:
-        Configuration: ${{ matrix.configuration }}
+    #- name: Restore the application
+    #  run: msbuild main/Main.sln /t:Restore /p:Configuration=${{ matrix.configuration }}
+    #  env:
+    #    Configuration: ${{ matrix.configuration }}
         
     - name: Checkout configure and build
       run: |
+        sudo cert-sync /etc/ssl/certs/ca-certificates.crt
         ./configure --profile=gnome
         make
 
