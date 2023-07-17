@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\MonoDevelop.props" />
   <Import Project="$(ReferencesGtk)" />
   <PropertyGroup>
@@ -82,7 +82,9 @@
     <Compile Include="Gui\MonoDevelop.WebReferences.Dialogs.WCFConfigWidget.cs" />
     <Compile Include="Gui\MonoDevelop.WebReferences.Dialogs.WebReferenceDialog.cs" />
     <Compile Include="MonoDevelop.WebReferences\WebReferencesProjectExtension.cs" />
-    <Compile Include="MonoDevelop.WebReferences\MonoDevelopDiscoveryClientProtocol.cs" />
+    <Compile Include="MonoDevelop.WebReferences\MonoDevelopDiscoveryClientProtocol.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonoDevelop.WebReferences.addin.xml" />
@@ -102,7 +104,6 @@
     <EmbeddedResource Include="icons\folder-web-16~dark~sel%402x.png" />
     <EmbeddedResource Include="icons\folder-web-16~sel.png" />
     <EmbeddedResource Include="icons\folder-web-16~sel%402x.png" />
-
     <EmbeddedResource Include="icons\web-reference-16.png" />
     <EmbeddedResource Include="icons\web-reference-16%402x.png" />
     <EmbeddedResource Include="icons\web-reference-16~contrast.png" />
