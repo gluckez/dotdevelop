@@ -89,6 +89,15 @@ Launch DotDevelop, using one of the 2 options
 mono main/build/bin/MonoDevelop.exe
 ```
 
+## Building using Dotdevelop
+once you have a sucessfull build you can also start Dotdevelop for buiding Dotdevelop
+git clone
+git submodule update --init
+nuget restore
+
+open Main.sln from Dotdevelop 
+select Mondevelop.Startup and DebugGnome!!
+
 ### Verify .NET Core Debugger is attached
 
 1. Launch, MonoDevelop
