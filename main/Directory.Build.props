@@ -17,12 +17,12 @@
     <NuGetVersionMicrosoftTemplateEngine>3.0.0-rc1.19464.2</NuGetVersionMicrosoftTemplateEngine>
     <NuGetVersionMicrosoftTestPlatform>16.2.0</NuGetVersionMicrosoftTestPlatform>
     <NuGetVersionMonoDevelopAnalyzers>0.1.0.2</NuGetVersionMonoDevelopAnalyzers>
-    <NuGetVersionNewtonsoftJson>12.0.2</NuGetVersionNewtonsoftJson>
+    <NuGetVersionNewtonsoftJson>13.0.3</NuGetVersionNewtonsoftJson>
     <NuGetVersionNuGet>5.8.0</NuGetVersionNuGet>
-    <NuGetVersionNUnit2>2.7.0</NuGetVersionNUnit2>
-    <NuGetVersionNUnit3>3.9.0</NuGetVersionNUnit3>
+    <NuGetVersionNUnit2>2.7.1</NuGetVersionNUnit2>
+    <NuGetVersionNUnit3>3.16.3</NuGetVersionNUnit3>
     <NuGetVersionVSCodeDebugProtocol>15.8.20719.1</NuGetVersionVSCodeDebugProtocol>
-    <NuGetVersionVSComposition>15.8.112</NuGetVersionVSComposition>
+    <NuGetVersionVSComposition>17.7.26</NuGetVersionVSComposition>
     <NuGetVersionVSEditor>16.4.280</NuGetVersionVSEditor>
   </PropertyGroup>
 </Project>
