@@ -11,7 +11,7 @@
     <ReferencesVSEditor Condition=" '$(OS)' == 'MAC' ">$(RootDirectory)\msbuild\ReferencesVSEditor.Mac.props</ReferencesVSEditor>
     <ReferencesVSEditor Condition=" '$(OS)' == 'UNIX' ">$(RootDirectory)\msbuild\ReferencesVSEditor.Gtk.props</ReferencesVSEditor>
     <ReferencesGtk>$(RootDirectory)\msbuild\ReferencesGtk.props</ReferencesGtk>
-    <NuGetVersionAllocationAnalyzer>1.0.0.9</NuGetVersionAllocationAnalyzer>
+    <NuGetVersionAllocationAnalyzer>3.0.0</NuGetVersionAllocationAnalyzer>
     <NuGetVersionCecil>0.10.4</NuGetVersionCecil>
     <NuGetVersionErrorProneNetStructs>0.1.2</NuGetVersionErrorProneNetStructs>
     <NuGetVersionMicrosoftTemplateEngine>3.0.0-rc1.19464.2</NuGetVersionMicrosoftTemplateEngine>
