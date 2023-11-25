@@ -21,7 +21,7 @@
     <NuGetVersionNuGet>5.8.0</NuGetVersionNuGet>
     <NuGetVersionNUnit2>2.7.1</NuGetVersionNUnit2>
     <NuGetVersionNUnit3>3.16.3</NuGetVersionNUnit3>
-    <NuGetVersionVSCodeDebugProtocol>15.8.20719.1</NuGetVersionVSCodeDebugProtocol>
+    <NuGetVersionVSCodeDebugProtocol>17.2.60629.1</NuGetVersionVSCodeDebugProtocol>
     <NuGetVersionVSComposition>17.7.26</NuGetVersionVSComposition>
     <NuGetVersionVSEditor>16.4.280</NuGetVersionVSEditor>
   </PropertyGroup>
