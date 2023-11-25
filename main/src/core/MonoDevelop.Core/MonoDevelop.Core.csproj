@@ -85,7 +85,7 @@
     <!-- disable this for now, it's absurdly noisy
     <PackageReference Include="ClrHeapAllocationAnalyzer" Version="1.0.0.9" />
     -->
-    <PackageReference Include="Microsoft.Build.Locator" Version="1.1.2" PrivateAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.6.10" PrivateAssets="runtime" />
     <PackageReference Include="Microsoft.CodeAnalysis.EditorFeatures" Version="$(NuGetVersionRoslyn)" PrivateAssets="runtime" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="$(NuGetVersionRoslyn)" PrivateAssets="runtime" />
     <PackageReference Include="Microsoft.VisualStudio.CodingConventions" Version="1.1.20180503.2" PrivateAssets="runtime" />
