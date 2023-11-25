@@ -12,7 +12,7 @@
     <ReferencesVSEditor Condition=" '$(OS)' == 'UNIX' ">$(RootDirectory)\msbuild\ReferencesVSEditor.Gtk.props</ReferencesVSEditor>
     <ReferencesGtk>$(RootDirectory)\msbuild\ReferencesGtk.props</ReferencesGtk>
     <NuGetVersionAllocationAnalyzer>1.0.0.9</NuGetVersionAllocationAnalyzer>
-    <NuGetVersionCecil>0.10.1</NuGetVersionCecil>
+    <NuGetVersionCecil>0.10.4</NuGetVersionCecil>
     <NuGetVersionErrorProneNetStructs>0.1.2</NuGetVersionErrorProneNetStructs>
     <NuGetVersionMicrosoftTemplateEngine>3.0.0-rc1.19464.2</NuGetVersionMicrosoftTemplateEngine>
     <NuGetVersionMicrosoftTestPlatform>16.2.0</NuGetVersionMicrosoftTestPlatform>
